@@ -14,9 +14,6 @@ MEDIA_VERSION = 1
 # Add base media (jquery can be easily added via INSTALLED_APPS)
 COMBINE_MEDIA = {
     'combined-%(LANGUAGE_CODE)s.js': (
-        # See documentation why site_data can be useful:
-        # http://code.google.com/p/app-engine-patch/wiki/MediaGenerator
-        '.site_data.js',
     ),
     'combined-%(LANGUAGE_DIR)s.css': (
         'global/look.css',
@@ -25,7 +22,7 @@ COMBINE_MEDIA = {
 
 # Change your email settings
 if on_production_server:
-    DEFAULT_FROM_EMAIL = 'bla@bla.com'
+    DEFAULT_FROM_EMAIL = 'bcherry@gmail.com'
     SERVER_EMAIL = DEFAULT_FROM_EMAIL
 
 # Make this unique, and don't share it with anybody.
@@ -44,7 +41,6 @@ LANGUAGE_CODE = 'en'
 
 # Restrict supported languages (and JS media generation)
 LANGUAGES = (
-    ('de', 'German'),
     ('en', 'English'),
 )
 
@@ -101,7 +97,6 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'appenginepatcher',
     'ragendja',
-	'home',
     'registration',
     'mediautils',
 )
