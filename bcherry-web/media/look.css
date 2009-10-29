@@ -1,0 +1,15 @@
+/* Add your global CSS (i.e., code that is project-specific and not part of any app) here. */
+
+body {
+  padding: 15px 20px;
+}
+
+#clickme {
+  background-color: #eeeeee;
+  border: 1px solid black;
+  padding: 3px;
+}
+
+#footer {
+  clear: both;
+}
