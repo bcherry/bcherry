@@ -4,14 +4,9 @@ runtime: python
 api_version: 1
 
 handlers:
-- url: /styles
-  static_dir: content/styles
-
-- url: /scripts
-  static_dir: content/scripts
- 
-- url: /images
-  static_dir: content/images
+- url: /(.+?/|)?(scripts|images|styles)/(.*)
+  static_files: \1content/\2/\3
+  upload: /content/(scripts|images|styles)/.*?\.(js|css|gif|png|jpg)
 
 - url: .*
   script: main.py
