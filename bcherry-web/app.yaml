@@ -4,9 +4,15 @@ runtime: python
 api_version: 1
 
 handlers:
+# Static CSS/JS/IMG, including sub-apps
 - url: /(.+?/|)?(scripts|images|styles)/(.*)
   static_files: \1content/\2/\3
   upload: /content/(scripts|images|styles)/.*?\.(js|css|gif|png|jpg)
 
+# Pets
+- url: /pets
+  script: /pets/main.py
+
+# Main Page
 - url: .*
   script: main.py
