@@ -1,0 +1,173 @@
+// $Id$
+
+import java.io.*;
+import java.util.*;
+import static java.lang.System.*;
+
+class spellcheck {
+    public static final int EXIT_SUCCESS = 0;
+    public static final int EXIT_MISSPELLING = 1;
+    public static final int EXIT_FAILURE = 2;
+    private static int exit_code = EXIT_SUCCESS;
+    
+    public static void main(String[] args) {
+        Options options = new Options();
+        scanOptions(args, options);
+        
+        hashset<String> hash = new hashset<String>();
+        makeHash(hash, options);
+        
+        if(options.debugdump == true) {
+        	hash.debugDump();
+        	exit(exit_code);
+        }
+        
+        readFiles(hash, options);
+        
+        exit(exit_code);
+    }
+    
+    static void scanOptions(String[] args, Options options) {
+        for(int i = 0; i < args.length; i++) {
+            if(args[i].equals("-D")) {
+                options.debugdump = true;
+            } else if(args[i].equals("-d")) {
+                String[] temp = options.dictionaries;
+                options.dictionaries = new String[options.dictionaries.length + 1];
+                
+                for(int j = 0; j < temp.length; j++)
+                    options.dictionaries[j] = temp[j];
+                options.dictionaries[options.dictionaries.length - 1] = args[++i];
+            } else if(args[i].equals("-n")) {
+                options.nodefaultdict = true;
+            } else {
+                String[] temp = options.filenames;
+                options.filenames = new String[options.filenames.length + 1];
+                for(int j = 0; j < temp.length; j++)
+                    options.filenames[j] = temp[j];
+                options.filenames[options.filenames.length - 1] = args[i];
+            }
+        }
+        if(options.filenames == null || options.filenames.length == 0) {
+        	options.filenames = new String[1];
+        	options.filenames[0] = "-";
+        }
+    }
+    
+    static void makeHash(hashset<String> hash, Options options) {
+        for(int i = 0; i < options.dictionaries.length; i++) {
+            try {
+            	BufferedReader reader = new BufferedReader(new FileReader(options.dictionaries[i]));
+            	for(String entry = reader.readLine(); entry != null; entry = reader.readLine())
+            		hash.add(entry.toLowerCase());
+            } catch(IOException e) {
+            	printError(e.getMessage());
+            }
+        }
+        if(!options.nodefaultdict) {
+        	try {
+        		BufferedReader reader = new BufferedReader(new FileReader("/usr/dict/words"));
+        		for(String entry = reader.readLine(); entry != null; entry = reader.readLine())
+        			hash.add(entry.toLowerCase());
+        	} catch(IOException e) {
+        		printError(e.getMessage());
+        	}
+        }
+    }
+    
+    static void readFiles(hashset<String> hash, Options options) {
+    	for(int i = 0; i < options.filenames.length; i++) {
+    		try {
+    			BufferedReader reader;
+    			if(options.filenames[i].equals("-"))
+    				reader = new BufferedReader(new InputStreamReader(in));
+    			else 
+    				reader = new BufferedReader(new FileReader(options.filenames[i]));
+    			int lineNum = 1;
+    			for(String line = reader.readLine(); line != null; line = reader.readLine()) {
+    				String[] words = extractwords(line);
+    				for(int j = 0; j < words.length; j++) {
+    					if(!hash.contains(words[j].toLowerCase()))
+    						printMisspelling(options.filenames[i], lineNum, words[j]);
+    				}
+    				lineNum++;
+    			}
+    		} catch(IOException e) {
+    			printError(e.toString());
+    		}
+    	}
+    }
+    
+    static void printError(String message) {
+        err.printf("%s", message);
+        exit_code = EXIT_FAILURE;
+    }
+    
+    static void printMisspelling(String filename, int line, String word) {
+        out.printf("%s: %d: %s%n", filename, line, word);
+        if(exit_code == EXIT_SUCCESS)
+        	exit_code = EXIT_MISSPELLING;
+    }
+    
+    static boolean iswordchar( char achar ){
+        return Character.isLetterOrDigit( achar ) || achar == '_';
+     };
+
+     static boolean iswordhyph( char achar ){
+        return ".-&'".indexOf( achar ) >= 0;
+     };
+
+     //
+     // extractwords - extract words from a line and return an array
+     // input        - line containing words
+     // returns      - array of words extracted from the line
+     //
+     static String[] extractwords( String line ){
+        List<String> wordlist = new LinkedList<String>();
+        OUTER_SCAN_LOOP:
+        for( int begin = 0;; ){
+
+           // find the beginning of the word
+           for(;; ++begin ){
+              if( begin >= line.length() ) break OUTER_SCAN_LOOP;
+              if( iswordchar( line.charAt( begin ))) break;
+           };
+           boolean haveword = iswordchar( line.charAt( begin ));
+           int end = begin + 1;
+
+           // find the end of that word
+           for(; end < line.length(); ++end ){
+              char endchar = line.charAt( end );
+              if( iswordchar( endchar )){
+                 haveword = haveword || iswordchar( endchar );
+              }else{
+                 if( ! iswordhyph( endchar )) break;
+                 if( ! iswordchar( line.charAt( end - 1 ))) break;
+              };
+           };
+
+           // if it really was a word, accumulate in list
+           if( haveword ){
+              if( ! iswordchar( line.charAt( end - 1 ))) --end;
+              wordlist.add( line.substring( begin, end ));
+           };
+           begin = end;
+        };
+
+        // return the words actually found
+        return wordlist.toArray( new String[0] );
+     };
+    
+    static class Options {
+        boolean debugdump;
+        boolean nodefaultdict;
+        String[] dictionaries;
+        String[] filenames;
+        Options() {
+        	debugdump = false;
+        	nodefaultdict = false;
+        	dictionaries = new String[0];
+        	filenames = new String[0];
+        }
+    } 
+}

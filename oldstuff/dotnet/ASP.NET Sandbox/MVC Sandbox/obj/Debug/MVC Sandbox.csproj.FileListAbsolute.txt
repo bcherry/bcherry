@@ -1,0 +1,5 @@
+C:\Users\bcherry\Documents\Personal\Software Devlopment\dotnet\ASP.NET Sandbox\MVC Sandbox\bin\MVC Sandbox.dll
+C:\Users\bcherry\Documents\Personal\Software Devlopment\dotnet\ASP.NET Sandbox\MVC Sandbox\bin\MVC Sandbox.pdb
+C:\Users\bcherry\Documents\Personal\Software Devlopment\dotnet\ASP.NET Sandbox\MVC Sandbox\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\bcherry\Documents\Personal\Software Devlopment\dotnet\ASP.NET Sandbox\MVC Sandbox\obj\Debug\MVC Sandbox.dll
+C:\Users\bcherry\Documents\Personal\Software Devlopment\dotnet\ASP.NET Sandbox\MVC Sandbox\obj\Debug\MVC Sandbox.pdb

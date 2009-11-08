@@ -1,0 +1,72 @@
+# $Id: GNUmakefile,v 351.6 2005-02-15 16:12:09-08 - - $
+
+CCOPT    = -D__EXTENSIONS__ -g -xO0 -Xc -xarch=v8
+LINTOPT  = -D__EXTENSIONS__ -Xa -fd -m -u -x -errchk=%all
+
+CHEADER  =  	    list.h auxlib.h
+CSOURCE  = edfile.c list.c auxlib.c
+OBJECTS  = ${patsubst %.c, %.o, ${CSOURCE}}
+EXECBIN  = edfile
+MKFILE   = GNUmakefile
+SOURCES  = ${CHEADER} ${CSOURCE} ${MKFILE}
+LISTING  = asg4c-edfile_listing.ps
+
+SUBMIT	 = submit cmps012b-wm.w05 asg4
+CID	 = /afs/cats.ucsc.edu/courses/cmps012b-wm/sparcbin/cid
+
+all : ${EXECBIN}
+
+${EXECBIN} : ${OBJECTS}
+	cc ${CCOPT} -o $@ ${OBJECTS}
+
+%.o : %.c
+	cc ${CCOPT} -c $<
+
+lint : ${CSOURCE}
+	lint ${LINTOPT} ${CSOURCE}
+
+ci : ${SOURCES}
+	${CID} + ${SOURCES}
+
+submit : ${SOURCES}
+	${SUBMIT} ${SOURCES}
+
+lis : ../${LISTING}
+	ghostview -magstep 1 ../${LISTING} &
+
+../${LISTING} : ${SOURCES}
+	- enscript -G -p ../${LISTING} ${SOURCES}
+	cd ..; ps2pdf ${LISTING}
+
+clean :
+	- rm ${OBJECTS} ${MKFILE}.old core
+
+spotless : clean
+	- rm ${EXECBIN}
+
+deps : ${CSOURCE} ${CHEADER}
+	cid + ${MKFILE}
+	perl -ni -e 'print unless m/^\S+\.o: \S+\.[hc]$$/' ${MKFILE}
+	cc -xM1 ${CSOURCE} | sort | uniq | tee -a ${MKFILE}
+	cid + ${MKFILE}
+
+again :
+	gmake spotless
+	gmake deps
+	gmake ci
+	gmake all
+	gmake lis
+
+#================================================================
+# DO NOT PUT ANY LINES IN THIS MAKEFILE THAT MATCH THE NAMES
+# OF ANY OF THE OBJECT FILES.  `gmake deps' WILL DELETE AND
+# REPLACE THEM BY THE NEW DEPENDENCIES AT THE END OF THE FILE.
+#================================================================
+auxlib.o: auxlib.c
+auxlib.o: auxlib.h
+edfile.o: auxlib.h
+edfile.o: edfile.c
+edfile.o: list.h
+list.o: auxlib.h
+list.o: list.c
+list.o: list.h

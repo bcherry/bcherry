@@ -1,0 +1,17 @@
+﻿<content name="maincontent">
+	<form action="/stories/reload" method="post" id="reloadform">
+		<label for="numentries">How many?</label>
+		<select name="num" id="numentries">
+			<var i="0" />
+			<option value="1">15</option>
+			# for (i = 5; i < 100; i += 5)
+            # {
+				<option value="${i}">${i * 15}</option> 
+			# }       
+		</select>
+		<input type="submit" value="Reload" />
+	</form>
+	<div id="stories">
+	
+	</div>
+</content>

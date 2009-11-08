@@ -1,0 +1,5 @@
+C:\Users\bcherry\Documents\Personal\Software Devlopment\dotnet\Blog Examples\Degradation 3-8\bin\Degradation 3-8.dll
+C:\Users\bcherry\Documents\Personal\Software Devlopment\dotnet\Blog Examples\Degradation 3-8\bin\Degradation 3-8.pdb
+C:\Users\bcherry\Documents\Personal\Software Devlopment\dotnet\Blog Examples\Degradation 3-8\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\bcherry\Documents\Personal\Software Devlopment\dotnet\Blog Examples\Degradation 3-8\obj\Debug\Degradation 3-8.dll
+C:\Users\bcherry\Documents\Personal\Software Devlopment\dotnet\Blog Examples\Degradation 3-8\obj\Debug\Degradation 3-8.pdb

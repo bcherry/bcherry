@@ -1,0 +1,96 @@
+This File is for all notes about the metroid project.
+Project created on 11/28/03
+I have no idea whether i will be able to finish this project, but it would be nice
+
+<<<<<<<<Plans>>>>>>>>
+-first i want to make a test environment, and have samus walking around
+-if i actually manage that, a pat on the back
+-weapons will include regular beam, charge beam, missiles, bombs
+-samus will be able to walk, crouch, morph, jump, and do flips
+-doors will be beam and missile doors only
+-game will start and you have just your beam gun
+-fight enemies, and maybe a boss, to get morph ball
+-then do more to get the bombs
+-a little more and a charge beam
+-then get the missiles and youre almost done with the game
+-a final boss fight, and thats it
+-of course thats a lot of work by itself
+-but it could happen :)
+-ill figure out how tall to make samus, and then ill make preliminary sprites to test the engine with
+
+<<<<<<<<<<ideas for how to do things>>>>>>>>>>>>>>
+maybe have a switch statement for drawing samus:
+	switch (samus.state) {
+		case LEFT:
+			// draw her facing left normal
+		case RIGHT:
+			// draw her facing right normal
+		case JUMP_LEFT:
+		case JUMP_RIGHT:
+		case KNEEL_LEFT:
+		case KNEEL_RIGHT:
+		case MORPH:
+		case FLIP_LEFT:
+		case FLIP_RIGHT:
+	}
+
+just an idea
+i should use extgraph's sprite mirroring routines
+
+so the game main shoud flow like this
+
+intialize variables
+do the menu
+maybe have a label there
+i think i should do the levels and the dma here at the start of the game loop
+and then an inside loop that runs the level
+do the putScreen() function
+samus needs a variable that says when she is in the air, and if she is in a flip
+if she is in the air, then there will be associated x and y velocities that need to be applied
+and walls need to be checked for
+so move her
+and then if she touched a wall and it was above her, kill the y change
+and if to either side kill the x change
+if she was falling and hit a wall below, then change her back to ground state, and move to that section of code
+then she needs the gravity applied to her y change
+if she is flipping then there should be a counter as to when she changes sprites
+i should use three flip sprites
+then i need to check input for movement, and if she hit left or right modify x change accordingly
+other key check will be saved for later
+then i guess im done with the in air stuff
+and i do it again for on the ground
+here i have a x change only
+and it wont vary much
+basically it has just a few speeds, so her start and end of movement is smooth
+so i check the left and right keys
+and if she moves left, then she needs a change, same with right
+and i only do that if no wall
+also check wall before increment by x change
+check jump key and if hit, then she will be in the air, and break from ground stuff
+her starting x change in the air will be same as current, and if she is pressing left or right, then she is also in a flip
+her y change will be a set value for her jump power, and if she got hi-jump boots for instance, it would be higher
+that is the end of the ground stuff
+the next stuff will happen whether she is in air or not
+test keys for shooting, and if she fires then push a shot to the stack of her current weapon
+but what it should do is test for pressing, and if she hits it then it will start up the variable charge
+as long as she continues to press it, charge will be incremented, but no shot fired
+other keypresses tested are down
+if down is pushed, she changes to kneel state, and if she is in kneel and down is pushed, she morphs
+because if she is in morph state, then everything is different
+when she presses fire it drops a bomb
+ill have to work more on morph later
+other keypresses, like pause and weapon change are also addresed
+check samus against enemies in the stack (as it will already be set by putScreen() )
+if enemy is hit, lose health according to strength
+and enter hurt mode
+hurt mode means the sprites are different and samus is momentarily uncontrollable
+then samus is done
+and the enemies start up
+each enemy on the level, not just the stack, needs to be updated based on a movement pattern
+enemy shots should be treated like additional enemies
+samus' bullets need to be treated too
+perhaps as their own stack
+if they go off the screen, kill them
+but they need to be tested against walls, enemies, doors
+and thats pretty much the game loop
+i hope it works

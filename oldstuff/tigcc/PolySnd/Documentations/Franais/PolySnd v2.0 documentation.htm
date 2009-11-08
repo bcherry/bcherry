@@ -1,0 +1,1463 @@
+<html>
+<head>
+<title>PolySnd v2.0 Documentation</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000" background="images/fond.jpg">
+<div align="center">
+  <p><img src="images/image1.png" width="269" height="84"></p>
+  <p align="left">&nbsp;</p>
+  <div align="left"> 
+    <p align="left"><a href="#introduction">1- Introduction.</a><br>
+      <a href="#ameliorations">2- Les am&eacute;liorations apport&eacute;es.</a><br>
+      <a href="#prisejack">3- Comment fabriquer ou obtenir un adaptateur Jack 
+      3.5 mm &lt;-&gt; 2.5 mm?</a><br>
+      <a href="#fonctionnement">4- Fonctionnement de la librairie et pr&eacute;cautions 
+      &agrave; prendre.</a><br>
+      <a href="#utilisation">5- Utiliser PolySnd v2.0 dans un programme.</a><br>
+      <a href="#gris">6- Informations &agrave; propos des niveaux de gris et de 
+      l'auto int n&deg;5.</a><br>
+      <a href="#fonctions">7- Liste et descriptions des fonctions de PolySnd v2.0.</a><br>
+      <a href="#consommation">8- Points sur la consommation de ressources avec 
+      PolySnd v2.0.</a><br>
+      <a href="#genlib">9- Utiliser PolySnd v2.0 avec Genlib.</a><br>
+      <a href="#durees">10-Tableau des dur&eacute;es.</a><br>
+      <a href="#ameliorer_son">11-Am&eacute;liorer la qualit&eacute; du son.</a><br>
+      <a href="#contact">12-Me contacter.</a><br>
+    </p>
+    <pre align="left">
+
+<font face="Comic Sans MS"><i><font size="3"><a name="introduction"></a>1</font></i><font size="3">. <u><i>Introduction.</i></u> </font></font>
+  </pre>
+  </div>
+  <p align="left"> &nbsp;&nbsp;&nbsp;PolySnd v2.0 est une librairie audio optimis&eacute;e 
+    pour la programmation de jeux sous TI68K. Son but est d'apporter un maximum 
+    de fonctions et de confort de programmation. Elle a &eacute;t&eacute; totalement 
+    r&eacute;&eacute;crite et repens&eacute;e compar&eacute; aux autres versions. 
+    La version 2.0 permet enfin de jouer du son en t&acirc;che de fond avec des 
+    niveaux de gris&#133; Elle est aussi capable de jouer du PCM qualit&eacute; 
+    1 bit &agrave; 8000 Hz, id&eacute;al pour des effets sonores dans les jeux.</p>
+  <p align="left">&nbsp;</p>
+  <p align="left"><i><font face="Comic Sans MS"><b><a name="ameliorations"></a>2</b></font></i><b><i><font face="Comic Sans MS">.</font></i></b><i><font face="Comic Sans MS"></font></i><u><i><font face="Comic Sans MS"> 
+    Les am&eacute;liorations apport&eacute;es.</font></i></u> </p>
+  <p align="left">&nbsp;&nbsp;&nbsp;PolySnd v2.0 est la seule librairie qui soit 
+    capable de jouer des musiques, des effets sonores, une simple fr&eacute;quence 
+    et m&ecirc;me du PCM (format WAV) dans des programmes sans que celle-ci ne 
+    bloque son processus. Elle est capable de jouer des musiques sur 2 canaux 
+    (2 voies), avec des niveaux de gris et ce sans ralentir le programme en cours. 
+    Elle incorpore 4 fonctions de gestions de donn&eacute;es (Musiques, Effets 
+    sonores, simple fr&eacute;quence, gestion de donn&eacute;es WAV en st&eacute;r&eacute;o), 
+    diverses fonctions informant sur l'&eacute;tat de la librairie et d'autres 
+    fonctions sur le traitement des donn&eacute;es musicales. PolySnd v2.0 est 
+    id&eacute;ale pour les programmes audio comme (Player, Programmes de composition 
+    musical ou encore simple d&eacute;mos graphique&#133;), c'est la seule librairie 
+    audio sur tout supports confondus (calculatrices) d'&ecirc;tre utilisable 
+    dans des programmes m&ecirc;me n&eacute;cessitant une grande puissance.<br>
+  </p>
+  <p align="left"> PolySnd v2.0 est le fruit de nombreux mois de recherche et 
+    de d&eacute;veloppement, j'esp&egrave;re quelle comblera tout vos d&eacute;sirs.</p>
+  <p align="left">&nbsp;</p>
+  <p align="left"><i><font face="Comic Sans MS"><b><a name="prisejack"></a>3.</b></font></i><u><i><font face="Comic Sans MS"> 
+    Comment fabriquer ou obtenir un adaptateur Jack 3.5 mm &lt;-&gt; 2.5 mm ?</font></i></u></p>
+  <p align="left">&nbsp;&nbsp;&nbsp;PolySnd v2.0 n&eacute;cessite un adaptateur 
+    Jack 3.5 mm en 2.5 mm st&eacute;r&eacute;o, en effet PolySnd v2.0 est une 
+    librairie polyphonique en st&eacute;r&eacute;o et donc pour pouvoir sortir 
+    du son sur un casque (conseill&eacute; car sur d'autre supports, le son risque 
+    d'&ecirc;tre parasit&eacute;) ou sur des enceintes, vous devez absolument 
+    poss&eacute;der un adaptateur.</p>
+  <p align="left">Si vous n'avez pas d'adaptateur Jack 3.5 mm en 2.5 mm, vous 
+    pouvez vous en procurer un dans certains magasins, si ce n'est pas possible 
+    vous pouvez vous en fabriquer un avec peu de mat&eacute;riel, pour &ccedil;a, 
+    suivez la proc&eacute;dure ci-dessous :</p>
+  <p align="left"></p>
+  <p align="left"><i><u>Mat&eacute;riels :</u></i></p>
+  <p align="left">- <b>Prise Jack M&acirc;le 2.5 mm. </b> <img src="images/image8.gif" width="78" height="15" hspace="10"><br>
+    Vous pouvez en trouver une dans un magasin d'&eacute;lectronique ou en r&eacute;cup&eacute;rant 
+    la prise Jack d'un cordon fourni avec la TI.</p>
+  <p align="left">- <b>Prise Jack Femelle 3.5 mm.</b><img src="images/image9.gif" width="91" height="30" vspace="0" hspace="10"><br>
+    Se trouve facilement dans les grandes surfaces ou dans des magasins d'&eacute;lectronique.</p>
+  <p align="left">- <b>Fer &agrave; souder, avec de l'&eacute;tain.</b><br>
+    - <b>Ruban adh&eacute;sif Noir</b>.<br>
+    Vous devez relier ensemble la masse, et les 2 fils de donn&eacute;es.</p>
+  <p align="left"><img src="images/image10.gif" width="216" height="30" vspace="0" hspace="85"></p>
+  <p align="left">Le fil gris correspond &agrave; la masse, et les fils rouge 
+    et bleu, aux donn&eacute;es.</p>
+  <p align="left"><br>
+    <font color="#0000FF"><b>Ce sch&eacute;ma peut &ecirc;tre adapt&eacute; avec 
+    une prise Jack M&acirc;le 3.5 mm.</b></font></p>
+  <p align="left"><br>
+    <i><font face="Comic Sans MS"><b><a name="fonctionnement"></a>4.</b></font></i><u><i><font face="Comic Sans MS"> 
+    Fonctionnement de la librairie et pr&eacute;cautions &agrave; prendre pour 
+    cr&eacute;er un programme.</font></i></u></p>
+  <p align="left">&nbsp;&nbsp;&nbsp;Pour pouvoir jouer du son dans un programme 
+    en t&acirc;che de fond (background) c'est &agrave; dire faire d&eacute;rouler 
+    un programme tout en jouant de la musique&#133; Cette librairie utilise l'auto 
+    interruption n&deg;5 pouss&eacute;e au maximum (8 KHz sur HW2 et 11 KHz sur 
+    HW1) mais elle reste toujours disponible aux programmeurs gr&acirc;ce &agrave; 
+    une fonction incluse dans PolySnd v2.0. Cette auto interruption &eacute;tant 
+    redirig&eacute;e vers les routines de PolySnd v2.0, certaines fonctions de 
+    l'AMS (Advanced Mathematic Software) seront inutilisables c'est pourquoi vous 
+    devez utiliser des &eacute;quivalents.</p>
+  <p align="left">Pour que cette librairie fonctionne correctement, vous devez 
+    d&eacute;sactiver certaines interruptions :</p>
+  <p align="left">- L'auto Int n&deg;1, utilis&eacute;e par l'AMS pour restaurer 
+    la ligne de statut (status line), et pour afficher le statut des touches. 
+    Utilis&eacute;e par certaines fonctions.</p>
+  <p align="left">- L'auto Int n&deg;2, utilis&eacute;e par ngetchx de l'AMS (Perturbe 
+    la librairie, importante &agrave; d&eacute;sactiver).</p>
+  <p align="left"><font color="#FF0000"><b>Au cours de cette documentation, les 
+    exemples permetteront de mieux comprendre comment sont d&eacute;sactiv&eacute; 
+    ces 2 interruptions.</b></font></p>
+  <p align="left">&nbsp;</p>
+  <p align="left"><i><font face="Comic Sans MS"><b><a name="utilisation"></a>5.</b></font></i><u><i><font face="Comic Sans MS"> 
+    Utiliser PolySnd v2.0 dans un programme.</font></i></u></p>
+  <p align="left"><b><i><u>Version dynamique :</u></i></b></p>
+  <p align="left"> &nbsp;&nbsp;&nbsp;Ne peut &ecirc;tre seulement utilis&eacute; 
+    que si vous programmez en mode kernel, vous devez dans ce cas poss&eacute;der 
+    un kernel et la librairie PolySnd v2.0 sur votre TI.<br>
+    Votre programme n&eacute;cessitera donc la pr&eacute;sence de PolySnd v2.0 
+    sur votre TI pour fonctionner.<br>
+    Vous trouverez la librairie dans le r&eacute;pertoire <b>bin</b> puis l'header 
+    dans le r&eacute;pertoire <b>headers/dynamique.</b></p>
+  <p align="left"><br>
+    <u><i><b>Version statique</b></i></u></p>
+  <p align="left">&nbsp;&nbsp;&nbsp;Si votre programme est d&eacute;velopp&eacute; 
+    en nostub ou en kernel, vous d&eacute;sirez que votre programme fonctionne 
+    sans la pr&eacute;sence de la librairie PolySnd v2.0 et que celle-ci ce trouve 
+    en interne dans le programme, vous devrez utiliser la version statique de 
+    PolySnd v2.0, les avantages de la version statique sont que vous &eacute;conomiserez 
+    de la place car votre programme utilisera seulement les fonctions qu'il a 
+    besoin de la librairie, vous trouverez la librairie au format statique dans 
+    le r&eacute;pertoire <b>bin</b> et l'header dans le r&eacute;pertoire <b>headers\statique</b>. 
+  </p>
+  <p align="left"><br>
+    <u><i>Conclusion :</i></u></p>
+  <p align="left">&nbsp;&nbsp;&nbsp;Il est pr&eacute;f&eacute;rable d'utiliser 
+    la version dynamique pour des programmes tr&egrave;s petits et ne se limitant 
+    qu'&agrave; une s&eacute;quence audio (morceaux de musiques ou simples effets 
+    sonores). Ces programmes n'ont que pour seul but, ex&eacute;cuter une musique&#133; 
+    Elle ne peut &ecirc;tre utilis&eacute;e dans des programmes en nostub.</p>
+  <p align="left">Par contre la version statique doit &ecirc;tre utilis&eacute; 
+    dans de gros projet comme programmes audio, jeux, d&eacute;mos sonores, &eacute;diteur 
+    de partitions&#133;</p>
+  <p align="left">Il est conseill&eacute; de choisir correctement en fonction 
+    de votre programme le format de la librairie, vous ne pourrez qu'&eacute;conomiser 
+    de la m&eacute;moire si ce choix est bien fait.<br>
+  </p>
+  <p align="left">&nbsp;</p>
+  <p align="left"><i><font face="Comic Sans MS"><b><a name="gris"></a>6.</b></font></i><u><i><font face="Comic Sans MS"> 
+    Informations &agrave; propos des niveaux de gris et de l'auto int n&deg;5.</font></i></u></p>
+  <p align="left">&nbsp;&nbsp;&nbsp;PolySnd v2.0 a &eacute;t&eacute; test&eacute; 
+    avec les routines de niveaux de gris de TIGCC, pour que les niveaux de gris 
+    fonctionnent correctement avec PolySnd v2.0 vous devez utiliser la fonction 
+    <b>USE_GRAY_WITH_POLYSND</b> avant l'appel de <b>GrayOn</b>. <b>USE_GRAY_WITH_POLYSND</b> 
+    n'est en fait une d&eacute;finition faisant appel &agrave; un hack de TIGCC, 
+    il n'est pas garanti que cette ligne fonctionne dans les versions de TIGCC 
+    ant&eacute;rieure ou sup&eacute;rieur &agrave; la version 0.94. Cette ligne 
+    &agrave; pour but de ne pas d&eacute;sactiver et de d&eacute;r&eacute;gler 
+    l'auto int 5 utilis&eacute; par PolySnd v2.0 lors du passage de la routine 
+    de niveaux de gris via l'auto int 1.</p>
+  <p align="left">PolySnd v2.0 utilise peux de ressources de l'auto int 5 c'est 
+    pourquoi il est possible de l'utiliser dans vos programmes &agrave; une fr&eacute;quence 
+    de param&eacute;trable gr&acirc;ce &agrave; la fonction SetInterrupt5Rate, 
+    par d&eacute;faut l'auto int 5 tourne &agrave; 1 Hz.<font color="#0000FF">Voir 
+    liste des fonctions.</font></p>
+  <p align="left">&nbsp;</p>
+  <p align="left"><i><font face="Comic Sans MS"><b><a name="fonctions"></a>7.</b></font></i><u><i><font face="Comic Sans MS"> 
+    Liste et descriptions des fonctions de PolySnd v2.0.</font></i></u></p>
+  <p align="left">&nbsp;&nbsp;&nbsp;La liste est donn&eacute;e sous forme de prototypes 
+    pour le C et en assembleur, un exemple en assembleur sera donn&eacute; pour 
+    chaque fonction. Vous trouverez au dessus des exemples le passage des arguments 
+    par registres pour la programmation en Asssembleur. Les fonctions en C commence 
+    toutes avec le prefixe pSnd_.</p>
+  <p align="left"><b><font color="#FF0000">Tout arguments eronn&eacute; ne sont 
+    pas pris en compte par la librairie est peuvent &ecirc;tre source de plantage 
+    plus ou moins s&eacute;v&eacute;re. Je ne suis en aucun cas responsable des 
+    pertes de donn&eacute;es et dommage subit par une mauvaise utilisation de 
+    la librairie</font></b></p>
+  <div align="left">
+    <p align="left"><i><font color="#0000FF"><u><font size="4" color="#FF0000"><b><font color="#0000FF">Liste 
+      des fonctions de PolySnd v2.0</font></b></font></u></font></i></p>
+    <p align="left"><a href="#EnableSound">EnableSound</a><br>
+      <a href="#DisableSound">DisableSound</a><br>
+      <a href="#InstallSound">InstallSound</a><br>
+      <a href="#UninstallSound">UninstallSound</a><br>
+      <a href="#Initialize">Initialize</a><br>
+      <a href="#SetTempo">SetTempo_voice[1|2]</a><br>
+      <a href="#GetTempo">GetTempo_voice[1|2]</a><br>
+      <a href="#SetState">SetState</a><br>
+      <a href="#SetLoop">SetLoop</a><br>
+      <a href="#SetBeep">SetBeep_voice[1|2]</a><br>
+      <a href="#PlayFX">PlayFX_voice[1|2]</a><br>
+      <a href="#GetFrequency">GetFrequency_voice[1|2]</a><br>
+      <a href="#PortStatus">PortStatus</a><br>
+      <a href="#Interrupt5">Interrupt5</a><br>
+      <a href="#PlaySound">PlaySound_voice[1|2]</a><br>
+      <a href="#GetLength">GetLength_voice[1|2]</a><br>
+      <a href="#GetTime">GetTime</a><br>
+      <a href="#GetState">GetState</a><br>
+      <a href="#GetMode">GetMode</a><br>
+      <a href="#GetLoop">GetLoop</a><br>
+      <a href="#Time">Time_voice[1|2]</a><br>
+      <a href="#SetTime">SetTime_voice[1|2]</a><br>
+      <a href="#VoiceState">VoiceState</a><br>
+      <a href="#SetVoiceState">SetVoiceState</a><br>
+      <a href="#SetIntMask">SetIntMask</a><br>
+      <a href="#AddNotes">AddNotes_voice[1|2]</a><br>
+      <a href="#PlayWAV">PlayWAV_voice[1|2]</a><br>
+      <a href="#Sample">Sample_voice[1|2]</a><br>
+      <a href="#GetNote">GetNote_voice[1|2]</a><br>
+      <a href="#_Ptridle">_Ptridle_voice[1|2]</a><br>
+      <a href="#_time_counter">_time_counter_voice[1|2]</a><br>
+      <a href="#_note_time_counter">_note_time_counter_voice[1|2]</a><br>
+      <a href="#_SkipData">_SkipData_voice[1|2]</a><br>
+      <a href="#PlayMode">PlayMode</a><br>
+      <a href="#Setlength">SetLength_voice[1|2]</a><br>
+      <a href="#SetInterrupt5Rate">SetInterrupt5Rate</a></p>
+    <p align="left"><a href="#GrayPolysnd">USE_GRAY_WITH_POLYSND</a></p>
+    <pre align="left">&nbsp;
+
+</pre>
+  </div>
+  <p align="left"><font color="#0000FF"><b><a name="EnableSound"></a>void</b></font> 
+    pSnd_EnableSound (<b><font color="#0000FF">void</font></b>) ;<br>
+    <b><font color="#0000FF">jsr</font></b> &nbsp;&nbsp;&nbsp;polysnd2 ::EnableSound<br>
+  </p>
+  <p align="left"><b><u>Initialise le port I/O.</u></b></p>
+  <p align="left">&nbsp;&nbsp;&nbsp;Cette fonction initialise le port I/O en bas 
+    niveau pour permettre de sortir des impulsions sous forme binaire, g&eacute;n&eacute;ralement 
+    cette fonction est appel&eacute;e en premi&egrave;re et est suivie de InstallSound. 
+    Elle inhibe aussi l'auto int n&deg;4.</p>
+  <p align="left">&nbsp;</p>
+  <p align="left"><font color="#0000FF"><b><a name="DisableSound"></a>void</b></font> 
+    pSnd_DisableSound (<b><font color="#0000FF">void</font></b>) ;<br>
+    <b><font color="#0000FF">jsr</font></b> &nbsp;&nbsp;&nbsp;polysnd2 ::DisableSound</p>
+  <p align="left"><b><u>Remet le Port I/O &agrave; son &eacute;tat courant.</u></b></p>
+  <p align="left">&nbsp;&nbsp;&nbsp;Cette fonction active le port I/O en haut 
+    niveau pour rendre la main au TIOS et ainsi &ecirc;tre g&eacute;r&eacute; 
+    correctement.</p>
+  <p align="left">&nbsp;</p>
+  <p align="left"><font color="#0000FF"><b><a name="InstallSound"></a>void</b></font> 
+    pSnd_InstallSound (<b><font color="#0000FF">void</font></b>) ;<br>
+    <b><font color="#0000FF">jsr</font></b> &nbsp;&nbsp;&nbsp;polysnd2 ::InstallSound</p>
+  <p align="left"><i><u>Input:</u></i> <b><font color="#FF0000"> &nbsp;&nbsp; 
+    &nbsp;</font>-</b><br>
+    <u><i>Output:</i></u><i>&nbsp;&nbsp;</i>-<br>
+    <i><u>Del: </u></i><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;d0</b></p>
+  <p align="left"><b><u>Installe l'interruption audio.</u></b></p>
+  <p align="left">&nbsp;&nbsp;&nbsp;Redirige l'auto int 5, initialise les variables 
+    de PolySnd v2.0 et installe l'interruption audio.<br>
+    Cette fonction se situe g&eacute;n&eacute;ralement apr&egrave;s EnableSound.</p>
+  <p align="left">A savoir que cette fonction initialise toute les valeurs de 
+    PolySnd v2.0. par d&eacute;faut PolySnd v2.0 est en mode St&eacute;r&eacute;o 
+    et le mode loop est mis &agrave; 0.</p>
+  <p align="left">&nbsp;</p>
+  <p align="left"><font color="#0000FF"><b><a name="UninstallSound"></a>void</b></font> 
+    pSnd_UninstallSound (<b><font color="#0000FF">void</font></b>) ;<br>
+    <b><font color="#0000FF">jsr</font></b> &nbsp;&nbsp;&nbsp;polysnd2 ::UninstallSound</p>
+  <p align="left"><i><u>Input:</u></i> <b><font color="#FF0000"> &nbsp;&nbsp; 
+    &nbsp;</font>-</b><br>
+    <u><i>Output:</i></u><i>&nbsp;&nbsp;</i>-<br>
+    <i><u>Del: </u></i><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; d0</b></p>
+  <p align="left"><b><u>Desinstall l'interruption audio.</u></b></p>
+  <p align="left">&nbsp;&nbsp;&nbsp;Cette fonction redirige l'auto int 5 &agrave; 
+    son &eacute;tat et &agrave; sa valeur initiale. Elle d&eacute;sactive toutes 
+    les fonctions de PolySnd v2.0.<br>
+  </p>
+  <p align="left"><br>
+  </p>
+  <p align="left"><b><font color="#0000FF"><a name="Initialize"></a>void </font></b>pSnd_Initialize 
+    (<b><font color="#0000FF">void</font></b>);<br>
+    <font color="#0000FF"><b>jsr</b></font> &nbsp;&nbsp;&nbsp;polysnd2 ::Initialize</p>
+  <p align="left"><i><u>Input:</u></i> <b><font color="#FF0000"> &nbsp;&nbsp; 
+    &nbsp;</font>-</b><br>
+    <u><i>Output:</i></u><i>&nbsp;&nbsp;</i>-<br>
+    <i><u>Del: </u></i><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;d0, a0</b></p>
+  <p align="left"><b><u>Remet &agrave; z&eacute;ro les variables de PolySnd v2.0.</u></b></p>
+  <p align="left">&nbsp;&nbsp;&nbsp;Cette fonction remet &agrave; z&eacute;ro 
+    les variables syst&egrave;mes de PolySnd v2.0. Elle annule toutes musiques 
+    ou tout effets sonores en cours.</p>
+  <p align="left">&nbsp;</p>
+  <p align="left"><b><font color="#0000FF"><a name="SetTempo"></a>void</font></b> 
+    pSnd_SetTempo_voice1 (<b><font color="#0000FF">unsigned short</font></b> tempo) 
+    ;<br>
+    <b><font color="#0000FF">void</font></b> pSnd_SetTempo_voice2 (<b><font color="#0000FF">unsigned 
+    short</font></b> tempo);<br>
+    <font color="#006600"><b>#define pSnd_SetTempo (tempo);</b></font></p>
+  <p align="left"><b><font color="#0000FF">move</font></b>.<b><font color="#FF0000">w</font></b> 
+    &nbsp;#120,<b><font color="#FF0000">d0</font></b><br>
+    <font color="#0000FF"><b>jsr </b></font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;polysnd2::SetTempo_voice[1|2]<br>
+  </p>
+  <div align="left"> 
+    <p align="left"><i><u>Input:</u></i> <b><font color="#FF0000"> &nbsp;&nbsp;&nbsp;d0</font><font color="#0000FF">.w</font></b> 
+      = Tempo<br>
+      <u><i>Output:</i></u><i>&nbsp;&nbsp;</i>-<br>
+      <i><u>Del: </u></i><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;d1, d2</b></p>
+    </div>
+  <p align="left"><b><u>R&egrave;gle le tempo sur la voie choisie.</u></b></p>
+  <p align="left">&nbsp;&nbsp;&nbsp;Le tempo est donn&eacute; en bpm. La valeur 
+    du tempo doit se situer entre 1 et 15 850 bpm, ce tempo est indicatif et plus 
+    sa valeur sera &eacute;lev&eacute;e, moins il sera pr&eacute;cis.</p>
+  <p align="left">A savoir que cette fonction fait partie de l'initialisation 
+    de PolySnd v2.0.</p>
+  <p align="left">&nbsp;</p>
+  <p align="left"><b><font color="#0000FF"><a name="GetTempo"></a>unsigned short 
+    </font></b>pSnd_GetTempo_voice1 (<b><font color="#0000FF">void</font></b>) 
+    ;<br>
+    <font color="#0000FF"><b>unsigned short</b></font> pSnd_GetTempo_voice2 (<b><font color="#0000FF">void</font></b>);</p>
+  <p align="left"><b><font color="#0000FF">jsr</font></b> polysnd2::GetTempo_voice[1|2]</p>
+  <p align="left"><i><u>Input:</u></i> <b><font color="#FF0000"> &nbsp;&nbsp;&nbsp;</font> 
+    -</b><br>
+    <u><i>Output:</i></u><i>&nbsp;<b><font color="#FF0000"> </font></b></i><b><font color="#FF0000">d0</font><font color="#0000FF">.w</font></b><br>
+    <i><u>Del: </u></i><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;d1</b></p>
+  <p align="left"><b><u>Renvoie le tempo en cours de la voie choisie.</u></b></p>
+  <p align="left">&nbsp;&nbsp;&nbsp;Cette fonction retourne le tempo en cours 
+    en bpm, la valeur du tempo est indicatif et peut donc poss&eacute;der une 
+    certaine marge d'erreur.</p>
+  <p align="left">&nbsp;</p>
+  <p align="left"><b><font color="#0000FF"><a name="SetState"></a>void</font></b> 
+    pSnd_SetState (<b><font color="#0000FF">unsigned char</font></b> state) ;<br>
+    <br>
+    <font color="#0000FF"><b>move</b></font>.<b><font color="#FF0000">b</font></b> 
+    &nbsp;#<font color="#006600"><b>_</b></font><b><font color="#006600">ALLVOICES</font></b>,<font color="#FF0000"><b>d0</b></font><br>
+    <font color="#0000FF"><b>jsr</b></font> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;polysnd2::SetState<br>
+  </p>
+  <p align="left"><b></b><i><u>Input:</u></i> <b><font color="#FF0000"> &nbsp;&nbsp;&nbsp;d0</font><font color="#0000FF">.b</font></b><br>
+    <u><i>Output:</i></u><i>&nbsp;<b> </b></i><b>-</b><br>
+    <i><u>Del: </u></i><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;-</b></p>
+  <p align="left"><u><b>R&egrave;gle l'&eacute;tats des voies.</b></u></p>
+  <p align="left">&nbsp;&nbsp;&nbsp;Cette option permet de mettre en pause/jouer 
+    un canal audio en fonction d'un bit. par d&eacute;faut elle est mise &agrave; 
+    z&eacute;ro et donc en pause pour les 2 voies, n'oublier d'activer PolySnd 
+    v2.0 &agrave; l'initialisation.</p>
+  <p align="left">Le canal 1 correspond au bit 0 et le canal 2 au bit 1, lorsque 
+    le bit d'un canal est &agrave; 1, le canal est activ&eacute;, si le bit est 
+    &agrave; 0, le canal est en pause.</p>
+  <p align="left"><br>
+    <b><font color="#006600">#define NOVOICE&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;0<br>
+    #define VOICE1 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1<br>
+    #define VOICE2 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2<br>
+    #define ALLVOICES &nbsp;3</font></b></p>
+  <p align="left"><b><font color="#0000FF">_NOVOICE &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;equ&nbsp; 
+    0<br>
+    _VOICE1 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;equ &nbsp;1<br>
+    _VOICE2 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;equ &nbsp;2<br>
+    _ALLVOICES &nbsp;equ &nbsp;3</font></b></p>
+  <p align="left">Cette fonction ne peut prendre en param&egrave;tre que ses &eacute;num&eacute;rations.<br>
+  </p>
+  <p align="left">&nbsp; </p>
+  <p align="left"><b><font color="#0000FF"><a name="SetLoop"></a>void</font></b> 
+    pSnd_SetLoop (<b><font color="#0000FF">unsigned char</font></b> loop) ;</p>
+  <p align="left"><font color="#0000FF"><b>move</b></font>.<b><font color="#FF0000">b</font></b> 
+    &nbsp;#<b><font color="#006600">_ALLVOICES</font></b>,<b><font color="#FF0000">d0</font></b><br>
+    <font color="#0000FF"><b>jsr</b></font> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;polysnd2::SetLoop<br>
+  </p>
+  <p align="left"><i><u>Input:</u></i> <b><font color="#FF0000"> &nbsp;&nbsp;&nbsp;d0</font><font color="#0000FF">.b</font></b><br>
+    <u><i>Output:</i></u><i>&nbsp;<b> </b></i><b>-</b><br>
+    <i><u>Del: </u></i><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;-</b></p>
+  <p align="left"><u><b>R&egrave;gle la r&eacute;p&eacute;tition de son.</b></u></p>
+  <p align="left">&nbsp;&nbsp;&nbsp;Cette option permet de r&eacute;p&eacute;ter 
+    en boucle une musique, des effets sonores ou une simple fr&eacute;quence, 
+    elle a pour but de faciliter le programmeur pour le d&eacute;veloppement de 
+    jeux, si une musique est jou&eacute;e sur le canal 1 et quelle doit &ecirc;tre 
+    jou&eacute;e en boucle, PolySnd v2.0 s'en chargera en regardant la valeur 
+    pass&eacute;e par SetLoop.<br>
+    <font color="#FF0000"><b>Attention</b>, il n'est pas conseill&eacute; de jouer 
+    en boucle une musique en st&eacute;r&eacute;o avec cette fonction car les 
+    voies risquent d'&ecirc;tre d&eacute;synchronis&eacute;es. <font color="#0000FF">Voir 
+    fonction VoiceState</font>.</font></p>
+  <p align="left">Cette fonction ne peut prendre en param&egrave;tre que les &eacute;num&eacute;rations 
+    cit&eacute;s plus haut.<br>
+  </p>
+  <p align="left"><br>
+  </p>
+  <p align="left"><b><font color="#0000FF"><a name="SetBeep"></a>void </font></b>pSnd_SetBeep_voice1 
+    (<b><font color="#0000FF">unsigned short </font></b>freq, <b><font color="#0000FF">unsigned 
+    char</font></b> duree) ;<br>
+    <font color="#000000"><b><font color="#0000FF">void</font> </b></font>pSnd_SetBeep_voice2 
+    (<b><font color="#0000FF">unsigned short </font></b>freq, <b><font color="#0000FF">unsigned 
+    char</font></b> duree) ;</p>
+  <p align="left"><b><font color="#0000FF">move</font></b>.<b><font color="#FF0000">w 
+    </font></b>&nbsp;#440,<font color="#FF0000"><b>d0</b></font><br>
+    <font color="#0000FF"><b>move</b></font>.<b><font color="#FF0000">b</font></b>&nbsp;&nbsp; 
+    #30,<font color="#FF0000"><b>d1</b></font><br>
+    <font color="#0000FF"><b>jsr</b></font> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;polysnd2::SetBeep_voice[1|2]<br>
+  </p>
+  <div align="left"> 
+    <p align="left"><i><u>Input:</u></i> <b><font color="#FF0000"> &nbsp;&nbsp;&nbsp;d0</font><font color="#0000FF">.w</font></b> 
+      = Frequence<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><font color="#FF0000">&nbsp;&nbsp;&nbsp;d1</font><font color="#0000FF">.b</font></b> 
+      = Longueur<br>
+      <u><i>Output:</i></u><i>&nbsp;<b> </b></i><b>-</b><br>
+      <i><u>Del: </u></i><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; d0</b> </p>
+  </div>
+  <p align="left"><u><b>R&eacute;gle PolySnd v2.0 en mode simple fr&eacute;quence 
+    sur le canl voulu. </b></u></p>
+  <p align="left">&nbsp;&nbsp;&nbsp;Cette fonction permet de jouer une simple 
+    fr&eacute;quence sur le canal de son choix. pour jouer ce mode, <b>n'oubliez 
+    pas de r&eacute;gler correctement SetSate.</b></p>
+  <p align="left">&nbsp;</p>
+  <p align="left"> <b><font color="#0000FF"><a name="PlayFX"></a>void</font></b> 
+    pSnd_PlayFX_voice1 (<b><font color="#0000FF">unsigned short</font></b> *list);<br>
+    <font color="#0000FF"><b>void</b></font> pSnd_PlayFX_voice2 (<b><font color="#0000FF">unsigned 
+    short</font></b> *list);</p>
+  <p align="left"><b><font color="#0000FF">lea&nbsp;&nbsp;</font></b>&nbsp;SoundFX(<b><font color="#FF0000">PC</font></b>),<font color="#FF0000"><b>a0</b></font><br>
+    <font color="#0000FF"><b>jsr</b></font> &nbsp;&nbsp;&nbsp;polysnd2::PlayFX_voice[1|2]<br>
+  </p>
+  <p align="left"><i><u>Input:</u></i> <b><font color="#FF0000"> &nbsp;&nbsp;&nbsp;a0</font></b><br>
+    <u><i>Output:</i></u><i>&nbsp;<b> </b></i><b>-</b><br>
+    <i><u>Del: </u></i><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;d0</b><br>
+  </p>
+  <p align="left"><b><u>Joue un effet sonore sur le canal voulu.</u></b></p>
+  <p align="left">&nbsp;&nbsp;Cette fonction permet de jouer des effets sonores 
+    (bruitages) sur le canal voulu. Cette fonction demande en param&egrave;tre 
+    un pointeur correspondant &agrave; des donn&eacute;es cod&eacute;es en short.</p>
+  <p align="left">En C pour utiliser correctement cette fonction vous devez utiliser 
+    une liste &agrave; une dimension qui se compose de cette fa&ccedil;on :</p>
+  <p align="left"><b><font color="#FF6600">fr&eacute;quence, dur&eacute;e, fr&eacute;quence, 
+    dur&eacute;e&#133; fr&eacute;quence, dur&eacute;e, fin</font></b></p>
+  <p align="left">Les fr&eacute;quences sont comprises entre 1 et 32768, 0 est 
+    consid&eacute;r&eacute; comme une pause.<br>
+    Les dur&eacute;es ici, peuvent aller de 1 &agrave; 255..<br>
+  </p>
+  <p align="left"><br>
+    <u><i>Voici un exemple de donn&eacute;es, effet sonore pour PlayFX&#133; :</i></u></p>
+  <p align="left"><b><font color="#0000FF">unsigned short</font></b> MySoundFX[]={<b><font color="#FF00FF">5000</font></b>,<b><font color="#006600">30</font></b>,<br>
+    <font color="#FF00FF"><b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;485</b></font>,<b><font color="#006600">10</font></b>,<br>
+    <font color="#FF00FF"><b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;8000</b></font>,<b><font color="#006600">90</font></b>,<br>
+    <font color="#FF00FF"><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7000</b></font>,<b><font color="#006600">50</font></b>,<br>
+    <font color="#FF00FF"><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6542</b></font>,<b><font color="#006600">45</font></b>,<br>
+    <font color="#FF00FF"><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></font><font color="#FF0000"><b>0xFFFF</b></font>};</p>
+  <p align="left"><font color="#FF0000"><b>0xFFFF</b></font> (65535) signale &agrave; 
+    PolySnd v2.0 la fin de l'effet sonore, il est important &agrave; mettre, sans 
+    lui, PolySnd v2.0 sera perdu.</p>
+  <p align="left">Les <b><font color="#FF00FF">xx</font></b> correspondent aux 
+    fr&eacute;quences de l'effet sonore MySoundFX.<br>
+    Les <b><font color="#006600">yy</font></b> correspondent aux dur&eacute;es 
+    des fr&eacute;quences associ&eacute;es, les dur&eacute;es d&eacute;pendent 
+    du tempo. </p>
+  <p align="left"><i><u>En assembleur MySoundFX donnera :</u></i></p>
+  <p align="left">MySoundFX :<br>
+    <font color="#0000FF"><b>dc</b></font>.<b><font color="#FF0000">w</font></b> 
+    <font color="#FF00FF"><b>5000</b></font>,<b><font color="#006600">30</font></b><br>
+    <font color="#0000FF"><b>dc</b></font>.<b><font color="#FF0000">w</font></b> 
+    <b><font color="#FF00FF">485</font></b>,<b><font color="#006600">10</font></b><br>
+    <font color="#0000FF"><b>dc</b></font>.<b><font color="#FF0000">w</font></b> 
+    <b><font color="#FF00FF">8000</font></b>,<b><font color="#006600">90</font></b><br>
+    <font color="#0000FF"><b>dc</b></font>.<b><font color="#FF0000">w</font></b> 
+    <b><font color="#FF00FF">7000</font>,<font color="#006600">50</font></b><br>
+    <font color="#0000FF"><b>dc</b></font>.<b><font color="#FF0000">w</font></b> 
+    <b><font color="#FF00FF">6542</font>,<font color="#006600">45</font></b><br>
+    <font color="#0000FF"><b>dc</b></font>.<b><font color="#FF0000">w</font></b> 
+    <b><font color="#FF0000">$FFFF</font></b><br>
+  </p>
+  <p align="left"><b><font color="#FF0000">Attention: </font></b><font color="#FF0000">N'oubliez 
+    pas d'utiliser correctement SetSate pour activer cette fonction.</font></p>
+  <p align="left">&nbsp;</p>
+  <p align="left"><b><font color="#0000FF"><a name="GetFrequency"></a>unsigned 
+    short</font></b> pSnd_GetFrequency_voice1 (<b><font color="#0000FF">void</font></b>);<br>
+    <font color="#0000FF"><b>unsigned short</b></font> pSnd_GetFrequency_voice2 
+    (<b><font color="#0000FF">void</font></b>);</p>
+  <p align="left"><b><font color="#0000FF">jsr</font></b> polysnd2::GetFrequency_voice[1|2]</p>
+  <p align="left"><i><u>Input:</u></i> <b><font color="#FF0000"> &nbsp;&nbsp; 
+    </font>-</b><br>
+    <u><i>Output:</i></u><i>&nbsp;<b> </b></i><b><font color="#FF0000">d0</font><font color="#0000FF">.w</font></b><br>
+    <i><u>Del: </u></i><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;-</b><font color="#FF0000"></font></p>
+  <p align="left"><b><u>Renvoie la fr&eacute;quence en cours sur le canal voulu.</u></b></p>
+  <p align="left">&nbsp;&nbsp;Cette fonction renvoie la fr&eacute;quence en train 
+    d'&ecirc;tre jou&eacute;e sur le canal voulu. La fr&eacute;quence est comprise 
+    entre 0 est 32768.</p>
+  <p align="left">&nbsp;</p>
+  <p align="left"><b><font color="#0000FF"><a name="PortStatus"></a>unsigned char</font></b> 
+    pSnd_PortStatus (<b><font color="#0000FF">void</font></b>) ;</p>
+  <p align="left"><b><font color="#0000FF">jsr</font></b> polysnd2 ::PortStatus</p>
+  <p align="left"><i><u>Input:</u></i> <b><font color="#FF0000"> &nbsp;&nbsp;&nbsp;</font>-</b><br>
+    <u><i>Output:</i></u><i>&nbsp;<b> </b></i><b><font color="#FF0000">d0</font><font color="#0000FF">.b</font></b><br>
+    <i><u>Del: </u></i><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;d0</b></p>
+  <p align="left"><b><u>Renvoie l'&eacute;tat du port I/O en bas niveau.</u></b></p>
+  <p align="left">&nbsp;&nbsp;Cette fonction permet de savoir quand la librairie 
+    &eacute;met des impulsions. Le canal 1 correspond au bit 0 et le canal 2 au 
+    bit 1, si un bit est arm&eacute; alors la tension traversant le fil de donn&eacute; 
+    du canal correspondant est &agrave; 0 V si le bit est d&eacute;sarm&eacute; 
+    la tension est &agrave; ~3V. Cette fonction est utile pour la cr&eacute;ation 
+    d'un oscilloscope &agrave; ondes en cr&eacute;neaux&#133;<br>
+    Cette fonction renvoie juste l'&eacute;tat du port (<b><font color="#FF0000">0x60000E</font></b>).<br>
+  </p>
+  <p align="left">&nbsp;</p>
+  <p align="left"><b><font color="#0000FF"><a name="Interrupt5"></a>void </font></b>pSnd_Interrupt5 
+    (<b>INT_HANDLER</b>) :</p>
+  <p align="left"><font color="#0000FF"><b>lea</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font>interrupt(<b><font color="#FF0000">PC</font></b>),<font color="#FF0000"><b>a0</b></font><br>
+    <font color="#0000FF"><b>jsr</b></font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+    polysnd2 ::Interrupt5<br>
+  </p>
+  <p align="left">Interrupt_handler:<br>
+    <font color="#0000FF"><b>move</b></font>.<b><font color="#FF0000">w</font></b> 
+    #$2700,sr<br>
+    ...<br>
+    <font color="#0000FF"><b>rte</b></font></p>
+  <p align="left"><i><u>Input:</u></i> <b><font color="#FF0000"> &nbsp;&nbsp;&nbsp;a0</font></b><br>
+    <u><i>Output:</i></u><i>&nbsp;<b> </b></i><b>-</b><br>
+    <i><u>Del: </u></i><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;-</b><b></b></p>
+  <p align="left"></p>
+  <p align="left"><b><u>Auto Int n&deg;5 de PolySnd v2.0.</u></b></p>
+  <p align="left">&nbsp;&nbsp;Cette fonction permet d'utiliser l'auto Int n&deg;5 
+    avec PolySnd v2.0. Elle tourne &agrave; une fr&eacute;quence pr&eacute;cise 
+    de 1 Hz par d&eacute;faut. Elle est param&egrave;trable gr&acirc;ce &agrave; 
+    la fonction SetInterrupt5Rate.</p>
+  <p align="left"><u><i>Exemple en C :</i></u></p>
+  <p align="left">INT_HANDLER OldInt1 = NULL;<br>
+    INT_HANDLER OldInt2 = NULL;<br>
+    <br>
+    <font color="#0000FF"><b>volatile unsigned long</b></font> counter ;</p>
+  <p align="left">DEFINE_INT_HANDLER (<b><font color="#FF00FF">Interrupt_handler5</font></b>)<br>
+    {<br>
+    <font color="#FF0000"><b>&nbsp;&nbsp;counter</b></font>++;<br>
+    }</p>
+  <p align="left">DEFINE_INT_HANDLER (myint2)<br>
+    {<br>
+    &nbsp;&nbsp;pokeIO (0x60001B,0);<br>
+    }</p>
+  <p align="left">void _main (void)<br>
+    {<br>
+    &nbsp;&nbsp;OldInt1 = GetIntVec (AUTO_INT_1);<br>
+    &nbsp;&nbsp;OldInt2 = GetIntVec (AUTO_INT_2);<br>
+    &nbsp;&nbsp;SetIntVec (AUTO_INT_1, DUMMY_HANDLER);<br>
+    &nbsp;&nbsp;SetIntVec (AUTO_INT_2, myint2);<br>
+  </p>
+  <p align="left"> <b><font color="#FF0000">&nbsp;&nbsp;counter</font></b>=0;</p>
+  <p align="left"> &nbsp;&nbsp;pSnd_EnableSound ();<br>
+    &nbsp;&nbsp;pSnd_InstallSound ();</p>
+  <p align="left"> &nbsp;&nbsp;pSnd_Interrupt5 (<b><font color="#FF00FF">Interrupt_handler5</font></b>);<br>
+    &nbsp;<b><font color="#0000FF">&nbsp;while</font></b> (_keytest (RR_ESC)!=TRUE) 
+    printf_xy (0,0,&quot;%ul&quot;,counter);</p>
+  <p align="left"> &nbsp;&nbsp;pSnd_UninstallSound ();<br>
+    &nbsp;&nbsp;pSnd_DisableSound ();</p>
+  <p align="left"> &nbsp;&nbsp;SetIntVec (AUTO_INT_1, OldInt1);<br>
+    &nbsp;&nbsp;SetIntVec (AUTO_INT_2, OldInt2);<br>
+    }</p>
+  <p align="left">Dans ce programme <b><i><font color="#FF0000">counter</font></i></b> 
+    sera incr&eacute;ment&eacute; de 1, 1 fois par secondes.<br>
+  </p>
+  <p align="left">&nbsp;</p>
+  <p align="left"><b><font color="#0000FF"><a name="PlaySound"></a>void</font></b> 
+    pSnd_PlaySound_voice1 (<b><font color="#0000FF">unsigned char</font></b> *);<br>
+    <font color="#0000FF"><b>void</b></font> pSnd_PlaySound_voice2 (<b><font color="#0000FF">unsigned 
+    char</font></b> *);</p>
+  <p align="left"><b><font color="#0000FF">lea</font></b> &nbsp;channel(<b><font color="#FF0000">PC</font></b>),<b><font color="#FF0000">a0</font></b><br>
+    <font color="#0000FF"><b>jsr</b></font> &nbsp;&nbsp;&nbsp;polysnd2::PlaySound_voice[1|2]<br>
+  </p>
+  <p align="left"><i><u>Input:</u></i> <b><font color="#FF0000"> &nbsp;&nbsp;&nbsp;a0</font></b><br>
+    <u><i>Output:</i></u><i>&nbsp;<b> </b></i><b>-</b><br>
+    <i><u>Del: </u></i><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;d0</b> </p>
+  <p align="left"><br>
+    <u><b>Joue une musique sur le canal voulu.</b></u></p>
+  <p align="left">&nbsp;&nbsp;Cette fonction permet de jouer une musique sur le 
+    canal voulu. Cette fonction demande un pointeur sur des donn&eacute;es en 
+    char. </p>
+  <p align="left">En C pour utiliser correctement cette fonction vous devez utiliser 
+    une liste &agrave; une dimension qui se compose de cette fa&ccedil;on :</p>
+  <p align="left"><b><font color="#FF6600">note_octave,dur&eacute;e, note_octave, 
+    dur&eacute;e&#133; note_octave, dur&eacute;e, fin</font></b></p>
+  <p align="left">Les notes suivies de leur octave sont d&eacute;finies gr&acirc;ce 
+    &agrave; un tableau de fr&eacute;quences, regardez le fichier header en C 
+    ou en ASM pour conna&icirc;tre les notes dans leurs formats. Ce proc&eacute;d&eacute; 
+    est identique pour les dur&eacute;es.<br>
+    Les b&eacute;mols sont not&eacute;s <i><b>b</b></i> et les di&egrave;ses <i> 
+    <b>d</b></i> en C et en ASM. Une note est toujours pr&eacute;c&eacute;d&eacute;e 
+    d'un tiret _. N'h&eacute;sitez pas &agrave; ouvrir les fichiers <i>polysnd2.h</i> 
+    dans le r&eacute;pertoire <b>headers</b> pour voir les &eacute;critures des 
+    notes et dur&eacute;es...</p>
+  <p align="left"><br>
+    <u><i> Voici un exemple de donn&eacute;es effets sonores pour PlaySound en 
+    C:</i></u></p>
+  <p align="left"><b><font color="#0000FF">unsigned char</font></b> channel[]={<b><font color="#FF00FF">_do0</font></b>,<b><font color="#006600">noire</font></b>,<br>
+    <font color="#FF00FF"><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_fa5</b></font>,<b><font color="#006600">blanche</font></b>,<br>
+    <font color="#FF00FF"><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_sold4</b></font>,<b><font color="#006600">croche</font></b>,<br>
+    <font color="#FF00FF"><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_sib9</b></font><font color="#006600"><b>,croche_pointee</b></font>,<br>
+    <font color="#FF00FF"><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></font><font color="#FF0000"><b>0xFF</b></font>} 
+    ;</p>
+  <p align="left">Le <b><font color="#FF0000">0xFF</font></b> indique &agrave; 
+    PolySnd v2.0 la fin des donn&eacute;es musical.</p>
+  <p align="left"><i><u>En assembleur channel donnera :</u></i></p>
+  <p align="left">channel :<br>
+    <font color="#0000FF"><b>dc</b></font>.<b><font color="#FF0000">b</font></b> 
+    <font color="#FF00FF"><b>&nbsp;_do0</b></font>,<b><font color="#006600">noire</font></b><br>
+    <font color="#0000FF"><b>dc</b></font>.<b><font color="#FF0000">b</font></b> 
+    <font color="#FF00FF"><b>&nbsp;_fa5</b></font>,<b><font color="#006600">blanche</font></b><br>
+    <font color="#0000FF"><b>dc</b></font>.<b><font color="#FF0000">b</font></b> 
+    <font color="#FF00FF"><b>&nbsp;_sold4</b></font>,<b><font color="#006600">croche</font></b><br>
+    <font color="#0000FF"><b>dc</b></font>.<b><font color="#FF0000">b</font></b> 
+    <b><font color="#FF00FF">&nbsp;_sib9</font></b>,<font color="#006600"><b>croche_pointee</b></font><br>
+    <font color="#0000FF"><b>dc</b></font>.<b><font color="#FF0000">b</font></b> 
+    <font color="#FF0000"><b>&nbsp;$FF</b></font></p>
+  <p align="left"><b><font color="#FF0000">Attention</font></b>, <font color="#FF0000">certaines 
+    fonctions de PolySnd v2.0 ne peuvent &ecirc;tre utilis&eacute;es qu'avec ce 
+    mode l&agrave;.<br>
+    <b></b><font color="#FF0000">N'oubliez pas d'utiliser correctement SetSate 
+    pour activer cette fonction.</font> </font></p>
+  <p align="left">&nbsp;</p>
+  <p align="left"><b><font color="#0000FF"><a name="GetLength"></a>unsigned char</font></b> 
+    pSnd_GetLength_voice1 (<b><font color="#0000FF">void</font></b>);<br>
+    <font color="#0000FF"><b>unsigned char</b></font> pSnd_GetLength_voice2 (<b><font color="#0000FF">void</font></b>);</p>
+  <p align="left"><b><font color="#0000FF">jsr</font></b> polysnd2::GetLength_voice[1|2]</p>
+  <p align="left"><i><u>Input:</u></i> <b><font color="#FF0000"> &nbsp;&nbsp;&nbsp;</font>-</b><br>
+    <u><i>Output:</i></u><i>&nbsp;<b> </b></i><b><font color="#FF0000">d0</font><font color="#0000FF">.b</font></b><br>
+    <i><u>Del: </u></i><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;d0</b></p>
+  <p align="left"><b><u>Renvoie la dur&eacute;e d'une note.</u></b></p>
+  <p align="left">&nbsp;&nbsp;Cette fonction permet de conna&icirc;tre la dur&eacute;e 
+    d'une fr&eacute;quence ou note en train d'&ecirc;tre jou&eacute;e. Id&eacute;al 
+    pour suivre l'avanc&eacute;e d'un morceau de musique ou d'effets sonores.</p>
+  <p align="left">&nbsp;</p>
+  <p align="left"><b><font color="#0000FF"><a name="GetTime"></a>unsigned short</font></b> 
+    pSnd_GetTime (<b><font color="#0000FF">unsigned char</font></b> *PtrData, 
+    <b><font color="#0000FF">unsigned short</font></b> Tempo);</p>
+  <div align="left"> 
+    <p align="left"><b><font color="#0000FF">lea</font></b> &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;channel(<b><font color="#FF0000">PC</font></b>),<b><font color="#FF0000">a0</font></b><br>
+      <font color="#0000FF"><b>move</b></font><font color="#FF0000">.<b>w</b></font> 
+      <b>#120</b>,d2<br>
+      <font color="#0000FF"><b>jsr</b></font> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;polysnd2::GetTime</p>
+    <p align="left"><i><u>Input:</u></i> <b><font color="#FF0000"> &nbsp;&nbsp;&nbsp;a0</font></b> 
+      = PtrData<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><font color="#FF0000">&nbsp;&nbsp;&nbsp;d2</font><font color="#0000FF">.w</font></b> 
+      = Tempo<br>
+      <u><i>Output:</i></u><i>&nbsp;<b> </b></i><b><font color="#FF0000">d0</font>.<font color="#0000FF">w</font></b><br>
+      <i><u>Del: </u></i><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; d0, d1, d2 ,a0</b> 
+      <br>
+    </p>
+    </div>
+  <p align="left"><b><u>Renvoie le temps total d'une musique.</u></b></p>
+  <p align="left">&nbsp;&nbsp;Renvoie le temps que mettra PolySnd v2.0 pour jouer 
+    une musique, ce temps est renvoy&eacute; en secondes. Cette fonction ne fonctionne 
+    qu'avec des donn&eacute;es musicales sous la forme de PlaySound&#133; <br>
+    Cette fonction est ext&eacute;rieure &agrave; PolySnd v2.0 et modifiera en 
+    rien son comportement. Elle permet de faciliter le travail du programmeur. 
+    Id&eacute;al pour un player ou pour estimer la dur&eacute;e d'une musique.</p>
+  <p align="left"><b><font color="#FF0000"><u>Attention:</u></font></b> <font color="#FF0000">Le 
+    temps donn&eacute; est une approximation et donc il n'est pas pr&eacute;cis. 
+    </font></p>
+  <p align="left">&nbsp;</p>
+  <p align="left"><b><font color="#0000FF"><a name="GetState"></a>unsigned char 
+    </font></b>pSnd_GetState (<b><font color="#0000FF">void</font></b>);</p>
+  <p align="left"><b><font color="#0000FF">jsr</font></b> polysnd2 ::GetState</p>
+  <p align="left"><i><u>Input:</u></i> <b><b><font color="#FF0000">&nbsp;&nbsp;&nbsp;</font>-</b><br>
+    </b><u><i>Output:</i></u><b><i>&nbsp;<b> </b></i><b><font color="#FF0000">d0</font><font color="#0000FF">.b</font></b><br>
+    </b><i><u>Del: </u></i><b><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;d0</b></b></p>
+  <p align="left"><b><u>Renvoie l'&eacute;tat d'un canal.</u></b></p>
+  <p align="left">&nbsp;&nbsp;Renvoie l'&eacute;tat d'un canal et indique si le 
+    canal est en pause ou non. Le canal 1 correspond au bit 0 et le canal 2 au 
+    bit 1, si ce bit est arm&eacute;, du son est jou&eacute; sur le canal correspondant, 
+    si le bit est d&eacute;sarm&eacute; le canal est en pause.</p>
+  <p align="left"></p>
+  <p align="left"></p>
+  <p align="left"></p>
+  <p align="left"></p>
+  <p align="left">Ces &eacute;num&eacute;rations sont valables pour tester les 
+    canaux :</p>
+  <p align="left"><b><font color="#006600">#define NOVOICE&nbsp;&nbsp;&nbsp;&nbsp; 
+    &nbsp;0<br>
+    #define VOICE1 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1<br>
+    #define VOICE2 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2<br>
+    #define ALLVOICES &nbsp;3</font></b></p>
+  <p align="left"><b><font color="#0000FF">_NOVOICE &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;equ 
+    &nbsp;0<br>
+    _VOICE1 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;equ &nbsp;1<br>
+    _VOICE2 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;equ &nbsp;2<br>
+    _ALLVOICES &nbsp;equ &nbsp;3</font></b></p>
+  <p align="left"> &nbsp;&nbsp;VoiceState est assez identique mais elle est utilis&eacute;e 
+    pour une fonction bien pr&eacute;cise, utilisez GetState pour savoir si du 
+    son est jou&eacute; sur un canal et VoiceState si un canal a termin&eacute; 
+    de jouer une simple fr&eacute;quence, une musique ou un effet sonore. GetState 
+    donne l'&eacute;tat courant de PolySnd v2.0 et VoiceState l'&eacute;tat du 
+    mode en cours.</p>
+  <p align="left">&nbsp;</p>
+  <p align="left"><b><font color="#0000FF"><a name="GetMode"></a>unsigned char</font></b> 
+    pSnd_GetMode (<b><font color="#0000FF">void</font></b>);</p>
+  <p align="left"><font color="#0000FF"><b>jsr</b></font> polysnd2::GetMode</p>
+  <p align="left"><i><u>Input:</u></i> <b><font color="#FF0000"> &nbsp;&nbsp;&nbsp;</font>-</b><br>
+    <u><i>Output:</i></u><i>&nbsp;<b> </b></i><b><font color="#FF0000">d0</font><font color="#0000FF">.b</font></b><br>
+    <i><u>Del: </u></i><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;d0</b></p>
+  <p align="left"><b><u>Renvoie le type de donn&eacute;es que PolySnd v2.0 est 
+    en train d'ex&eacute;cuter.</u></b></p>
+  <p align="left">&nbsp;&nbsp;Cette fonction permet de savoir si une simple fr&eacute;quence, 
+    un effet sonore, une musique ou encore des donn&eacute;es WAV sont en train 
+    d'&ecirc;tre jou&eacute; sur un canal.<br>
+    Cette fonction suit un codage bien pr&eacute;cis pour conna&icirc;tre le mode 
+    de donn&eacute;es ex&eacute;cut&eacute;.</p>
+  <p align="left">Les bits 0 &agrave; 3 concerne le canal 1 et les bits 4 &agrave; 
+    7, le canal 2, si :</p>
+  <div align="left">
+    <p align="left">0001 = beep (simple fr&eacute;quence)<br>
+      0010 = PlayFX (effet sonore)<br>
+      0100 = PlayWAV (WAV)<br>
+      1000 = PlaySound (musique)</p>
+    </div>
+  <p align="left">Ces &eacute;num&eacute;rations suivantes sont valables pour 
+    tester les canaux :<br>
+    <font color="#006600"><b>#define BEEP_VOICE1 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1<br>
+    #define BEEP_VOICE2 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;16<br>
+    #define FX_VOICE1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+    2<br>
+    #define FX_VOICE2 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;32<br>
+    #define SOUND_VOICE1 &nbsp;&nbsp;8<br>
+    #define SOUND_VOICE2 &nbsp; 128<br>
+    #define WAV_VOICE1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4<br>
+    #define WAV_VOICE2 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;64</b></font></p>
+  <p align="left"><b><font color="#0000FF">_BEEP_VOICE1 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;equ&nbsp;&nbsp;1<br>
+    _BEEP_VOICE2 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;equ&nbsp;&nbsp;16<br>
+    _FX_VOICE1 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;equ&nbsp;&nbsp;2<br>
+    _FX_VOICE2 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;equ&nbsp;&nbsp;32<br>
+    _SOUND_VOICE1 &nbsp;equ&nbsp;&nbsp;8<br>
+    _SOUND_VOICE2 &nbsp;equ&nbsp;&nbsp;128<br>
+    _WAV_VOICE1 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; equ&nbsp;&nbsp;4<br>
+    _WAV_VOICE2 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;equ&nbsp;&nbsp;64</font></b></p>
+  <p align="left">Exemple pour un effet sonore sur le canal 1 et une musique sur 
+    le canal 2. 1000 0010</p>
+  <p align="left"><i><u>En C :</u></i></p>
+  <p align="left"><b><font color="#0000FF">if</font></b> (pSnd_GetMode ()==(<b><font color="#006600">FX_VOICE1</font></b> 
+    |<b><font color="#006600"> SOUND_VOICE2</font></b>)) {&#133;}</p>
+  <p align="left"><br>
+    <u><i>En ASM:</i></u></p>
+  <p align="left"><b><font color="#0000FF">jsr</font></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+    polysnd2::GetMode <font color="#006600">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;appel 
+    de GetMode</font><br>
+    <font color="#0000FF"><b>move</b></font><b><font color="#FF0000">.b</font></b> 
+    &nbsp;#<b><font color="#006600">_FX_VOICE1</font></b>,d1 <font color="#006600">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;d1 
+    contient 0000 0010</font><br>
+    <font color="#0000FF"><b>ori</b></font>.<b><font color="#FF0000">b</font></b> 
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#<b><font color="#006600">_SOUND_VOICE2</font></b>,d1 
+    <font color="#006600">&nbsp;;effectue un OU logique avec 0000 0010 et 1000 
+    0000, d1 contient 1000 0010</font><br>
+    <font color="#0000FF"><b>cmp</b></font><b><font color="#FF0000">.b</font></b> 
+    &nbsp;&nbsp;&nbsp;d0,d1 <font color="#006600">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;si 
+    d0=d1</font><br>
+    <font color="#0000FF"><b>beq</b></font> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;continue&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+    <font color="#006600">;alors aller &agrave; continue</font><br>
+    <font color="#0000FF"><b>rts</b></font> <font color="#006600">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;sinon 
+    fin</font></p>
+  <p align="left"><i>continue:</i><br>
+    ....<br>
+  </p>
+  <p align="left">&nbsp;</p>
+  <p align="left"><b><font color="#0000FF"><a name="GetLoop"></a>unsigned char</font></b> 
+    pSnd_GetLoop (<b><font color="#0000FF">void</font></b>);</p>
+  <p align="left"><b><font color="#0000FF">jsr</font></b> polysnd2::GetLoop</p>
+  <p align="left"><i><u>Input:</u></i> <b><font color="#FF0000"> &nbsp;&nbsp;&nbsp;</font>-</b><br>
+    <u><i>Output:</i></u><i>&nbsp;<b> </b></i><b><font color="#FF0000">d0</font><font color="#0000FF">.b</font></b><br>
+    <i><u>Del: </u></i><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;d0</b></p>
+  <p align="left"><b><u>Renvoie si le mode loop est activ&eacute; sur un canal.</u></b></p>
+  <p align="left">&nbsp;&nbsp;Cette fonction renvoie si le mode loop est activ&eacute; 
+    sur un canal. Le bit 0 correspond au canal 1 et le bit 1 au canal 2. Si le 
+    bit est arm&eacute;, le mode loop est activ&eacute;, si le bit est d&eacute;sarm&eacute; 
+    le mode loop est d&eacute;sactiv&eacute;. Ce mode n'est pas disponible pour 
+    les donn&eacute;es WAV.</p>
+  <p align="left">Ces &eacute;num&eacute;rations sont valables pour tester les 
+    canaux :</p>
+  <p align="left"><b><font color="#006600">#define NOVOICE &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0<br>
+    #define VOICE1 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1<br>
+    #define VOICE2 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2<br>
+    #define ALLVOICES &nbsp;3</font></b></p>
+  <p align="left"><b><font color="#0000FF">_NOVOICE &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;equ 
+    &nbsp;0<br>
+    _VOICE1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; equ &nbsp;1<br>
+    _VOICE2 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;equ &nbsp;2<br>
+    _ALLVOICES &nbsp;equ &nbsp;3</font></b></p>
+  <p align="left">&nbsp;</p>
+  <p align="left"><b><font color="#0000FF"><a name="Time"></a>unsigned short</font></b> 
+    pSnd_Time_voice1 (<b><font color="#0000FF">void</font></b>);<br>
+    <font color="#0000FF"><b>unsigned short</b></font> pSnd_Time_voice2 (<b><font color="#0000FF">void</font></b>);</p>
+  <p align="left"><b><font color="#0000FF">jsr</font></b> polysnd2::_Time_voice[1|2]</p>
+  <p align="left"><i><u>Input:</u></i> <b><font color="#FF0000"> &nbsp;&nbsp;&nbsp;</font>-</b><br>
+    <u><i>Output:</i></u><i>&nbsp;<b> </b></i><b><font color="#FF0000">d0</font><font color="#0000FF">.w</font></b><br>
+    <i><u>Del: </u></i><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;d0</b></p>
+  <p align="left"><b><u>Renvoie le temps &eacute;coul&eacute; en secondes depuis 
+    le d&eacute;but d'une simple fr&eacute;quence, d'un effet sonore ou d'une 
+    musique sur le canal voulu.</u></b></p>
+  <p align="left">&nbsp;&nbsp;Cette fonction renvoie le temps &eacute;coul&eacute; 
+    depuis le d&eacute;but d'une simple fr&eacute;quence, d'un effet sonore ou 
+    d'une musique sur le canal voulu. Ce temps est donn&eacute; en secondes. Id&eacute;al 
+    pour un player. Ce temps peut &ecirc;tre initialis&eacute; &agrave; tout moment 
+    gr&acirc;ce &agrave; SetTime_voice [1|2]. A savoir que lors de la fin d'un 
+    mode, le compteur de temps s'initialise mais continu a &ecirc;tre incr&eacute;ment&eacute;.</p>
+  <p align="left">&nbsp;</p>
+  <p align="left"><b><font color="#0000FF"><a name="SetTime"></a>void</font></b> 
+    pSnd_SetTime_voice1 (<b><font color="#0000FF">unsigned short</font></b> time),<br>
+    <font color="#0000FF"><b>void </b></font>pSnd_SetTime_voice2 (<b><font color="#0000FF">unsigned 
+    short </font></b>time);<br>
+    <font color="#006600"><b>#define pSnd_SetTime (time);</b></font></p>
+  <p align="left"><b><font color="#0000FF">move</font><font color="#FF0000">.w</font></b> 
+    &nbsp;#60,<font color="#FF0000"><b>d0</b></font><br>
+    <font color="#0000FF"><b>jsr</b></font> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;polysnd2::SetTime_voice[1|2]<br>
+  </p>
+  <p align="left"><i><u>Input:</u></i> <b><font color="#FF0000"> &nbsp;&nbsp;&nbsp;d0</font><font color="#0000FF">.w</font> 
+    </b>=<b> </b>Time<br>
+    <u><i>Output:</i></u><i>&nbsp;<b> </b></i><b>-</b><br>
+    <i><u>Del: </u></i><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;d0</b></p>
+  <p align="left"><b><u>Change la valeur du compteur de temps &eacute;coul&eacute; 
+    sur le canal voulu.</u></b></p>
+  <p align="left">&nbsp;&nbsp;Cette fonction change la valeur du compteur permettant 
+    de d&eacute;terminer le temps &eacute;coul&eacute; d'un morceau de musique&#133; 
+    Utile pour ce positionner dans une musique. La valeur sp&eacute;cifi&eacute;e 
+    doit &ecirc;tre en secondes.</p>
+  <p align="left">&nbsp;</p>
+  <p align="left"><b><font color="#0000FF"><a name="VoiceState"></a>unsigned char</font></b> 
+    pSnd_VoiceState (<b><font color="#0000FF">void</font></b>) ;</p>
+  <p align="left"><b><font color="#0000FF">jsr</font></b> polysnd2 ::VoiceState</p>
+  <p align="left"><i><u>Input:</u></i> <b><font color="#FF0000"> &nbsp;&nbsp;&nbsp;</font>-</b><br>
+    <u><i>Output:</i></u><i>&nbsp;<b> </b></i><b><font color="#FF0000">d0</font><font color="#0000FF">.b</font></b><br>
+    <i><u>Del: </u></i><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;-</b><b></b></p>
+  <p align="left"><b><u>Renvoie l'&eacute;tat d'un canal.</u></b></p>
+  <p align="left">&nbsp;&nbsp;Cette fonction permet de d&eacute;terminer si un 
+    mode a fini de jouer du son&#133; Le bit 0 correspond au canal 1 et le bit 
+    1 au canal 2, si ce bit est arm&eacute; le mode est en train d'&ecirc;tre 
+    jou&eacute; sur le canal correspondant, si le bit est d&eacute;sarm&eacute;, 
+    PolySnd v2.0 a fini de jouer le mode&#133;</p>
+  <p align="left">Cette fonction est utile pour synchroniser et r&eacute;p&eacute;ter 
+    en boucle une musique en st&eacute;r&eacute;o.</p>
+  <p align="left">Ces &eacute;num&eacute;rations sont valables pour tester les 
+    canaux :</p>
+  <p align="left"><b><font color="#006600">#define NOVOICE &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0<br>
+    #define VOICE1 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1<br>
+    #define VOICE2 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2<br>
+    #define ALLVOICES &nbsp;3</font></b></p>
+  <p align="left"><b><font color="#0000FF">_NOVOICE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+    equ &nbsp;0<br>
+    _VOICE1 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;equ &nbsp;1<br>
+    _VOICE2 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;equ &nbsp;2<br>
+    _ALLVOICES &nbsp;equ &nbsp;3</font></b><br>
+    Exemple pour jouer une musique en st&eacute;r&eacute;o en boucle sans utiliser 
+    la fonction loop :</p>
+  <p align="left">SetVoiceState (<b><font color="#006600">ALLVOICES</font></b>);</p>
+  <p align="left"><b><font color="#0000FF">while</font></b> (_keytest (RR_ESC)==FALSE)<br>
+    {<br>
+    <font color="#0000FF"><b>&nbsp;&nbsp;if </b></font>(pSnd_VoiceState ()==<b><font color="#006600">NOVOICE</font></b>) 
+    {pSnd_PlaySound_voice1 (channel1); pSnd_PlaySound_voice2 (channel2); pSnd_SetState 
+    (<b><font color="#006600">ALLVOICES</font></b>);}<br>
+    &nbsp;&nbsp;....<br>
+    }<br>
+  </p>
+  <p align="left">&nbsp;</p>
+  <p align="left"><b><font color="#0000FF"><a name="SetVoiceState"></a>void </font></b>pSnd_SetVoiceState 
+    (<b><font color="#0000FF">unsigned char</font></b> state);</p>
+  <p align="left"><font color="#0000FF"><b>move</b></font>.<b><font color="#FF0000">b</font></b> 
+    &nbsp;#<b><font color="#006600">_VOICE1</font></b>,d0<br>
+    <font color="#0000FF"><b>jsr</b></font> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;polysnd2::SetVoiceState<br>
+  </p>
+  <p align="left"><i><u>Input:</u></i> <b><font color="#FF0000"> &nbsp;&nbsp;&nbsp;d0</font>.<font color="#0000FF">b</font> 
+    </b>= Voices<br>
+    <u><i>Output:</i></u><i>&nbsp;<b> </b></i><b>-</b><br>
+    <i><u>Del: </u></i><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;-</b> </p>
+  <p align="left"><b><u>R&egrave;gle VoiceState.</u></b></p>
+  <p align="left"><b><font color="#FF0000">&nbsp;&nbsp;Attention</font></b>, <font color="#FF0000">cette 
+    fonction permet de r&eacute;gler VoiceState en fonction de ses besoins.<br>
+    La valeur pass&eacute;e par SetVoiceState sera initialis&eacute;e si une musique 
+    est rejou&eacute;e ou si PolySnd v2.0 a &eacute;t&eacute; configur&eacute; 
+    pour recevoir un autre traitement de donn&eacute;es. Utilisez cette fonction 
+    &agrave; titre de r&eacute;sultats temporaire.</font> <font color="#FF0000"><b>Cette 
+    fonction n'est pas identique &agrave; <i>GetState</i>, <i>GetState</i> renvoie 
+    l'&eacute;tat courant de PolySnd v2.0 et <i>VoiceState</i> l'&eacute;tat courant 
+    du mode en cours.<br>
+    </b></font></p>
+  <p align="left">&nbsp;</p>
+  <p align="left"><b><font color="#0000FF"><a name="SetIntMask"></a>void </font></b>pSnd_SetIntMask 
+    (<b><font color="#0000FF">unsigned short</font></b> mask);</p>
+  <p align="left"><b><font color="#0000FF">move</font></b>.<b><font color="#FF0000">w</font></b> 
+    &nbsp;<b>#$2700</b>,<font color="#FF0000"><b>d0</b></font><br>
+    <font color="#0000FF"><b>jsr</b></font> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;polysnd2::SetIntMask<br>
+  </p>
+  <p align="left"><i><u>Input:</u></i> <b><font color="#FF0000"> &nbsp;&nbsp;&nbsp;d0</font><font color="#0000FF">.w</font> 
+    </b>= mask<br>
+    <u><i>Output:</i></u><i>&nbsp;<b> </b></i><b>-</b><br>
+    <i><u>Del: </u></i><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;-</b> </p>
+  <p align="left"><b><u>R&egrave;gle le masque d'interruptions de PolySnd v2.0.</u></b></p>
+  <p align="left">&nbsp;&nbsp;Cette fonction est assez importante si vous avez 
+    du mal &agrave; utiliser PolySnd v2.0 avec d'autres interruptions et que vous 
+    constatez que l'auto Int 1&#133; est ralentie, ce masque permet &agrave; PolySnd 
+    de d&eacute;sactiver ou ne pas d&eacute;sactiver certaines interruptions lors 
+    du passage de l'interruption de PolySnd v2.0. La valeur du masque doit se 
+    situer entre 0x2100 et 0x2700. par d&eacute;faut ce masque est &agrave; 0x2400.</p>
+  <p align="left">&nbsp;</p>
+  <p align="left"><b><font color="#0000FF"><a name="AddNotes"></a>void </font></b>pSnd_AddNotes_voice1 
+    (<b><font color="#0000FF">unsigned char</font></b> nbr) ;<br>
+    <font color="#0000FF"><b>void</b></font> pSnd_AddNotes_voice2 (<b><font color="#0000FF">unsigned</font></b> 
+    <b><font color="#0000FF">char</font></b> nbr) ;<br>
+    <font color="#006600"><b>#define AddNotes (unsigned char addnts);</b></font></p>
+  <p align="left"><font color="#0000FF"><b>move</b></font>.<b><font color="#FF0000">b</font></b> 
+    &nbsp;#12,<font color="#FF0000"><b>d0</b></font><br>
+    <font color="#0000FF"><b>jsr</b></font> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;polysnd2::AddNotes_voice1<br>
+  </p>
+  <p align="left"><i><u>Input:</u></i> <b> &nbsp;&nbsp;&nbsp;<font color="#FF0000">d0</font></b><b><font color="#0000FF">.b</font> 
+    </b>= AddNote<br>
+    <u><i>Output:</i></u><i>&nbsp;<b> </b></i><b>-</b><br>
+    <i><u>Del: </u></i><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;-</b> </p>
+  <p align="left"></p>
+  <p align="left"></p>
+  <p align="left"><b><u>Permet de jouer un morceau avec un nombre de notes au 
+    dessus/ ou en dessous des notes d'origine.</u></b></p>
+  <p align="left">&nbsp;&nbsp;Dans la fonction en Assembleur toutes les notes 
+    de musique seront jouant 12 notes (1 octave) au-dessus de la note originale. 
+    Cette fonction est utile pour permettre d'augmenter/ diminuer d'une octave 
+    une musique sans devoir la modifier.</p>
+  <p align="left">&nbsp;</p>
+  <p align="left"><b><font color="#0000FF"><a name="GetNote"></a>unsigned char</font></b> 
+    pSnd_GetNote_voice1 (<b><font color="#0000FF">void</font></b>);<br>
+    <font color="#0000FF"><b>unsigned char</b></font> pSnd_GetNote_voice2 (<b><font color="#0000FF">void</font></b>); 
+  </p>
+  <p align="left"><b><font color="#0000FF">jsr</font></b> polysnd2::GetNote_voice[1|2]</p>
+  <p align="left"><i><u>Input:</u></i> <b><font color="#FF0000"> &nbsp;&nbsp;&nbsp;</font>-</b><br>
+    <u><i>Output:</i></u><i>&nbsp;<b> </b></i><b><font color="#FF0000">d0</font><font color="#0000FF">.b</font></b><br>
+    <i><u>Del: </u></i><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;d0</b></p>
+  <p align="left"><b><u>Renvoie la note en cours d'&ecirc;tre jou&eacute;e.</u></b></p>
+  <p align="left">&nbsp;&nbsp;La valeur renvoy&eacute;e correspond &agrave; l'index 
+    de la note dans la table des fr&eacute;quences, 0 correspond &agrave; la pause, 
+    1 &agrave; Do octave 0... Il est assez facile de rep&eacute;rer de cette fa&ccedil;on 
+    une note avec son octave. La table de PolySnd v2.0 contient 120 notes r&eacute;partie 
+    sur 10 octaves.</p>
+  <p align="left">&nbsp;</p>
+  <p align="left"><b><font color="#0000FF"><a name="_Ptridle"></a>void </font></b>*pSnd_Ptridle_voice1 
+    (<b><font color="#0000FF">void </font></b>*) ;<br>
+    <font color="#0000FF"><b>void</b></font> *pSnd_Ptridle_voice2 (<b><font color="#0000FF">void 
+    </font></b>*) ;</p>
+  <p align="left"><font color="#0000FF"><b>sub</b></font><b><font color="#FF0000">.l</font></b> 
+    &nbsp;&nbsp;&nbsp;&nbsp;<font color="#FF0000"><b>a0</b></font>,<font color="#FF0000"><b>a0 
+    </b></font><br>
+    <font color="#0000FF"><b>jsr</b></font> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;polysnd2::_Ptridle_voice[1|2]<br>
+  </p>
+  <p align="left"><i><u>Input:</u></i> <b> &nbsp;&nbsp;&nbsp;<font color="#FF0000">a0</font></b><b> 
+    </b>= Ptr<br>
+    <u><i>Output:</i></u><i>&nbsp;<b> </b></i><b><font color="#FF0000">a0</font></b><br>
+    <i><u>Del: </u></i><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;d0, a0</b></p>
+  <p align="left"><b><u>Renvoie/change le pointeur de donn&eacute;es de PlaySound.</u></b></p>
+  <p align="left">&nbsp;&nbsp;Cette fonction permet de renvoyer le pointeur de 
+    donn&eacute;es si l'argument sp&eacute;cifi&eacute; est NULL ou &eacute;gale 
+    &agrave; 0 en Assembleur. Si cette argument est diff&eacute;rent de NULL ou 
+    de 0, le pointeur de donn&eacute;es de PlaySound sera modifi&eacute;. N'oubliez 
+    pas d'utiliser la fonction<b> <i>SetSate</i></b> pour arr&ecirc;ter PolySnd 
+    v2.0 lors de votre modification et <b><i>_SkipData_voice[1|2]</i></b> pour 
+    remettre les valeurs &agrave; z&eacute;ro de la donn&eacute;e. V&eacute;rifiez 
+    que votre pointeur est correctement avant de faire toute modifcation, cette 
+    fonction peut &ecirc;tre sources de plantages plus ou moins s&eacute;rieux.</p>
+  <p align="left">&nbsp;</p>
+  <p align="left"><b><font color="#0000FF"><a name="_time_counter"></a>unsigned 
+    long </font></b>pSnd_time_counter_voice1 (<b><font color="#0000FF">unsigned 
+    long </font></b>counter) ;<br>
+    <b><font color="#0000FF">unsigned long </font></b>pSnd_time_counter_voice2 
+    (<b><font color="#0000FF">unsigned long </font></b>counter) ;</p>
+  <p align="left"><font color="#0000FF"><b>move</b></font><b><font color="#FF0000">.l</font></b> 
+    <b>&nbsp;&nbsp;#5000</b>,<b><font color="#FF0000">d0</font></b><br>
+    <font color="#0000FF"><b>jsr</b></font> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;polysnd2::_time_counter_voice[1|2]<br>
+  </p>
+  <p align="left"><i><u>Input:</u></i> <b> &nbsp;&nbsp;&nbsp;<font color="#FF0000">d0</font></b><b><font color="#0000FF">.l</font> 
+    </b>= Counter<br>
+    <u><i>Output:</i></u><i>&nbsp;<b> </b></i><b><font color="#FF0000">d0</font><font color="#0000FF">.l</font></b><br>
+    <i><u>Del: </u></i><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;d0</b> </p>
+  <p align="left"><b><u>Renvoie/change le compteur de temps de PolySnd v2.0.</u></b></p>
+  <p align="left">&nbsp;&nbsp;Cette fonction permet de renvoyer le compteur de 
+    temps d'interruptions de PolySnd v2.0 si l'argument sp&eacute;cifi&eacute; 
+    est NULL ou &eacute;gale &agrave; 0 en Assembleur. Si cette argument est diff&eacute;rent 
+    de NULL ou de 0, le compteur de temps sera modifi&eacute;. Les incr&eacute;ments 
+    de ce compteur d&eacute;pendent de la fonction SetInterrupt5Rate, par d&eacute;faut 
+    1 incr&eacute;ment de compteur correspond &agrave; 1 seconde. Cette fonction 
+    est disponible pour permetter de r&eacute;gler pr&eacute;cisement le compteur 
+    de temps de chaque voies.</p>
+  <p align="left">&nbsp;</p>
+  <p align="left"><b><font color="#0000FF"><a name="_note_time_counter"></a>unsigned 
+    long </font></b>pSnd_note_time_counter_voice1 (<b><font color="#0000FF">unsigned 
+    long </font></b>counter) ;<br>
+    <b><font color="#0000FF">unsigned long </font></b>pSnd_note_time_counter_voice2 
+    (<b><font color="#0000FF">unsigned long </font></b>counter) ;</p>
+  <p align="left"><font color="#0000FF"><b>move</b></font><b><font color="#FF0000">.l</font></b> 
+    <b>&nbsp;#0</b>,<font color="#FF0000"><b>d0</b></font><br>
+    <font color="#0000FF"><b>jsr</b></font> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;polysnd2::_note_time_counter_voice[1|2]<br>
+  </p>
+  <p align="left"><i><u>Input:</u></i> <b> &nbsp;&nbsp;&nbsp;<font color="#FF0000">d0</font></b><b><font color="#0000FF">.l</font> 
+    </b>= Counter<br>
+    <u><i>Output:</i></u><i>&nbsp;<b> </b></i><b><font color="#FF0000">d0</font><font color="#0000FF">.l</font></b><br>
+    <i><u>Del: </u></i><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;d0</b></p>
+  <p align="left"><b><u>Renvoie/change le compteur de temps de la note en cours.</u></b></p>
+  <p align="left">&nbsp;&nbsp;Cette fonction permet de renvoyer le compteur de 
+    temps d'interruptions de la note en cours de la fonction PlaySound, si l'argument 
+    sp&eacute;cifi&eacute; est NULL ou &eacute;gale &agrave; 0 en Assembleur. 
+    Si cette argument est diff&eacute;rent de NULL ou de 0, le compteur de temps 
+    de la note sera modifi&eacute;. Les incr&eacute;ments de ce compteur d&eacute;pendent 
+    de la fonction SetInterrupt5Rate, par d&eacute;faut 1 incr&eacute;ment de 
+    compteur correspond &agrave; 1 seconde. Cette fonction permet de savoir combien 
+    de cycles d'interruption la note en cours a &eacute;t&eacute; jou&eacute;e.</p>
+  <p align="left">&nbsp;</p>
+  <p align="left"><b><font color="#0000FF"><a name="_SkipData"></a>void </font></b>pSnd_SkipData_voice1 
+    (<b><font color="#0000FF">void</font></b>) ;<br>
+    <font color="#0000FF"><b>void</b></font> pSnd_SkipData_voice2 (<b><font color="#0000FF">void</font></b>) 
+    ;</p>
+  <p align="left"><b><font color="#0000FF">jsr</font></b> polysnd2::_SkipData_voice[1|2]</p>
+  <p align="left"><b><u>Efface les variables de la donn&eacute; en cours.</u></b></p>
+  <p align="left">&nbsp;&nbsp;Cette fonctions remet &agrave; z&eacute;ro les compteurs 
+    de donn&eacute;es interne de PolySnd v2.0.</p>
+  <p align="left">&nbsp;</p>
+  <p align="left"><b><font color="#0000FF"><a name="PlayMode"></a>void</font></b> 
+    pSnd_PlayMode (<b><font color="#0000FF">unsigned char</font></b> mode);</p>
+  <p align="left"><font color="#0000FF"><b>move</b></font>.<b><font color="#FF0000">b</font></b> 
+    &nbsp;#<b><font color="#006600">_MONO</font></b>,<b><font color="#FF0000">d0</font></b><br>
+    <font color="#0000FF"><b>jsr</b></font> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;polysnd2::PlayMode<br>
+  </p>
+  <p align="left"><i><u>Input:</u></i> <b> &nbsp;&nbsp;&nbsp;<font color="#FF0000">d0</font></b><b><font color="#0000FF">.b</font> 
+    </b>= PlayMode<br>
+    <u><i>Output:</i></u><i>&nbsp;<b> </b></i><b>-</b><br>
+    <i><u>Del: </u></i><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;-</b> </p>
+  <p align="left"><b><u>Change le mode de lecture de PolySnd v2.0.</u></b></p>
+  <p align="left">&nbsp;&nbsp;Par d&eacute;faut PolySnd v2.0 est en mode STEREO, 
+    ce mode permet de jouer sur 2 voies des modes diff&eacute;rent ou identique. 
+    Malheuresement si vous jou&eacute; une musique en st&eacute;r&eacute;o, la 
+    consommation des ressources CPU est assez importante, environ 15%. Mais dans 
+    le cas contraire ou vous ne jouez qu'une musique ou que des bruitages sur 
+    un canal, vous pouvez utiliser le mode MONO, les fonctions suivit du pr&eacute;fixe 
+    voice2 seront ignor&eacute; jusqu'&agrave; changement du mode. L'avantage 
+    du mode MONO est de permettre de jouer des donn&eacute;es en MONO sur les 
+    2 canaux et de gagner &eacute;norm&eacute;ment de ressources, soit une perte 
+    de 5% des ressources CPU. Ces valeurs sont indicatif car d&eacute;pendent 
+    du mode utilis&eacute;, ici PlaySound et des donn&eacute;es. Bien s&ucirc;r 
+    si vous utilisez les fonctions PlayWAV ou encore PlayFX, la consommation CPU 
+    sera bien plus faible.</p>
+  <p align="left"><i><u>Ces &eacute;num&eacute;ration sont valables pour cette 
+    fonction:</u></i></p>
+  <p align="left"><b><font color="#006600">#define MONO &nbsp;&nbsp;&nbsp;&nbsp;0<br>
+    #define STEREO &nbsp;1</font></b></p>
+  <p align="left"><b><font color="#0000FF">_MONO &nbsp;&nbsp;&nbsp;&nbsp;equ &nbsp;0<br>
+    _STEREO &nbsp;equ&nbsp; 1</font></b></p>
+  <p align="left">&nbsp;</p>
+  <div align="left"> 
+    <p align="left"><b><font color="#0000FF"><a name="SetLength"></a>void</font></b> 
+      pSnd_SetLength_voice1 (<b><font color="#0000FF">unsigned char</font></b> 
+      length);<br>
+      <b><font color="#0000FF">void</font></b> pSnd_SetLength_voice1 (<b><font color="#0000FF">unsigned 
+      char</font></b> length);</p>
+    </div>
+  <p align="left"><font color="#0000FF"><b>move</b></font>.<b><font color="#FF0000">b</font></b> 
+    &nbsp;#<b>20</b>,<b><font color="#FF0000">d0</font></b><br>
+    <font color="#0000FF"><b>jsr</b></font> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;polysnd2::SetLength_voice[1|2]<br>
+  </p>
+  <p align="left"><i><u>Input:</u></i> <b> &nbsp;&nbsp;&nbsp;<font color="#FF0000">d0</font></b><b><font color="#0000FF">.b</font> 
+    </b>= length<br>
+    <u><i>Output:</i></u><i>&nbsp;<b> </b></i><b>-</b><br>
+    <i><u>Del: </u></i><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;-</b> </p>
+  <p align="left"><b><u>R&eacute;gle la dur&eacute;e de la note en cours.</u></b></p>
+  <p align="left">&nbsp;&nbsp;Cette fonction permet de r&eacute;gler le temps 
+    de la note en train d'&ecirc;tre jou&eacute;e.</p>
+  <p align="left">&nbsp;</p>
+  <p align="left"><b><font color="#0000FF"><a name="SetInterrupt5Rate"></a>void</font></b> 
+    pSnd_SetInterrupt5Rate (<b><font color="#0000FF">unsigned short </font></b>freq);</p>
+  <p align="left"><font color="#0000FF"><b>move</b></font>.<b><font color="#FF0000">w</font></b> 
+    &nbsp;#<b>500</b>,<b><font color="#FF0000">d0</font></b><br>
+    <font color="#0000FF"><b>jsr</b></font> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;polysnd2::Setinterrupt5Rate<br>
+  </p>
+  <p align="left"><i><u>Input:</u></i> <b> &nbsp;&nbsp;&nbsp;<font color="#FF0000">d0</font></b><b><font color="#0000FF">.w</font> 
+    </b>= Frequence<br>
+    <u><i>Output:</i></u><i>&nbsp;<b> </b></i><b>-</b><br>
+    <i><u>Del: </u></i><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;d0, d1, a0</b> 
+  </p>
+  <p align="left"><b><u>R&eacute;gle la fr&eacute;quence de linterruption personnalis&eacute; 
+    de PolySnd (fonction Interrupt5).</u></b></p>
+  <p align="left">&nbsp;&nbsp;Cette fonction permet de changer la fr&eacute;quence 
+    de la fonction Interrupt5, par d&eacute;faut celle-ci est &agrave; 1 Hz mais 
+    il est possible de monter jusq'&agrave; 11569 Hz sur HW et 8192 Hz sur HW2, 
+    plus la fr&eacute;quence de l'interruption Interrupt5 de PolySnd v2.0 est 
+    &eacute;lev&eacute; plus la consommation CPU augmente.</p>
+  <p align="left">Les fonctions de temps d&eacute;pendent de la fr&eacute;quence 
+    de cette interruption.</p>
+  <p align="left">&nbsp;</p>
+  <p align="left"><b><u><font color="#0099FF">Fonctions num&eacute;riques, PolySnd 
+    v2.0 est capable de jouer du son qualit&eacute;e 1 bits &agrave; un taux d'&eacute;chantillionage 
+    &agrave; 8000 Hz en num&eacute;rique. Ce mode &agrave; &eacute;t&eacute; d&eacute;velopp&eacute; 
+    pour permettre de jouer des bruitages r&eacute;aliste dans des jeux, comme 
+    bruits de pas, voies...</font></u></b></p>
+  <p align="left"><b><font color="#0000FF"><a name="PlayWav"></a>void </font></b>pSnd_PlayWAV_voice1 
+    (<b><font color="#0000FF">unsigned char</font></b> *wav,<b><font color="#0000FF">unsigned 
+    short</font></b> size);<br>
+    <font color="#0000FF"><b>void</b></font> pSnd_PlayWAV_voice2 (<b><font color="#0000FF">unsigned 
+    char</font></b> *wav,<b><font color="#0000FF">unsigned short </font></b>size);<br>
+    <font color="#006600"><b>#define pSnd_PlayWAV (unsigned char *wav,unsigned 
+    short size);</b></font></p>
+  <p align="left"><b><font color="#0000FF">lea</font></b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sound_wav(<b><font color="#FF0000">PC</font></b>),<font color="#FF0000"><b>a0</b></font><br>
+    <font color="#0000FF"><b>move</b></font>.<b><font color="#FF0000">w</font></b> 
+    &nbsp;#fin_sound-sound_wav,<b><font color="#FF0000">d0</font></b><br>
+    <font color="#0000FF"><b>jsr</b></font> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;polysnd2::PlayWAV_voice[1|2]<br>
+    &#133;</p>
+  <p align="left">sound_wav :<br>
+    <font color="#0000FF"><b>dc</b></font>.<b><font color="#FF0000">b</font></b> 
+    <b>&nbsp;50,85,124,158,25&#133;</b><br>
+    &#133;<br>
+    fin_sound : </p>
+  <p align="left"><i><u>Input:</u></i> <b><font color="#FF0000"> &nbsp;&nbsp;&nbsp;a0</font></b> 
+    = PtrData<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><font color="#FF0000">&nbsp;&nbsp;&nbsp;d0</font><font color="#0000FF">.w</font></b> 
+    = Size<br>
+    <u><i>Output:</i></u><i>&nbsp;<b> </b></i><b>-</b><br>
+    <i><u>Del: </u></i><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;-</b></p>
+  <p align="left"><u><i>Voici un exemple d'utilisation de PlayWAV en C :</i></u></p>
+  <p align="left">INT_HANDLER OldInt1 = NULL;<br>
+    INT_HANDLER OldInt2 = NULL;<br>
+  </p>
+  <p align="left">DEFINE_INT_HANDLER (myint2)<br>
+    {<br>
+    &nbsp;&nbsp;pokeIO (0x60001B,0);<br>
+    } </p>
+  <p align="left"><b><font color="#0000FF">unsigned char </font></b>sound_wav[]={50,85,124,158,25&#133;};</p>
+  <p align="left">void _main (void)<br>
+    {<br>
+    &nbsp;&nbsp;OldInt1 = GetIntVec (AUTO_INT_1);<br>
+    &nbsp;&nbsp;OldInt2 = GetIntVec (AUTO_INT_2);<br>
+    &nbsp;&nbsp;SetIntVec (AUTO_INT_1, DUMMY_HANDLER);<br>
+    &nbsp;&nbsp;SetIntVec (AUTO_INT_2, myint2);<br>
+  </p>
+  <p align="left"> &nbsp;&nbsp;pSnd_EnableSound ();<br>
+    &nbsp;&nbsp;pSnd_InstallSound ();</p>
+  <p align="left">&nbsp;&nbsp;pSnd_PlayMode (<b><font color="#006600">MONO</font></b>);</p>
+  <p align="left"> &nbsp;&nbsp;pSnd_Sample_voice1 (8192);<br>
+    &nbsp;&nbsp;pSnd_PlayWAV_voice1 (sound_wav,<b><font color="#0000FF">sizeof</font></b> 
+    (sound_wav));<br>
+  </p>
+  <p align="left">&nbsp;&nbsp;pSnd_SetState (<b><font color="#006600">ALLVOICES</font></b>);</p>
+  <p align="left"><b><font color="#0000FF">&nbsp;&nbsp;while</font></b> ((_keytest 
+    (RR_ESC)!=<b><font color="#006600">TRUE</font></b>) &amp;&amp; pSnd_GetState 
+    ());</p>
+  <p align="left"> &nbsp;&nbsp;pSnd_UninstallSound ();<br>
+    &nbsp;&nbsp;pSnd_DisableSound ();</p>
+  <p align="left"> &nbsp;&nbsp;SetIntVec (AUTO_INT_1, OldInt1);<br>
+    &nbsp;&nbsp;SetIntVec (AUTO_INT_2, OldInt2);<br>
+    }</p>
+  <p align="left"><b><u>Permet de jouer des donn&eacute;es WAV en qualit&eacute; 
+    1 bit &agrave; 8000 Hz.</u></b></p>
+  <p align="left">&nbsp;&nbsp;Il est possible de jouer du WAV (son num&eacute;rique) 
+    avec PolySnd v2.0. Dans cette exemple 8192 bits sont lus par secondes (1024 
+    octets/s), il est possible de diminuer la taille des donn&eacute;es au d&eacute;triment 
+    de la qualit&eacute; en changeant le taux d'&eacute;chantillonnage (voir Sample_voice[1|2]).<br>
+    Il a &eacute;tait souhaitable d'utiliser une qualit&eacute; 1 bit pour PolySnd 
+    v2.0 car les testes effectu&eacute; avec des qualit&eacute; sup&eacute;rieure 
+    jusqu'&agrave; 8 bits n'&eacute;tait pas satisfaisante en taille m&eacute;moire.</p>
+  <p align="left">&nbsp;</p>
+  <p align="left"><b><font color="#0000FF"><a name="Sample"></a>void </font></b>pSnd_Sample_voice1 
+    (<b><font color="#0000FF">unsigned </font></b>short);<br>
+    <font color="#0000FF"><b>void</b></font> pSnd_Sample_voice2 (<b><font color="#0000FF">unsigned 
+    </font></b>short);<br>
+    <font color="#006600"><b>#define pSnd_Samples (sample);</b></font></p>
+  <p align="left"><b><font color="#0000FF">move</font></b>.<b><font color="#FF0000">w</font></b> 
+    &nbsp;#4000,<b><font color="#FF0000">d0</font></b><br>
+    <font color="#0000FF"><b>jsr</b></font> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;polysnd2::Sample_vioice[1|2]</p>
+  <p align="left"><i><u>Input:</u></i> <b> &nbsp;&nbsp;&nbsp;<font color="#FF0000">d0</font></b><b><font color="#0000FF">.w</font> 
+    </b>= sample<br>
+    <u><i>Output:</i></u><i>&nbsp;<b> </b></i><b>-</b><br>
+    <i><u>Del: </u></i><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;-</b> <br>
+  </p>
+  <p align="left"><b><u>R&eacute;gle le taux d'&eacute;chantillionage.</u></b></p>
+  <p align="left">&nbsp;&nbsp;Cette fonction permet de diminuer ou augmenter la 
+    vitesse de lecture des donn&eacute;es et ainsi permettre de diminuer la taille 
+    des fichiers. Dans l'exemple en Assembleur le taux d'&eacute;chantillonnage 
+    est de 4000 Hz. PolySnd v2.0 est capable d'aller jusqu'&agrave; 8192 Hz. Les 
+    donn&eacute;es WAV ne peuvent &ecirc;tre produite que par le logiciel Converti 
+    fournis dans un autre pack.</p>
+  <p align="left">&nbsp;</p>
+  <p align="left"><b><font color="#006600"><a name="GrayPolysnd"></a>USE_GRAY_WITH_POLYSND</font></b></p>
+  <p align="left">&nbsp;&nbsp;Cette d&eacute;finition ne peut &ecirc;tre utilis&eacute;e 
+    en C que sous TIGCC, elle a pour but de faire fonctionner correctement PolySnd 
+    v2.0 avec les niveaux de gris de TIGCC.<br>
+    Cette d&eacute;finition doit se situer juste avant <b><font color="#FF0000">GrayOn 
+    ().</font></b><br>
+    Il n'est pas assur&eacute; que cette d&eacute;finition fonctionne dans les 
+    futurs versions de TIGCC dans ce cas vous devez savoir que la routine de gestion 
+    des niveaux de gris ne doit pas d&eacute;sactiver l'auto Int 5 lors de son 
+    passage, si ce n'est pas le cas vous constaterez un ralentissement et un son 
+    assez grave de PolySnd v2.0, ou tout autre comportements bizarre, c'est pour 
+    &ccedil;a qu'il faut configurer correctement les masques d'interruptions des 
+    interruptions que vous utilisez.</p>
+  <p align="left">&nbsp;</p>
+  <p align="left"><i><font face="Comic Sans MS"><b><a name="consommation"></a>8.</b></font></i><u><i><font face="Comic Sans MS"> 
+    Points sur la consommation de ressources avec PolySnd v2.0.</font></i></u></p>
+  <p align="left">&nbsp;&nbsp;Suivant les diff&eacute;rent mode de lecture de 
+    donn&eacute;es, les donn&eacute;es elle-m&ecirc;me ou encore la configuration 
+    de PolySnd v2.0 (Mono ou st&eacute;r&eacute;o), la consommation de ressources 
+    CPU est variable et peut &ecirc;tre &eacute;lev&eacute;e ou tr&egrave;s tr&egrave;s 
+    faible. Si vous jouez une musique en mode st&eacute;r&eacute;o sur 2 voies 
+    qui comporte un tempo assez &eacute;lev&eacute; et des dur&eacute;es de notes 
+    assez faible, la consommation CPU peut monter jusqu'&agrave; 15% avec seulement 
+    PolySnd v2.0. Si vous jouez en mode MONO une musique vous perderez environ 
+    5% des ressources CPU au maximum. Suivant le mode vous pouvez perdre seulement 
+    2% des ressources ou bien plus, par cons&eacute;quent il n'est pas assur&eacute; 
+    que dans un programme PolySnd v2.0 ralentisse plus ou moins celui-ci. C'est 
+    pourquoi vous devez bien r&eacute;fl&eacute;chir &agrave; l'incorporation 
+    du son dans votre programme ou jeu et &eacute;viter au maximum de jouer des 
+    musiques sur 2 voies directement dans un jeu demandant beaucoup de ressources 
+    CPU. Pr&eacute;vil&eacute;giez plut&ocirc;t des musiques sur 2 voies dans 
+    des menus...</p>
+  <p align="left">&nbsp;</p>
+  <p align="left"><i><font face="Comic Sans MS"><b><a name="genlib"></a>9.</b></font></i><u><i><font face="Comic Sans MS"> 
+    Utiliser PolySnd v2.0 avec Genlib.</font></i></u></p>
+  <p align="left">&nbsp;&nbsp;Pour utiliser correctement Genlib avec PolySnd v2.0 
+    vous devez tout d'abord initialiser la librairie Genlib puis intercepter l'interruption 
+    n&deg;5 de Genlib gr&acirc;ce &agrave; l'adresse 0x74. Une fois cette op&eacute;ration 
+    effectu&eacute; il vous reste &agrave; initialiser PolySnd v2.0, cr&eacute;er 
+    une interruption avec la fonction Interrupt5 de PolySnd v2.0, dans cette interruption 
+    executer l'interruption de Genlib.</p>
+  <p align="left"> <u><font color="#FF0000"><b>Attention</b></font></u>: <font color="#FF0000">L'interruption 
+    de PolySnd v2.0 tourne &agrave; 5000 Hz et celle de Genlib &agrave; 90 Hz, 
+    par cons&eacute;quent vous devez cr&eacute;er une fonction dans l'interruption 
+    de PolySnd v2.0 capable d'executer tout les 90 Hz l'interruption de Genlib.</font></p>
+  <p align="left"><u><i>En ASM:</i></u></p>
+  <div align="left"> 
+    <p align="left">jsr &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;genlib::init 
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;Initialise 
+      Genlib <br>
+      move.l &nbsp;$74,GenlibInt &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;Sauvegarde 
+      l'auto int n&deg;5 de Genlib dans GenlibInt<br>
+      jsr &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;polysnd2::EnableSound&nbsp;&nbsp;&nbsp;&nbsp;;Initialise 
+      le Port I/O<br>
+      jsr &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;polysnd2::InstallSound&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;Initialise 
+      PolySnd, attention: N'oublier pas &agrave; la fin de restaurer PolySnd et 
+      Genlib </p>
+    <p align="left">lea &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;myint5(PC),a0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;Interruption 
+      de PolySnd v2.0<br>
+      jsr&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;polysnd2::Interrupt5<br>
+      ... ;votre code<br>
+      rts </p>
+    <p align="left">myint5:<br>
+      addi.l &nbsp;#590,counter &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;90/5000*32768<br>
+      cmpi &nbsp;&nbsp;#32473,counter &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;32768-590/2<br>
+      ble &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;execute_genblib_interrupt&nbsp;&nbsp;&nbsp;;Si 
+      32473 est plus petit ou &eacute;gale &agrave; counter alors executer interruption 
+      de genlib<br>
+      rte&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;Fin 
+      de l'interruption de PolySnd</p>
+    <p align="left">execute_genlib_interrupt:<br>
+      subi &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#32768,counter&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:Soustrait 
+      32768 &agrave; counter<br>
+      move.l GenlibInt(PC),-(a7)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;Execute 
+      interruption de Genlib<br>
+      rts</p>
+  </div>
+  <p align="left"><i><u>En C:</u></i></p>
+  <div align="left"> 
+    <pre align="left">INT_HANDLER GenlibInt = NULL;
+volatile unsigned long counter=0
+
+
+//5000 Hz
+DEFINE_INT_HANDLER (myint5)
+{
+  counter+=590; //90/5000*32768
+   
+  if (counter&gt;32473) //32768-590/2
+  {
+    counter-=32768;
+    ExecuteHandler(GenlibInt);
+  }
+}
+
+void _main (void)
+{
+ counter=0;
+
+ gl_init ();
+ GenlibInt=GetIntVec(AUTO_INT_5);
+ pSnd_EnableSound ();
+ pSnd_InstallSound ();
+ pSnd_Interrupt5(myint5);
+ ...
+&nbsp;//Votre code
+}
+</pre>
+    <p align="left"><b><font color="#FF0000">N'oubliez pas de restaurer correctement 
+      Genlib et PolySnd v2.0 ainsi que de d&eacute;sactiver au d&eacute;but les 
+      auto int n&deg;1 et 2 pour PolySnd v2.0.</font></b></p>
+    </div>
+  <p></p>
+  <p align="left">&nbsp;</p>
+  <p align="left"><i><font face="Comic Sans MS"><b><a name="durees"></a>10.</b></font></i><u><i><font face="Comic Sans MS"> 
+    Tableau des dur&eacute;es.</font></i></u><br>
+  </p>
+  <p align="left">&nbsp;&nbsp;PolySnd v2.0 est capable de jouer n'importe quelle 
+    note sur 10 octaves, les octaves sont not&eacute;es de 0 &agrave; 9. La liste 
+    des notes et des dur&eacute;es n'est pas exhaustive, il est possible de la 
+    compl&eacute;ter selon vos crit&egrave;res. </p>
+  <p align="left">Une note est pr&eacute;c&eacute;d&eacute;e d'un tiret puis suivie 
+    du nom de la note, puis son type (b&eacute;mol ou di&egrave;se) et enfin le 
+    num&eacute;ro de l'octave. Pour un <i><b>DO di&egrave;se d'octave 5</b></i> 
+    vous noterez : <i><b>_dod4</b></i>.</p>
+  <p align="left">Une pause sera not&eacute;e <i><b>pause</b></i> ou <i><b>0</b></i>.</p>
+  <p align="left">Voici le tableau des dur&eacute;es, la r&eacute;f&eacute;rence 
+    de PolySnd v2.0 est la noire avec une dur&eacute;e de 32 cycles de tempo. 
+    32 cycles est &eacute;quivalents &agrave; 1 temps.</p>
+  <div align="left">
+    <table width="46%" border="1" align="center" height="374">
+      <tr> 
+        <td width="21"></td>
+        <td width="32%"> 
+          <div align="center"><b><i><u>Type</u></i></b></div>
+        </td>
+        <td width="35%"> 
+          <div align="center"><b><i><u>Syntaxe</u></i></b></div>
+        </td>
+        <td width="33%"> 
+          <div align="center"><b><i><u>Dur&eacute;e</u></i></b></div>
+        </td>
+      </tr>
+      <tr> 
+        <td></td>
+        <td width="32%"><font color="#FF0000">Ronde</font></td>
+        <td width="35%"><b>ronde</b></td>
+        <td width="33%">4 temps</td>
+      </tr>
+      <tr> 
+        <td></td>
+        <td width="32%"><font color="#FF0000">Blanche</font></td>
+        <td width="35%"><b>Blanche</b></td>
+        <td width="33%">2 temps</td>
+      </tr>
+      <tr> 
+        <td></td>
+        <td width="32%"><font color="#FF0000">Blanche point&eacute;e</font></td>
+        <td width="35%"><b>blanche_pointee</b></td>
+        <td width="33%">2+ 1/2 temps</td>
+      </tr>
+      <tr> 
+        <td></td>
+        <td width="32%"><font color="#FF0000">Noire point&eacute;e</font></td>
+        <td width="35%"><b>noire_pointee</b></td>
+        <td width="33%">1+1/2 temps</td>
+      </tr>
+      <tr> 
+        <td></td>
+        <td width="32%"><font color="#FF0000">Noire</font></td>
+        <td width="35%"><b>noire</b></td>
+        <td width="33%">1 temps</td>
+      </tr>
+      <tr> 
+        <td></td>
+        <td width="32%"><font color="#FF0000">Croche point&eacute;e</font></td>
+        <td width="35%"><b>croche_pointee</b></td>
+        <td width="33%">1/2+1/4 temps</td>
+      </tr>
+      <tr> 
+        <td></td>
+        <td width="32%"><font color="#FF0000">Croche</font></td>
+        <td width="35%"><b>croche</b></td>
+        <td width="33%">1/2 temps</td>
+      </tr>
+      <tr> 
+        <td></td>
+        <td width="32%"><font color="#FF0000">Double croche</font></td>
+        <td width="35%"><b>double_croche</b></td>
+        <td width="33%">1/4 temps</td>
+      </tr>
+      <tr> 
+        <td></td>
+        <td width="32%"><font color="#FF0000">Triple croche</font></td>
+        <td width="35%"><b>triple_croche</b></td>
+        <td width="33%">1/8 temps</td>
+      </tr>
+      <tr> 
+        <td></td>
+        <td width="32%"><font color="#FF0000">Quadruple croche</font></td>
+        <td width="35%"><b>quadruple_croche</b></td>
+        <td width="33%">1/16 temps</td>
+      </tr>
+      <tr> 
+        <td></td>
+        <td width="32%"><font color="#FF0000">Soupir</font></td>
+        <td width="35%"><b>soupir</b></td>
+        <td width="33%">1 temps</td>
+      </tr>
+      <tr> 
+        <td></td>
+        <td width="32%"><font color="#FF0000">Soupir point&eacute;</font></td>
+        <td width="35%"><b>soupir_pointe</b></td>
+        <td width="33%">1+1/2 temps</td>
+      </tr>
+    </table>
+    <p align="center"><b>Il existe des abr&eacute;viations, regardez le fichier<font color="#006600"> 
+      polysnd2.h.</font></b><br>
+    </p>
+  </div>
+  <p align="left">&nbsp; </p>
+  <p align="left"><i><font face="Comic Sans MS"><b><a name="ameliorer_son"></a>11.</b></font></i><u><i><font face="Comic Sans MS"> 
+    Am&eacute;liorer la qualit&eacute; du son.</font></i></u></p>
+  <p align="left">&nbsp;&nbsp;Il est possible d'am&eacute;liorer la qualit&eacute; 
+    du son en fabriquant un <u>passe bas</u> sur chaque voie. Vous devez poss&eacute;der 
+    2 condensateurs de 47 pF et 2 r&eacute;sistances de 470 kohms<br>
+  </p>
+  <p align="center"><img src="images/image11.gif" width="330" height="153"></p>
+  <p align="center">Ce passe bas a pour but de transformer les ondes sous forme 
+    de cr&eacute;neaux en ondes sinuso&iuml;dales.</p>
+  <p align="left">&nbsp;</p>
+  <p align="left"><i><font face="Comic Sans MS"><b><a name="contact"></a>12.</b></font></i><u><i><font face="Comic Sans MS"> 
+    Me contacter.</font></i></u></p>
+  <p align="left">&nbsp;&nbsp;N'h&eacute;sitez pas &agrave; me contacter pour 
+    toutes suggestions, critiques, rapport de bugs ou tout simplement m'envoyer 
+    vos cr&eacute;ations musicales ou tout autre programme utilisant PolySnd v2.0. 
+    <a href="mailto:geoffrey.anneheim@wanadoo.fr">geoffrey.anneheim@wanadoo.fr</a></p>
+  <p align="left">&nbsp;</p>
+  <p align="left"><b><font color="#FF0000" size="5"><u>Remerciements :</u></font></b></p>
+  <p align="left"><i><u>Florian Drevet</u></i> pour son superbe <b><font color="#0000FF">Zguide</font></b> 
+    qui m'a permis d'apprendre l'assembleur tr&egrave;s facilement</p>
+  <p align="left"><i><u>Xavier Vassor, Julien Muchembled, Zeljko Juric, Kevin 
+    Kofler, Sebastian Reichelt, Jean Canazzi, Niklas Brunlid, Philipp Winkler</u></i> 
+    pour le compilateur<b><font color="#0000FF"> TIGCC SDK</font></b> et le fichier 
+    d'aide tr&egrave;s complet. Tout particuli&egrave;rement <u> <i> <b>Kevin 
+    Kofler </b></i></u>qui m'a aid&eacute; dans la r&eacute;alisation de cette 
+    librairie.</p>
+  <p align="left"><i><u>Vertyos alias bob64, Kevin Kofler, MacInToc, EvaSDK, jackiechan, 
+    nEUrOne, Uther Lightbringer, Squale92, BiHi, XDanger, Ximoon, fabedal, Nil, 
+    ExtendeD, Godzil, squalyl et Brunni</u></i> pour leurs aides, critiques et 
+    suggestions. N'h&eacute;sitez pas &agrave; faire un tours sur : <a href="http://www.yaronet.com">yAronet.com</a></p>
+  <p align="left">Grand merci &agrave; <u><i>J&eacute;r&eacute;mie Luissiez (Vil)</i></u> 
+    et <u><i>Paul Froissart (Pollux)</i></u> pour la routine de wave2asm.</p>
+  <p align="left"><i><u>MasterSam</u></i> pour son exemple Only For You. (Un bonne 
+    exemple pour PolySnd Player).<br>
+    <u>Son site WEB</u> : <a href="http://perso.wanadoo.fr/mastersam.rc">http://perso.wanadoo.fr/mastersam.rc</a></p>
+  <p align="left"><i><u>Raphael Domenge</u></i> pour avoir contribu&eacute; &agrave; 
+    PolySnd v2.0.</p>
+  <p align="left"><i><u>Brunni</u> </i>l'auteur de converti pour PolySnd et bien 
+    faiteur de nombreuses am&eacute;liorations...</p>
+  <p align="left">PolySnd v2.0 a &eacute;t&eacute; test&eacute; et d&eacute;velopp&eacute; 
+    sur une TI-92 plus, HW2 ROM: 2.05 et 2.08. Elle a &eacute;t&eacute; test&eacute; 
+    sur AMS 2.05, 2.08 et 2.09 ainsi que sur Pedrom v0.76. Grand merci &agrave; 
+    <u><i>Patrick Pelissier (PpHd)</i></u>.</p>
+  <p align="left">Merci &agrave; <i><u>Malcolm Smith (TRgenius)</u></i> pour l'exemple 
+    Avoid et pour son aide.</p>
+  <p align="left">Et je n'oublie pas <u><i>Iros</i></u>, sans lui je n'aurais 
+    pas plus adapter PolySnd pour les HW1.</p>
+  <p align="left"><b>Je n'oublie pas aussi bien d'autres personnes qui m'ont aid&eacute;s 
+    &agrave; r&eacute;aliser cette librairie ainsi que mes b&ecirc;tas testeurs. 
+    ;o)</b></p>
+  <p align="left"><br>
+    <font size="5"><i><font color="#FF0000"><b><u>Logiciels et outils pour PolySnd 
+    v2.0 :</u></b></font></i></font></p>
+  <p align="left"><b><font color="#0000FF" size="4">PolySnd MIDI Converter:</font></b> 
+    Convertisseur MIDI en format PolySnd v2.0, il permet d'obtenir des donn&eacute;es 
+    en C, ASM ou pour PolySnd Player. </p>
+  <p align="left"><font color="#0000FF" size="4"><b>PolySnd Converti</b></font><b> 
+    </b>: Convertisseur WAV en donn&eacute;es 1 bit pour PolySnd v2.0, il permet 
+    de convertir un WAV en C ou en ASM.</p>
+  <p align="left"><b><font color="#0000FF" size="4">PolySnd Player</font></b> 
+    : Joueur de musiques, les musiques prennent peu de place. Il est capable de 
+    renvoyer une multitude d'informations sur la musique en cours.</p>
+  <p align="left">&nbsp;</p>
+  <p align="left"><b><font color="#FF0000" size="4"><u>Peut &ecirc;tre que j'aurais 
+    le temps de d&eacute;velopper ses outils. </u></font></b></p>
+  <p align="left"><font color="#0000FF" size="4"><b>'PolySnd Kit Programmer Basic</b></font>' 
+    : R&eacute;alisez vos compositions en TI-BASIC.</p>
+  <p align="left"><b><font color="#0000FF" size="4">'PolySnd Partition Editor'</font></b>: 
+    R&eacute;alisez vos musiques notes &agrave; notes avec cette &eacute;diteurs.</p>
+  <p align="left"><br>
+    <i><font size="3" color="#FF0000"><b>Reste plus qu'&agrave; vous faire des 
+    programmes avec PolySnd v2.0&#133; :o)</b></font></i></p>
+  <p align="left">Visitez <a href="http://www.ticalc.org">http://www.ticalc.org</a> 
+    pour trouvez ses logiciels, kernel&#133;<br>
+    Visitez mon site d&eacute;di&eacute; au TI68K et &agrave; mes projets : <a href="http://perso.wanadoo.fr/tisofts">TISofts</a></p>
+  <p align="left"><i><b><u>Me contacter:</u> </b></i><a href="mailto:geoffrey.anneheim@wanadoo.fr">Geoffrey 
+    ANNEHEIM</a></p>
+  <p align="left"><b><i>PolySnd v2.0</i></b> est sous le label d'<a href="http://oragestudio.free.fr">OrageStudio</a>. 
+    N'h&eacute;sitez pas &agrave; y faire un tour.</p>
+  <p align="left">&nbsp;</p>
+  <p align="right"><font size="2"><i><font face="Georgia, Times New Roman, Times, serif">Copyright 
+    2003 by Geoffrey ANNEHEIM</font></i></font></p>
+</div>
+</body>
+</html>

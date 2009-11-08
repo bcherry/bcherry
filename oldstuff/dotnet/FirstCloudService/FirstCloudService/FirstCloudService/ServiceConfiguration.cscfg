@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<ServiceConfiguration serviceName="FirstCloudService" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration">
+  <Role name="WebRole">
+    <Instances count="10"/>
+    <ConfigurationSettings>
+    </ConfigurationSettings>
+  </Role>
+</ServiceConfiguration>

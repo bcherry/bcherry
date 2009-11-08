@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Assemblies Version="1073741836">
+  <Assembly Name="System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Image="f28483cf-f587-47c6-ae60-75af4a831be6" Timestamp="633530004480000000" XmlDocIndexTimestamp="633490327300000000" />
+  <Assembly Name="System.Data.DataSetExtensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Image="cfa2d1af-9b51-4c59-9a25-60096fa18c74" Timestamp="633530004480000000" XmlDocIndexTimestamp="633490327300000000" />
+  <Assembly Name="System.Xml.Linq, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Image="b6f0babf-cfc4-4f6e-a69c-fc6d18eceee8" Timestamp="633530004480000000" XmlDocIndexTimestamp="633490327300000000" />
+  <Assembly Name="System.Web.Extensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" Image="9b457fce-0d18-4a64-a903-5db85c16cf1e" Timestamp="633530004480000000" XmlDocIndexTimestamp="633492931960000000" />
+  <Assembly Name="JetBrains.Annotations, Version=4.1.933.3, Culture=neutral, PublicKeyToken=1010a0d8d6380325" Image="323f43f4-16d4-4c0f-842c-19efc429745a" Timestamp="633560030920000000" XmlDocIndexTimestamp="633560030920000000" />
+  <Assembly Name="System.Web.Abstractions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" Image="cbeb02b1-05fd-43d1-ae97-0b6278defd8e" Timestamp="633687882660000000" />
+  <Assembly Name="System.Web.Mvc, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" Image="4db97d4c-290f-4d47-9eea-2a954115c9ae" Timestamp="633687882700000000" XmlDocIndexTimestamp="633687876380000000" />
+  <Assembly Name="System.Web.Routing, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" Image="35b55abc-e178-4ac5-9f71-5a2aaf836348" Timestamp="633687882660000000" />
+  <Assembly Name="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" Image="9df4718d-d753-432a-b109-833b53ba7c07" Timestamp="633530575220000000" />
+</Assemblies>

@@ -1,0 +1,51 @@
+Script started on Tue Apr 22 10:38:18 2003
+
+======== 2% listedit.perl -e test2.input <script.lsed
+listedit.perl: 4 lines read.
+listedit.perl: ifoo
+     3  foo
+listedit.perl: ibar
+     3  bar
+listedit.perl: iline3
+     3  line3
+listedit.perl: *
+     0  test1 line0
+     1  test1 line1
+     2  test1 line2
+     3  line3
+     4  bar
+     5  foo
+     6  test1 line3 - last line
+listedit.perl: wtest2.output
+listedit.perl: 7 lines written to test2.output
+listedit.perl: ^D
+
+======== 3% cat -n script.lsed
+     1	ifoo
+     2	ibar
+     3	iline3
+     4	*
+     5	wtest2.output
+
+======== 4% cat -n test2.input
+     1	test1 line0
+     2	test1 line1
+     3	test1 line2
+     4	test1 line3 - last line
+
+======== 5% cat -n wtest2.output
+cat: cannot open wtest2.output
+
+======== 6% cat -n test2.output
+     1	test1 line0
+     2	test1 line1
+     3	test1 line2
+     4	line3
+     5	bar
+     6	foo
+     7	test1 line3 - last line
+
+======== 7% exit
+
+======== 8% 
+script done on Tue Apr 22 10:39:13 2003

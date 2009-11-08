@@ -1,0 +1,41 @@
+Script started on Tue Apr 22 10:34:48 2003
+
+======== 2% listedit.perl
+listedit.perl: 0 lines read.
+listedit.perl: ifirstline
+     0  firstline
+listedit.perl: asecondline
+     1  secondline
+listedit.perl: athirdline
+     2  thirdline
+listedit.perl: *
+     0  firstline
+     1  secondline
+     2  thirdline
+listedit.perl: afterlastline
+     3  fterlastline
+listedit.perl: 0
+     0  firstline
+listedit.perl: izeroline
+     0  zeroline
+listedit.perl: *
+     0  zeroline
+     1  firstline
+     2  secondline
+     3  thirdline
+     4  fterlastline
+listedit.perl: wtest1.output
+listedit.perl: 5 lines written to test1.output
+listedit.perl: ^D
+
+======== 3% cat -n test1.output
+     1	zeroline
+     2	firstline
+     3	secondline
+     4	thirdline
+     5	fterlastline
+
+======== 4% exit
+
+======== 5% 
+script done on Tue Apr 22 10:35:30 2003

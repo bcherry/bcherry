@@ -1,0 +1,56 @@
+/* $Id: buffer.h,v 351.2 2005-03-03 14:06:03-08 - - $ */
+// Ben Cherry - CMPS012B - Wesley Mackey - Winter 05 - Asg 5
+/*
+** buffer - accumulate and manage a variable-length string
+*/ 
+
+#ifndef __BUFFER_H__
+#define __BUFFER_H__
+
+#include "auxlib.h"
+
+typedef struct buffer *buffer_ref;
+
+buffer_ref new_buffer( void );
+   /* purpose:  constructor
+   ** postcond: returns valid buffer
+   ** returns:  pointer to new buffer
+   ** fails:    assert failure: if no memory is available
+   */
+
+void free_buffer( buffer_ref );
+   /* purpose:  destructor to free up memory
+   ** precond:  valid buffer
+   ** postcond: that handle is dangling
+   */
+
+void clear_buffer( buffer_ref );
+   /* purpose:  clear character string out of buffer
+   ** precond:  valid buffer
+   ** postcond: buffer is empty
+   */
+
+void append_buffer( buffer_ref, char );
+   /* purpose:  append a character to the end of the buffer
+   ** precond:  valid buffer
+   ** postcond: string is longer by one character passed as param
+   ** fails:    assert failure: if no memory is available when full
+   */
+
+char *peek_buffer( buffer_ref );
+   /* purpose:  return a heap-allocated copy of the string
+   ** precond:  valid buffer
+   ** postcond: buffer is unchanged
+   ** returns:  peeking pointer into buffer
+   ** fails:    pointer becomes dangling whenever buffer is altered
+   */
+
+bool is_buffer( buffer_ref );
+   /* purpose:  run-time type checking to verify is a buffer
+   ** precond:  valid buffer
+   ** postcode: buffer not changed
+   ** returns:  true if is a buffer, false if not
+   */
+
+#endif
+

@@ -1,0 +1,21 @@
+
+Actual leaks report    (actual leaks:         0  total size:       0 bytes)
+
+ 
+
+Possible leaks report  (possible leaks:       0  total size:       0 bytes)
+
+ 
+
+Blocks in use report   (blocks in use:        6  total size:     412 bytes)
+
+ Total  % of Num of  Avg     Allocation call stack
+ Size    All Blocks  Size
+======= ==== ====== ======  =======================================
+    308  74%      1    308  _real_setlocale < setlocale < main 
+     48  11%      1     48  _real_setlocale < setlocale < main 
+     22   5%      1     22  _real_setlocale < setlocale < main 
+     12   2%      1     12  _real_setlocale < setlocale < main 
+     11   2%      1     11  strdup < locale_per_category < _real_setlocale < setlocale < main 
+     11   2%      1     11  _real_setlocale < setlocale < main 
+ 

@@ -1,0 +1,97 @@
+<html>
+<head>
+<title>PolySnd v2.0 lisez-moi</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<div align="center">
+  <p><img src="images/image1.png" width="271" height="91"></p>
+  <p>&nbsp;</p>
+  <p><font size="4"><b>par</b></font>&nbsp; <a href="mailto:geoffrey.anneheim@wanadoo.fr"><font size="4"><b><font color="#0000FF" face="Comic Sans MS"> 
+    Geoffrey ANNEHEIM</font></b></font></a></p>
+  <p><b><a href="http://perso.wanadoo.fr/tisofts"><font color="#0000FF" size="4">http://perso.wanadoo.fr/tisofts</font></a></b></p>
+  <p>&nbsp;</p>
+  <div align="left"> 
+    <p align="left">&nbsp;&nbsp;Librairie destin&eacute;e &agrave; la programmation 
+      audio de jeux vid&eacute;os ou divers programmes. Elle fonctionne sous toutes 
+      les ROM et hardwares existant. Elle a &eacute;t&eacute; test&eacute;e sous 
+      Pedrom.<br>
+      Il est possible de programmer en Kernel ou en Nostub en C et ASM. Elle a 
+      &eacute;t&eacute; d&eacute;velopp&eacute; pour les TI-89, TI-92+ et V200.</p>
+    <p align="left"> &nbsp;&nbsp;__________________________________________________<br>
+      &nbsp;&nbsp;&nbsp;<b><font size="4">Version 2.47</font>, <font face="Arial, Helvetica, sans-serif">19 
+      / 10 / 03</font><br>
+      &nbsp;&nbsp;&nbsp;<font face="Arial, Helvetica, sans-serif">Copyright 2002-2003 
+      par Geoffrey ANNEHEIM</font></b><br>
+      &nbsp;&nbsp;&nbsp;__________________________________________________&nbsp;&nbsp;&nbsp;</p>
+    <p align="left"><b><font face="Arial, Helvetica, sans-serif" size="-1">Cette 
+      librairie non modifi&eacute;e peut &ecirc;tre distribu&eacute; de mani&egrave;re 
+      libre, &agrave; condition de joindre ce texte avec la licence GNU que vous 
+      trouverez &agrave; la racine du dossier.<br>
+      Les sources compl&egrave;tes sont disponible et peuvent &ecirc;tre utilis&eacute; 
+      sous certaines conditions.<br>
+      Si jamais vous utilisez cette librairie dans un programme que vous distribuez, 
+      merci de mentionner mon nom dans le readme, cela me ferait plaisir!</font></b></p>
+    <p><b><font color="#FF0000">Je ne suis en aucun cas responsable de pertes 
+      de donn&eacute;es d&ucirc; &agrave; une mauvaise utilisation de la librairie. 
+      Tous sch&eacute;mas &eacute;lectroniques que je diffuse dans la documentation 
+      principale, on &eacute;tait test&eacute; et donc en aucun cas je suis responsable 
+      de tout dommages subit &agrave; votre calculatrice.</font></b></p>
+    <p><b><font color="#FF0000">Ce programme ne fonctionne qu'avec les versions 
+      de TIGCC sup&eacute;rieur &agrave; la version 0.94. Compil&eacute; avec 
+      TIGCC 0.95 B&ecirc;ta 1.0.</font></b></p>
+    <p><b><font color="#FF0000">Si lors de l'execution d'un programme utilisant 
+      PolySnd plante, pour remettre le port I/O &agrave; son &eacute;tat d'origine, 
+      allez dans le menu Vark-Link et sur n'importe quelle variable faites Link/Send 
+      puis ON pour annuler.</font></b></p>
+    <p>Les exemples fournis avec le pack de la librairie, sont une aide tr&egrave;s 
+      pr&eacute;cieuse, car ils permettent de montrer une utilisation correcte 
+      de presque toutes les fonctions de PolySnd v2.0, n'h&eacute;sitez donc pas 
+      &agrave; regarder le code source pour d&eacute;velopper vos programmes. 
+      Aucunes protections n'ont &eacute;t&eacute; d&eacute;velopp&eacute; dans 
+      la librairie pour &eacute;viter tout plantage d&ucirc; &agrave; des arguments 
+      incorrects, n'h&eacute;sitez donc pas &agrave; v&eacute;rifier vos arguments 
+      avant de faire passer une fonction &agrave; PolySnd v2.0. En Assembleur, 
+      PolySnd v2.0 d&eacute;truit des registres lors du passage de certaines fonctions 
+      de PolySnd v2.0, ses registres sont mentionn&eacute; dans la documentation, 
+      chaque arguments doit &ecirc;tre pass&eacute; par certains registres, eux 
+      aussi mentionn&eacute; dans la documentation. Si vous constatez tout bugs 
+      ou erreurs dans les exemples ou m&ecirc;me dans la documentation, n'h&eacute;sitez 
+      pas &agrave; me les rapporter. Th&eacute;oriquement PolySnd v2.0 ne poss&egrave;de 
+      pas de bugs, mais on sais jamais. :o)</p>
+    <p>Je n'assure pas &agrave; 100% que PolySnd v2.0 fonctionnera correctement 
+      sur les futurs version d'AMS sup&eacute;rieure &agrave; 2.09 ou encore les 
+      futurs version de Pedrom.</p>
+    <p>PolySnd v2.0 ne fonctionne pas sur Virtual TI. Si une futur version de 
+      Virtual TI ou une simple routine corrige ce probl&egrave;me, n'h&eacute;sitez 
+      pas &agrave; me reporter la solution. ;o)</p>
+    <p>PolySnd v2.0 n'a &eacute;t&eacute; test&eacute; qu'avec les niveaux de 
+      gris de TIGCC et il est donc possible quelle ne fonctionne pas correctement 
+      avec certaines librairies graphiques existante comme Genlib ou XLib. Toutefois 
+      il est possible d'utiliser PolySnd v2.0 avec ce genre de librairie, comme 
+      par exemple Genlib, vous trouverez plus d'informations dans la documentation.</p>
+    <p>PolySnd v2.0 est un environnement de programmation multit&acirc;che, ce 
+      qui donne la particularit&eacute; d'ex&eacute;cuter du son en m&ecirc;me 
+      temps que le programme principal s'execute. Cet environnement est assez 
+      simpliste et donc il n'est pas possible d'assurer une lecture parfaite et 
+      r&eacute;el de donn&eacute;es MIDI ou WAV. PolySnd v2.0 poss&egrave;de ses 
+      propres formats de donn&eacute;es, &eacute;vitez donc les musiques assez 
+      complexe et instrumentale ou encore des effets sonores long et complexe. 
+      L'utilisation correcte de modes de lecture dans un programme peuvent &ecirc;tre 
+      sources de bonne qualit&eacute; audio, de performance et de gain m&eacute;moire.</p>
+    <p>Pour les donn&eacute;es type effets sonores ou musiques n'h&eacute;sitez 
+      pas &agrave; les compresser, vous gagnerez un gain important de m&eacute;moire.</p>
+    <p><b><font color="#0000FF">N'h&eacute;sitez pas &agrave; t&eacute;l&eacute;charger 
+      les divers outils de PolySnd v2.0, comme le convertisseur MIDI / WAV (PolySnd 
+      MIDI Converter, PolySnd Converti) ou le player (PolySnd Player)... cela 
+      ne pourra que vous faciliter la programmation de son dans vos programmes.</font></b></p>
+    <p>N'h&eacute;sitez pas &agrave; diffuser cette librairie et surtout &agrave; 
+      inclure du son dans vos jeux. ;o)</p>
+    <p>Pour toutes suggestions, report de bugs ou tout simplement avoir des d&eacute;tails 
+      plus pr&eacute;cis sur certaines fonctions... N'h&eacute;sitez pas &agrave; 
+      me contacter: <a href="mailto:geoffrey.anneheim@wanadoo.fr">geoffrey.anneheim@wanadoo.fr</a></p>
+  </div>
+</div>
+</body>
+</html>

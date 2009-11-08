@@ -1,0 +1,9 @@
+. Ben Cherry - bcherry@ucsc.edu
+. $Id$
+
+CMPS012B - Winter 05 - Wesley Mackey - Asg2 - lookup
+01/28/05
+
+I have followed the implementation described in the specification.
+However, I could not make the enum filemodes in file.java work,
+So I replaced with static final ints instead.

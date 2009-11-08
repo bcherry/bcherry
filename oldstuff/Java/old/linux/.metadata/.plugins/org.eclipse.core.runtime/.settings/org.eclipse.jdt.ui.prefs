@@ -1,0 +1,11 @@
+#Fri Nov 26 17:07:44 PST 2004
+useQuickDiffPrefPage=true
+tabWidthPropagated=true
+useAnnotationsPrefPage=true
+org.eclipse.jface.textfont=1|Monospace|10|0|GTK|1|;
+org.eclipse.jdt.ui.editor.tab.width=4
+org.eclipse.jdt.ui.formatterprofiles.version=6
+Refactoring.ErrorPage.severityThreshold=2
+eclipse.preferences.version=1
+fontPropagated=true
+org.eclipse.jdt.ui.javadoclocations=<?xml version\="1.0" encoding\="UTF-8"?>\n<javadoclocation>\n<location_01 path\="/usr/lib/SunJava2-1.4.2/jre/lib/jsse.jar" url\="http\://java.sun.com/j2se/1.4.2/docs/api"/>\n<location_01 path\="/usr/lib/SunJava2-1.4.2/jre/lib/charsets.jar" url\="http\://java.sun.com/j2se/1.4.2/docs/api"/>\n<location_01 path\="/usr/lib/SunJava2-1.4.2/jre/lib/ext/sunjce_provider.jar" url\="http\://java.sun.com/j2se/1.4.2/docs/api"/>\n<location_01 path\="/usr/lib/SunJava2-1.4.2/jre/lib/ext/localedata.jar" url\="http\://java.sun.com/j2se/1.4.2/docs/api"/>\n<location_01 path\="/usr/lib/SunJava2-1.4.2/jre/lib/sunrsasign.jar" url\="http\://java.sun.com/j2se/1.4.2/docs/api"/>\n<location_01 path\="/usr/lib/SunJava2-1.4.2/jre/lib/rt.jar" url\="http\://java.sun.com/j2se/1.4.2/docs/api"/>\n<location_01 path\="/usr/lib/SunJava2-1.4.2/jre/lib/jce.jar" url\="http\://java.sun.com/j2se/1.4.2/docs/api"/>\n<location_01 path\="/usr/lib/SunJava2-1.4.2/jre/lib/ext/ldapsec.jar" url\="http\://java.sun.com/j2se/1.4.2/docs/api"/>\n<location_01 path\="/usr/lib/SunJava2-1.4.2/jre/lib/ext/dnsns.jar" url\="http\://java.sun.com/j2se/1.4.2/docs/api"/>\n</javadoclocation>\n

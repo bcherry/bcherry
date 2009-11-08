@@ -1,0 +1,14 @@
+Created 12:27 11/27/04
+by Ben Cherry
+
+We still need to:
+-Finalize arrangement of window
+-Make the game end properly
+-Require words to add to existing words
+-Multiplier color key
+-Logo/title
+	transparent on board logo
+		implemented but commented out
+		include font?
+		different font?
+		embedded fonts?

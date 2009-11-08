@@ -1,0 +1,9 @@
+/windows/G/Java Source/linux/.metadata/.plugins/org.eclipse.jdt.core/2591809280.index
+/windows/G/Java Source/linux/.metadata/.plugins/org.eclipse.jdt.core/426786870.index
+/windows/G/Java Source/linux/.metadata/.plugins/org.eclipse.jdt.core/2075968601.index
+/windows/G/Java Source/linux/.metadata/.plugins/org.eclipse.jdt.core/820019804.index
+/windows/G/Java Source/linux/.metadata/.plugins/org.eclipse.jdt.core/2960635006.index
+/windows/G/Java Source/linux/.metadata/.plugins/org.eclipse.jdt.core/3503231500.index
+/windows/G/Java Source/linux/.metadata/.plugins/org.eclipse.jdt.core/290750574.index
+/windows/G/Java Source/linux/.metadata/.plugins/org.eclipse.jdt.core/3941414335.index
+/windows/G/Java Source/linux/.metadata/.plugins/org.eclipse.jdt.core/2949629524.index

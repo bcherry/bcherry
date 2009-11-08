@@ -1,0 +1,111 @@
+/* $Id: wordfreq.c,v 351.2 2005-03-03 14:50:47-08 - - $ */
+// Ben Cherry - CMPS012B - Wesley Mackey - Winter 05 - Asg 5
+
+/*
+* NAME
+*    wordfreq - starter code for wordfreq
+*
+* SYNOPSIS
+*    wordfreq [filename...]
+*
+* DESCRIPTION
+*    Each file in sequence is opened and read.  As each word is
+*    found it is written to stdout.  If no files are specified,
+*    stdin is read.  
+*
+* OPERANDS
+*    All operands are filenames.  If a filename is specified as
+*    the single character `-', stdin is read at that point.
+*/
+
+#include <ctype.h>
+#include <errno.h>
+#include <libgen.h>
+#include <locale.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <strings.h>
+
+#include "auxlib.h"
+#include "buffer.h"
+#include "bstree.h"
+
+struct options{
+   bool d_debugdump;   /* was the -D flag given? */
+   char **fileargs;   /* points at argv[optind]; */
+   int fileargc;      /* dimension of fileargs */
+};
+
+void scanoptions( struct options *options, int argc, char **argv ){
+	opterr = FALSE;
+	for(;;) {
+		int option = getopt(argc, argv, "D-");
+		if(option == EOF) break;
+		switch(option){
+			case 'D':
+				options->d_debugdump = TRUE;
+				break;
+		}
+	}
+	options->fileargs = argv+optind;
+	options->fileargc = argc - optind;
+}
+
+void countwords( char *filename, FILE *file, bstree_ref bstree){
+   int linenr = 1;
+   buffer_ref buffer = new_buffer();
+   for(;;){
+      int newchar = getc( file );
+      if( newchar == EOF ) break;
+      if( newchar == '\n' ) ++linenr;
+      if( ! isalnum( newchar )) continue;
+      /* LINTED(cast from 32-bit integer to 8-bit integer) */
+      append_buffer( buffer, (char) newchar );
+      for(;;){
+         newchar = getc( file );
+         if( newchar == EOF ) break;
+         if( ! isalnum( newchar )) break;
+         /* LINTED(cast from 32-bit integer to 8-bit integer) */
+         append_buffer( buffer, (char) newchar );
+      };
+      insert_bstree(bstree, peek_buffer(buffer));
+	  //xprintf( "%s: %d: %s\n", filename, linenr, peek_buffer( buffer ));
+      clear_buffer( buffer );
+   };
+   free_buffer( buffer ); buffer = NULL;
+}
+
+int main( int argc, char **argv ){
+   bstree_ref bstree = new_bstree();
+   struct options options;
+   bzero( &options, sizeof options );
+   scanoptions( &options, argc, argv );
+   //char *locale = setlocale( LC_CTYPE, "iso_8859_1" );
+   set_progname( argv[0] );
+   //xprintf( "locale = %s\n", locale ? locale : "(NULL)" );
+   if( argc < 2 ){
+      countwords( "-", stdin, bstree);
+   }else{
+      int itor;
+      for( itor = 0; itor < options.fileargc; itor++ ){
+         if( strcmp( options.fileargs[itor], "-" ) == 0 ){
+            countwords( "-", stdin, bstree);
+         }else{
+            FILE *infile = fopen( options.fileargs[itor], "r" );
+            if( infile == NULL ){
+               syseprintf( options.fileargs[itor] );
+            }else{
+               countwords( options.fileargs[itor], infile, bstree);
+               (void) fclose( infile ); infile = NULL;
+            };
+         };
+      };
+   };
+   if(options.d_debugdump)
+	   debugdump_bstree(bstree);
+   else
+		print_bstree(bstree);
+   free_bstree(bstree);
+   return get_exitcode();
+}
+

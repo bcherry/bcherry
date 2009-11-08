@@ -1,0 +1,19 @@
+[Settings]
+Archive=0
+Pack=1
+Packed Variable=ptdvcode
+Project Name=PTDev
+GCC Switches=-Os -Wall -W -Wwrite-strings
+GNU Assembler Switches=
+Assembler Switches=-g -t
+GNU Linker Switches=
+Linker Switches=
+Debug Info=0
+Standard Library=1
+Command Line=
+Post-Build Process=
+[Included Files]
+C File 1=Pinball Table Creator.c
+Archive File 1=C:\Program Files\TIGCC\extgraph.a
+Text File 1=TI Pinball Table Developer README.txt
+Header File 1=C:\Program Files\TIGCC\Include\extgraph.h

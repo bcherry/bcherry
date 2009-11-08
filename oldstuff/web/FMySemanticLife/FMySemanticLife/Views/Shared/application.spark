@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head> 
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> 
+    <title>FMySemanticLife - A Noteflash Research Project</title> 
+    <link rel="shortcut icon" href="/content/images/favicon.jpg">  
+    <link rel="stylesheet" type="text/css" href="/content/styles/home.css"/> 
+    <link rel="stylesheet" type="text/css" href="/content/styles/default.css"/> 
+    <script type="text/javascript" src="/content/scripts/jquery-1.3.2.min.js"></script>
+    <script type="text/javascript" src="/content/scripts/fml.js"></script>
+</head> 
+ 
+<body> 
+ 
+    <!--Main_Container--> 
+    <center> 
+        <div class="end top"></div> 
+  		<div class="middle" id="middle"> 
+		    <!--Tabs--> 
+		    <ul id="tabs"> 	
+			    <!--Active_Tab--> 
+				    <li class="active"> 
+					    <a> 
+						    <div class="left"></div> 
+						    <div class="center"> 
+							    FMySemanticLife
+						    </div> 
+						    <div class="right"></div> 
+					    </a> 
+				    </li>        
+			    <!--/Active_Tab-->    
+		    </ul> 
+		    <!--/Tabs--> 
+ 
+            <div class="content"> 
+                <div id="title"> 
+                    <div id="logo"></div> 
+                    <div id="slogan"></div> 
+                </div> 
+                <div style="background: url(content/images/shadow_search_bottom.png) top left repeat-x; padding: 50px; text-align: center; font-family: Verdana;"> 
+                    <use content="maincontent" />
+                </div>                    
+            </div> 
+        </div>    
+    	<div class="end bottom"></div>        
+    </center> 
+ 
+    <!--/Main_Container--> 
+    
+    <!--Footer--> 
+    <div id="footer"> 
+    	<span>&copy; 2009 Noteflash Labs</span> 
+    </div> 
+    <!--/Footer--> 
+ 
+    
+    
+</body> 
+ 
+</html>

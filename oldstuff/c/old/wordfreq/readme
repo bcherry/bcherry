@@ -1,0 +1,39 @@
+. $Id$
+. Ben Cherry - CMPS012B - Wesley Mackey - Winter 05 - Asg 5
+
+NAME
+     wordfreq - binary tree word count utility
+
+SYNOPSIS
+     wordfreq [-D] [filename...]
+
+DESCRIPTION
+     The input is scanned for words.  At the end of all of the files,
+     a frequency table is printed, sorted by word, showing each unique
+     word found in the input along with the number of times it
+     appears.  Words are converted to lower case.  A word is any
+     sequence of alphanumeric characters.
+
+OPTIONS
+     Any word of the command line which begins with a minus sign is an
+     option unless it consists of a minus sign by itself.  Options are
+     scanned by getopt(3c).  The following options are supported:
+
+     -D   At the end of execution, instead of printing the output in
+          the normal manner, a debug dump of the entire binary tree is
+          done in debug format showing the values in each node and all
+          pointers in the nodes.
+
+     --   Option scanning stops and all further words from the command
+          line are operands.  See getopt(3c).
+
+OPERANDS
+     All operands are filenames.  Each file is read in sequence.  If
+     no files are specified on the command line, stdin is read.  If
+     any filename is specified as a single minus sign (`-'), stdin is
+     read at that point.
+
+EXIT STATUS
+     0    All input files were read, output was generated, and no
+          invalid options were found.
+     1    An error occurred.

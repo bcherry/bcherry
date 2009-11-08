@@ -1,0 +1,5 @@
+C:\Users\bcherry\Documents\Personal\Software Devlopment\dotnet\FirstCloudService\FirstCloudService\FirstCloudService_WebRole\bin\FirstCloudService_WebRole.dll
+C:\Users\bcherry\Documents\Personal\Software Devlopment\dotnet\FirstCloudService\FirstCloudService\FirstCloudService_WebRole\bin\FirstCloudService_WebRole.pdb
+C:\Users\bcherry\Documents\Personal\Software Devlopment\dotnet\FirstCloudService\FirstCloudService\FirstCloudService_WebRole\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\bcherry\Documents\Personal\Software Devlopment\dotnet\FirstCloudService\FirstCloudService\FirstCloudService_WebRole\obj\Debug\FirstCloudService_WebRole.dll
+C:\Users\bcherry\Documents\Personal\Software Devlopment\dotnet\FirstCloudService\FirstCloudService\FirstCloudService_WebRole\obj\Debug\FirstCloudService_WebRole.pdb

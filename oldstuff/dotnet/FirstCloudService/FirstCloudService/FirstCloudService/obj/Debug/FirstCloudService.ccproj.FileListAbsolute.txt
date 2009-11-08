@@ -1,0 +1,14 @@
+C:\Users\bcherry\Documents\Personal\Software Devlopment\dotnet\FirstCloudService\FirstCloudService\FirstCloudService\bin\Debug\FirstCloudService.csx\roles\WebRole\Default.aspx
+C:\Users\bcherry\Documents\Personal\Software Devlopment\dotnet\FirstCloudService\FirstCloudService\FirstCloudService\bin\Debug\FirstCloudService.csx\roles\WebRole\Web.config
+C:\Users\bcherry\Documents\Personal\Software Devlopment\dotnet\FirstCloudService\FirstCloudService\FirstCloudService\bin\Debug\FirstCloudService.csx\roles\WebRole\bin\FirstCloudService_WebRole.dll
+C:\Users\bcherry\Documents\Personal\Software Devlopment\dotnet\FirstCloudService\FirstCloudService\FirstCloudService\bin\Debug\FirstCloudService.csx\roles\WebRole\bin\FirstCloudService_WebRole.pdb
+C:\Users\bcherry\Documents\Personal\Software Devlopment\dotnet\FirstCloudService\FirstCloudService\FirstCloudService\bin\Debug\FirstCloudService.csx\roles\WebRole\bin\ucruntime.dll
+C:\Users\bcherry\Documents\Personal\Software Devlopment\dotnet\FirstCloudService\FirstCloudService\FirstCloudService\bin\Debug\FirstCloudService.csx\ServiceDefinition.rd
+C:\Users\bcherry\Documents\Personal\Software Devlopment\dotnet\FirstCloudService\FirstCloudService\FirstCloudService\bin\Debug\FirstCloudService.csx\ServiceDefinition.rdsc
+C:\Users\bcherry\Documents\Personal\Software Devlopment\dotnet\FirstCloudService\FirstCloudService\FirstCloudService\bin\Debug\FirstCloudService.csx\ServiceDefinition.csdef
+C:\Users\bcherry\Documents\Personal\Software Devlopment\dotnet\FirstCloudService\FirstCloudService\FirstCloudService\bin\Debug\ServiceConfiguration.cscfg
+C:\Users\bcherry\Documents\Personal\Software Devlopment\dotnet\FirstCloudService\FirstCloudService\FirstCloudService\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\bcherry\Documents\Personal\Software Devlopment\dotnet\FirstCloudService\FirstCloudService\FirstCloudService\obj\Debug\FirstCloudService_WebRole\bin\FirstCloudService_WebRole.dll
+C:\Users\bcherry\Documents\Personal\Software Devlopment\dotnet\FirstCloudService\FirstCloudService\FirstCloudService\obj\Debug\FirstCloudService_WebRole\bin\FirstCloudService_WebRole.pdb
+C:\Users\bcherry\Documents\Personal\Software Devlopment\dotnet\FirstCloudService\FirstCloudService\FirstCloudService\obj\Debug\FirstCloudService_WebRole\Default.aspx
+C:\Users\bcherry\Documents\Personal\Software Devlopment\dotnet\FirstCloudService\FirstCloudService\FirstCloudService\obj\Debug\FirstCloudService_WebRole\Web.config

@@ -1,0 +1,14 @@
+import tio.*;
+
+class OrderTest{
+    public static void main(String[] args){
+        System.out.println("Please supply 3 integers:");
+        System.out.println("Result is " +
+                orderTest(Console.in.readInt(),Console.in.readInt(),
+                        Console.in.readInt()));
+    }
+    static boolean orderTest(int num1, int num2, int num3){
+        if(num1 <= num2 && num2 <= num3) return true;
+        return false;
+    }
+}

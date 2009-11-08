@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<libraryInfos>
+<libraryInfo version="1.4.2_03-b02" home="/usr/lib/SunJava2-1.4.2">
+<bootpath>
+<entry path="/usr/lib/SunJava2-1.4.2/jre/lib/rt.jar"/>
+<entry path="/usr/lib/SunJava2-1.4.2/jre/lib/i18n.jar"/>
+<entry path="/usr/lib/SunJava2-1.4.2/jre/lib/sunrsasign.jar"/>
+<entry path="/usr/lib/SunJava2-1.4.2/jre/lib/jsse.jar"/>
+<entry path="/usr/lib/SunJava2-1.4.2/jre/lib/jce.jar"/>
+<entry path="/usr/lib/SunJava2-1.4.2/jre/lib/charsets.jar"/>
+<entry path="/usr/lib/SunJava2-1.4.2/jre/classes"/>
+</bootpath>
+<extensionDirs>
+<entry path="/usr/lib/SunJava2-1.4.2/jre/lib/ext"/>
+</extensionDirs>
+<endorsedDirs>
+<entry path="/usr/lib/SunJava2-1.4.2/jre/lib/endorsed"/>
+</endorsedDirs>
+</libraryInfo>
+<libraryInfo version="1.4.2_03-b02" home="/usr/lib/SunJava2-1.4.2/jre">
+<bootpath>
+<entry path="/usr/lib/SunJava2-1.4.2/jre/lib/rt.jar"/>
+<entry path="/usr/lib/SunJava2-1.4.2/jre/lib/i18n.jar"/>
+<entry path="/usr/lib/SunJava2-1.4.2/jre/lib/sunrsasign.jar"/>
+<entry path="/usr/lib/SunJava2-1.4.2/jre/lib/jsse.jar"/>
+<entry path="/usr/lib/SunJava2-1.4.2/jre/lib/jce.jar"/>
+<entry path="/usr/lib/SunJava2-1.4.2/jre/lib/charsets.jar"/>
+<entry path="/usr/lib/SunJava2-1.4.2/jre/classes"/>
+</bootpath>
+<extensionDirs>
+<entry path="/usr/lib/SunJava2-1.4.2/jre/lib/ext"/>
+</extensionDirs>
+<endorsedDirs>
+<entry path="/usr/lib/SunJava2-1.4.2/jre/lib/endorsed"/>
+</endorsedDirs>
+</libraryInfo>
+</libraryInfos>

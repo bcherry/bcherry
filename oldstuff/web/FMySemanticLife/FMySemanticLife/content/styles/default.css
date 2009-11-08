@@ -1,0 +1,61 @@
+﻿/* Default StyleSheet - By Jonathan Azoff */
+@import url("reset.css");
+
+/* Navgation */
+ul#nav { display: block; width: 960px; height: auto; list-style: none; margin: 20px auto 5px; }
+ul#nav:after { content: ""; display: block; height: 0; clear: both; visibility: hidden; }
+ul#nav > li.left { float:left; margin-right: 20px; }
+ul#nav > li.right { float:right; margin-left: 20px; }
+ul#nav > li > a { font-size: 12px; font-weight: bold; color: #9C9C9C; }
+ul#nav > li > a:hover { color: #54D5FF; }
+ul#nav > li > form { position: relative; margin-top: -5px; } 
+ul#nav > li > form > * { float: left; }
+ul#nav > li > form > input[type=text] { border: solid 1px #EBEBEB; height: 20px; width: 420px; margin-right: 10px; padding: 3px 3px 0; font-family: "Courier New", Courier, monospace; color: #333333; font-size: 13px; }
+
+/* Tabs */
+ul#tabs { display: block; width: 922px; margin-left: 38px; height: auto; background: url(../images/tabs_bg.png) repeat-y 0 17px; list-style: none; }
+ul#tabs:after { content: ""; display: block; height: 0; clear: both; visibility: hidden; }
+ul#tabs > li { position:relative; float:left; margin-left: -40px; z-index: 2; bottom: 63px;  }
+ul#tabs > li:after { content: ""; display: block; height: 0; clear: both; visibility: hidden; }
+ul#tabs > li > a { display: block; font-size: 11px; color: #737373; float:left; }
+ul#tabs > li > a:hover { color: #54D5FF; }
+ul#tabs > li > a:after { content: ""; display: block; height: 0; clear: both; visibility: hidden; }
+ul#tabs > li > a > div { float: left; height: 40px; width: 36px; }
+ul#tabs > li > a > div.left { background: url(../images/tab_left_inactive.png) right no-repeat; }
+ul#tabs > li > a > div.right { background: url(../images/tab_right_inactive.png) left no-repeat; }
+ul#tabs > li > a > div.center { cursor: pointer; width: auto; height: 22px; min-width: 30px; text-align: center; padding-top: 18px; background: url(../images/tab_center_inactive.png) center repeat-x; }
+ul#tabs > li > a > div.pad { padding-right: 17px; }
+ul#tabs > li > a > div > span { cursor: pointer; display:block; padding-left: 15px; background-position: left center; background-repeat: no-repeat; }
+ul#tabs > li > a.saved > div > span { background-image: url(../images/saved_black.png); }
+ul#tabs > li.active > a.saved > div > span, 
+ul#tabs > li > a.saved:hover > div > span { background-image: url(../images/saved_blue.png); }
+ul#tabs > li > a.unsaved > div > span { background-image: url(../images/unsaved_black.png); }
+ul#tabs > li.active > a.unsaved > div > span, 
+ul#tabs > li > a.unsaved:hover > div > span { background-image: url(../images/unsaved_blue.png); }
+ul#tabs > li > a.search > div > span { background-image: url(../images/search_black.png); }
+ul#tabs > li.active > a.search > div > span, 
+ul#tabs > li > a.search:hover > div > span { background-image: url(../images/search_blue.png); }
+ul#tabs > li > a.closer { width: 12px; height: 12px; background: url(../images/close.png) center no-repeat; position: relative; top: 18px; right: 48px; }
+ul#tabs > li > a.closer:hover { background-image: url(../images/close_red.png); }
+ul#tabs > li.add > a,
+ul#tabs > li.active > a { color: #54D5FF;  }
+ul#tabs > li.active { z-index: 3; }
+ul#tabs > li.active > a > div.left { background-image: url(../images/tab_left.png); }
+ul#tabs > li.active > a > div.right { background-image: url(../images/tab_right.png); }
+ul#tabs > li.active > a > div.center { background-image: url(../images/tab_center.png); }
+
+/* Main Container */
+center { background-color:#FFFFFF; height: auto; width: 974px; text-align: left; margin-top: 40px;  }
+center > div.end { background-repeat: no-repeat; height: 30px;  z-index: 1; width: 974px; }
+center > div.top { background-image: url(../images/shadow_top.png); background-position: bottom; }
+center > div.bottom  { background-image: url(../images/shadow_bottom.png); background-position: top; }
+center > div.middle { background: url(../images/shadow_middle.png) top center repeat-y; width: 960px; padding: 0 7px;  z-index: 2; }
+center > div.middle:after { content: ""; display: block; height: 0; clear: both; visibility: hidden; }
+center > div.middle > div { position: relative; float:left;  width: 960px; margin: -63px 0 -23px; background-color: #FFF; min-height:86px;}
+center > div.middle > div:after { content: ""; display: block; height: 0; clear: both; visibility: hidden; }
+
+/* Footer */
+div#footer { text-transform: uppercase; font: 11px Verdana, Arial, Helvetica, sans-serif; padding-top: 5px; width: 960px;   }
+div#footer > span { float: left; color: #9C9C9C; }
+div#footer > a { float: right; color: #54D5FF; }
+div#footer > a:hover { color: #9C9C9C; }

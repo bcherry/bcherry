@@ -1,0 +1,64 @@
+// $Id$
+
+import static java.lang.System.*;
+
+public class hashset <keytype>{                                  
+	private static class node {                                           
+		Object key;
+		node link;
+	}
+	private int nodecount = 0;
+	private node[] headers = new node[15];
+	public boolean add(keytype any) {
+		if(!contains(any)) {
+			int code = Math.abs(any.hashCode());
+			node newNode = new node();
+			newNode.key = any;
+			newNode.link = headers[code%headers.length];
+			headers[code%headers.length] = newNode;
+			nodecount++;
+            if((double)size()/(double)headers.length > 0.75)
+                increaseSize();
+			return true;
+		} else
+			return false;
+	}
+	public boolean contains (keytype any) {
+		int code = Math.abs(any.hashCode());
+		for(node curr = headers[code%headers.length]; curr != null; curr = curr.link) {
+			if(any.equals(curr.key))
+				return true;
+		}
+		return false;
+	}
+	public int size () {
+		return nodecount;
+	}
+	public void debugDump() {
+		int maxL = 0;
+		for(int i = 0; i < headers.length; i++) {
+			if(headers[i] == null)
+				continue;
+			out.printf("header[%d]:%n", i);
+			int l = 0;
+			for(node curr = headers[i]; curr != null; curr = curr.link) {
+				out.printf("\t-> [%s] (%d)%n", curr.key.toString(), curr.key.hashCode());
+				l++;
+			}
+			if(l > maxL)
+				maxL = l;
+		}
+		out.printf("hashset.size() = %8d%nheaders.length = %8d%nloading factor = %12.3f%nmax chain leng = %8d%n", size(), headers.length, (double)size()/(double)headers.length, maxL);
+	}
+    private void increaseSize() {
+        node[] newHeaders = new node[headers.length*2+1];
+        for(int i = 0; i < headers.length; i++) {
+            for(node curr = headers[i], next = null; curr != null; curr = next) {
+                next = curr.link;
+                curr.link = newHeaders[((keytype)curr.key).hashCode()%newHeaders.length];
+                newHeaders[((keytype)curr.key).hashCode()%newHeaders.length] = curr;
+            }
+        }
+        headers = newHeaders;
+    }
+}   

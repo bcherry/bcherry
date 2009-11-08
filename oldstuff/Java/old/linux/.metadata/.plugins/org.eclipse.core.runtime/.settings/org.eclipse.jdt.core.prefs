@@ -1,0 +1,5 @@
+#Fri Nov 26 17:07:45 PST 2004
+eclipse.preferences.version=1
+org.eclipse.jdt.core.builder.resourceCopyExclusionFilter=*.launch
+org.eclipse.jdt.core.classpathContainer.Hello\ World|org.eclipse.jdt.launching.JRE_CONTAINER=<?xml version\="1.0" encoding\="UTF-8"?>\n<classpath>\n<classpathentry kind\="lib" path\="/usr/lib/SunJava2-1.4.2/jre/lib/rt.jar"/>\n<classpathentry kind\="lib" path\="/usr/lib/SunJava2-1.4.2/jre/lib/sunrsasign.jar"/>\n<classpathentry kind\="lib" path\="/usr/lib/SunJava2-1.4.2/jre/lib/jsse.jar"/>\n<classpathentry kind\="lib" path\="/usr/lib/SunJava2-1.4.2/jre/lib/jce.jar"/>\n<classpathentry kind\="lib" path\="/usr/lib/SunJava2-1.4.2/jre/lib/charsets.jar"/>\n<classpathentry kind\="lib" path\="/usr/lib/SunJava2-1.4.2/jre/lib/ext/dnsns.jar"/>\n<classpathentry kind\="lib" path\="/usr/lib/SunJava2-1.4.2/jre/lib/ext/sunjce_provider.jar"/>\n<classpathentry kind\="lib" path\="/usr/lib/SunJava2-1.4.2/jre/lib/ext/ldapsec.jar"/>\n<classpathentry kind\="lib" path\="/usr/lib/SunJava2-1.4.2/jre/lib/ext/localedata.jar"/>\n</classpath>\n
+org.eclipse.jdt.core.codeComplete.visibilityCheck=enabled

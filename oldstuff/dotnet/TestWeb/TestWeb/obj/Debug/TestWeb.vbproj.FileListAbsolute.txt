@@ -1,0 +1,9 @@
+C:\Users\bcherry\Documents\Personal\Software Devlopment\dotnet\TestWeb\TestWeb\bin\TestWeb.dll
+C:\Users\bcherry\Documents\Personal\Software Devlopment\dotnet\TestWeb\TestWeb\bin\TestWeb.pdb
+C:\Users\bcherry\Documents\Personal\Software Devlopment\dotnet\TestWeb\TestWeb\bin\TestWeb.xml
+C:\Users\bcherry\Documents\Personal\Software Devlopment\dotnet\TestWeb\TestWeb\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\bcherry\Documents\Personal\Software Devlopment\dotnet\TestWeb\TestWeb\obj\Debug\TestWeb.Resources.resources
+C:\Users\bcherry\Documents\Personal\Software Devlopment\dotnet\TestWeb\TestWeb\obj\Debug\TestWeb.vbproj.GenerateResource.Cache
+C:\Users\bcherry\Documents\Personal\Software Devlopment\dotnet\TestWeb\TestWeb\obj\Debug\TestWeb.dll
+C:\Users\bcherry\Documents\Personal\Software Devlopment\dotnet\TestWeb\TestWeb\obj\Debug\TestWeb.xml
+C:\Users\bcherry\Documents\Personal\Software Devlopment\dotnet\TestWeb\TestWeb\obj\Debug\TestWeb.pdb

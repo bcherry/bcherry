@@ -1,0 +1,17 @@
+[Settings]
+Project Name=AI
+GCC Switches=-O2 -Wall -W
+Assembler Switches=-k -g -t
+Linker Switches=
+BSR Patch=1
+Pack=0
+Packed Variable=
+Archive=0
+GNU Assembler Switches=
+GNU Linker Switches=
+Debug Info=0
+Standard Library=1
+Command Line=
+Post-Build Process=
+[Included Files]
+C File 1=AI.c

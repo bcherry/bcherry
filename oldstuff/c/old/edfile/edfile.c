@@ -1,0 +1,255 @@
+/* $Id: edfile.c,v 351.7 2005-02-15 16:01:42-08 - - $ */
+
+#include <assert.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <strings.h>
+
+#include "auxlib.h"
+#include "list.h"
+
+static char* progname = NULL;
+
+struct options{
+   bool e_opt_echo;   /* was the -e flag given? */
+   bool s_opt_silent; /* was the -s flag given? */
+   char **fileargs;   /* points at argv[optind]; */
+   int fileargc;      /* dimension of fileargs */
+};
+
+void scanoptions( struct options *options, int argc, char **argv ){
+	opterr = FALSE;
+	for(;;) {
+		int option = getopt(argc, argv, "es-");
+		if(option == EOF) break;
+		switch(option){
+			case 'e':
+				options->e_opt_echo = TRUE;
+				break;
+			case 's':
+				options->s_opt_silent = TRUE;
+				break;
+		}
+	}
+	options->fileargs = argv+optind;
+	options->fileargc = argc - optind;
+}
+
+void badline( int stdincount, char *stdinline ){
+   eprintf( "Bad input line %d: %s\n", stdincount, stdinline );
+}
+
+void printCurr(list_ref list, struct options* options) {
+	if(!options->s_opt_silent) {
+		if(viewcurr_list(list) == NULL)
+			eprintf(" No text to print.\n");
+		else
+			printf("\t%s\n",viewcurr_list(list));
+	}
+}
+void lastLine(list_ref list, struct options* options) {
+	setmove_list(list, MOVE_LAST);
+	printCurr(list, options);
+}
+void firstLine(list_ref list, struct options* options) {
+	setmove_list(list, MOVE_HEAD);
+	if(setmove_list(list, MOVE_NEXT))
+		printCurr(list, options);
+}
+void printAll(list_ref list, struct options* options) {
+	setmove_list(list, MOVE_HEAD);
+	while(setmove_list(list, MOVE_NEXT)) {
+		printCurr(list, options);
+	}
+}
+void prevLine(list_ref list, struct options* options) {
+	if(!setmove_list(list,MOVE_PREV))
+		setmove_list(list, MOVE_NEXT);
+	printCurr(list, options);
+}
+void nextLine(list_ref list, struct options* options) {
+	setmove_list(list,MOVE_NEXT);
+	printCurr(list, options);
+}
+void insertAfter(list_ref list, char* line, struct options* options) {
+	insert_list(list, line);
+	printCurr(list, options);
+}
+void deleteLine(list_ref list, struct options* options) {
+	delete_list(list);
+}
+void insertBefore(list_ref list, char* line, struct options* options) {
+	setmove_list(list, MOVE_PREV);
+	insert_list(list, line);
+	printCurr(list, options);
+}
+int readFile(list_ref list, char* filename, struct options* options) {
+	int lineNum = 0;
+	char buf[1024];
+
+	FILE *f = fopen(filename, "r");
+	if(f == NULL) {
+		eprintf("Error opening %s\n", filename);
+		fclose(f);
+		return -1;
+	}
+	for(;;) {
+		char *linepos = fgets( buf, sizeof buf, f );
+		linepos = strchr( buf, '\n' );
+		
+		if( linepos == NULL || buf[0] == '\0' ){
+			break;
+		}else{
+			*linepos = '\0';
+			insert_list(list, buf);
+			lineNum++;
+		}
+	}
+	fclose(f);
+	return lineNum;
+}
+int writeFile(list_ref list, char *filename, struct options* options) {
+	int count = 0;
+	FILE *f = fopen(filename, "w");
+	if(f == NULL) {
+		eprintf("Error writing to file %s\n", filename);
+		fclose(f);
+		return -1;
+	}
+	for(setmove_list(list, MOVE_HEAD); setmove_list(list, MOVE_NEXT);) {
+		fputs(viewcurr_list(list), f);
+		fputs("\n",f);
+		count++;
+	}
+	return count;
+}
+
+void editfile( struct options *options, list_ref list ){
+   char stdinline[1024];
+   char *operand = NULL;
+   int stdincount = 0;
+   int lineCount = 0;
+   char *linepos = NULL;
+   for(;;){
+      if(!options->s_opt_silent)
+		 printf("%s: ", progname); 
+	  linepos = fgets( stdinline, sizeof stdinline, stdin );
+      if( linepos == NULL ) break;
+	  if(options->e_opt_echo && !options->s_opt_silent)
+	     printf("%s",stdinline);
+      linepos = strchr( stdinline, '\n' );
+      if( linepos == NULL || stdinline[0] == '\0' ){
+         badline( stdincount, stdinline );
+      }else{
+         *linepos = '\0';
+		 operand=stdinline+1;
+         switch( stdinline[0] ){
+            case '$':
+            	if(stdinline[1] != '\0') {
+					badline(stdincount, stdinline);
+					break;
+				}
+            	lastLine(list, options);
+            	break;
+            case '*':
+            	if(stdinline[1] != '\0') {
+					badline(stdincount, stdinline);
+					break;
+				}
+            	printAll(list, options); 
+            	break;
+            case '.': 
+            	if(stdinline[1] != '\0') {
+					badline(stdincount, stdinline);
+					break;
+				}
+            	printCurr(list, options);
+            	break;
+            case '0':
+            	if(stdinline[1] != '\0') {
+					badline(stdincount, stdinline);
+					break;
+				}
+            	firstLine(list, options);
+            	break;
+            case '<': 
+            	if(stdinline[1] != '\0') {
+					badline(stdincount, stdinline);
+					break;
+				}
+            	prevLine(list, options);
+            	break;
+            case '>': 
+            	if(stdinline[1] != '\0') {
+					badline(stdincount, stdinline);
+					break;
+				}
+            	nextLine(list, options);
+            	break;
+            case '@': 
+            	if(stdinline[1] != '\0') {
+					badline(stdincount, stdinline);
+					break;
+				}
+            	debugdump_list( list );
+            	break;
+            case 'a': 
+            	insertAfter(list, operand, options);
+            	break;
+            case 'd': 
+            	if(stdinline[1] != '\0') {
+					badline(stdincount, stdinline);
+					break;
+				}
+            	deleteLine(list, options);
+            	break;
+            case 'i': 
+            	insertBefore(list, operand, options); 
+            	break;
+            case 'r':
+				lineCount = readFile(list, operand, options); 
+            	if(lineCount>=0 && !options->s_opt_silent)
+					printf("%s: %d lines read.\n", progname, lineCount);
+				break;
+            case 'w': 
+            	lineCount = writeFile(list, operand, options); 
+            	if(lineCount>=0 && !options->s_opt_silent)
+					printf("%s: %d lines written to %s\n", progname, lineCount, operand);
+				break;
+            default :
+            	badline( stdincount, stdinline );
+         };
+      };
+      ++stdincount;
+   };
+   if(!options->s_opt_silent)
+	  printf("\n");
+}
+
+void readFiles(list_ref list, struct options *options) {
+	int i;
+	int count = 0;
+	int n;
+
+	for(i = 0; i < options->fileargc; i++) {
+		if((n=readFile(list, options->fileargs[i], options)) < 0)
+			break;
+		count+=n;
+	}
+	if(!options->s_opt_silent)
+		printf("%s: %d lines read.\n", progname, count);
+}
+
+int main( int argc, char **argv ){
+   struct options options;
+   list_ref list = NULL;
+   bzero( &options, sizeof options );
+   set_progname( argv[0] );
+   progname = argv[0];
+   scanoptions( &options, argc, argv );
+   list = new_list();
+   readFiles(list, &options);
+   editfile( &options, list );
+   free_list( list ); list = NULL;
+   return get_exitcode();
+}

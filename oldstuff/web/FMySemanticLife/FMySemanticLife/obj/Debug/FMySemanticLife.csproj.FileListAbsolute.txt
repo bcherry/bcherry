@@ -1,0 +1,9 @@
+C:\Users\bcherry\Documents\Personal\Software Devlopment\web\FMySemanticLife\FMySemanticLife\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\bcherry\Documents\Personal\Software Devlopment\web\FMySemanticLife\FMySemanticLife\bin\FMySemanticLife.dll
+C:\Users\bcherry\Documents\Personal\Software Devlopment\web\FMySemanticLife\FMySemanticLife\bin\FMySemanticLife.pdb
+C:\Users\bcherry\Documents\Personal\Software Devlopment\web\FMySemanticLife\FMySemanticLife\obj\Debug\FMySemanticLife.dll
+C:\Users\bcherry\Documents\Personal\Software Devlopment\web\FMySemanticLife\FMySemanticLife\obj\Debug\FMySemanticLife.pdb
+C:\Users\bcherry\Documents\Personal\Software Devlopment\web\FMySemanticLife\FMySemanticLife\bin\MvcContrib.SparkViewEngine.dll
+C:\Users\bcherry\Documents\Personal\Software Devlopment\web\FMySemanticLife\FMySemanticLife\bin\Spark.dll
+C:\Users\bcherry\Documents\Personal\Software Devlopment\web\FMySemanticLife\FMySemanticLife\bin\Spark.Web.Mvc.dll
+C:\Users\bcherry\Documents\Personal\Software Devlopment\web\FMySemanticLife\FMySemanticLife\bin\SparkLanguage.dll

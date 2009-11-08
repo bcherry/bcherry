@@ -1,0 +1,28 @@
+[Settings]
+Archive=0
+Pack=0
+Packed Variable=
+Project Name=Demos
+GCC Switches=-Os -Wall -W -Wwrite-strings
+GNU Assembler Switches=
+Assembler Switches=-g -t
+GNU Linker Switches=
+Linker Switches=
+Debug Info=0
+Standard Library=1
+Command Line=
+Post-Build Process=
+[Included Files]
+C File 1=extgraph\src\demos\demo1.c
+C File 2=extgraph\src\demos\demo7.c
+C File 3=extgraph\src\demos\demo6.c
+C File 4=extgraph\src\demos\demo5.c
+C File 5=extgraph\src\demos\demo4.c
+C File 6=extgraph\src\demos\demo3.c
+C File 7=extgraph\src\demos\demo2.c
+C File 8=extgraph\src\demos\demo11.c
+C File 9=extgraph\src\demos\demo10.c
+C File 10=extgraph\src\demos\demo9.c
+C File 11=extgraph\src\demos\demo8.c
+Archive File 1=extgraph\lib\extgraph.a
+Header File 1=extgraph\lib\extgraph.h

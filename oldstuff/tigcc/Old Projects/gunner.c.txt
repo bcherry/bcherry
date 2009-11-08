@@ -1,0 +1,111 @@
+// C Source File
+// Created 11/15/03; 4:49:22 PM
+
+#define USE_TI89              // Compile for TI-89
+//#define USE_TI92PLUS          // Compile for TI-92 Plus
+//#define USE_V200              // Compile for V200
+
+#define OPTIMIZE_ROM_CALLS    // Use ROM Call Optimization
+
+#define SAVE_SCREEN           // Save/Restore LCD Contents
+
+#include <tigcclib.h>         // Include All Header Files
+#include "gunner.h"
+
+#define UP 0b1
+#define DOWN 0b100
+#define LEFT 0b10
+#define RIGHT 0b1000
+#define SEC 0b10000
+
+// Main Function
+void _main(void)
+{
+	INT_HANDLER interrupt1 = GetIntVec(AUTO_INT_1);
+	
+	int key=0;
+	char choice=0;
+	char done=0;
+	
+	POS gunner1= {16,39};
+	
+	GrayOn();
+	
+	title: choice=title();
+		if (!choice) {
+			SetIntVec(AUTO_INT_1,interrupt1);
+			GrayOff();
+			return;
+		}
+	
+	while (1) {
+		
+		// initialize
+		done=0;
+		
+		CLRSCR();
+		
+		drawGunner(gunner1);
+		
+		//game loop
+		SetIntVec(AUTO_INT_1,DUMMY_HANDLER);
+		while(!quit() && !done) {
+			start:
+			key=0;
+			
+			delay(6);
+		} //while !quit and !done
+		
+		if (!done) {
+			SetIntVec(AUTO_INT_1,interrupt1);
+			GrayOff();
+			return;
+		}
+		
+	} //infinite loop
+}
+
+// main menu
+inline int title(void) {
+	int key=0;
+	GraySetAMSPlane(LIGHT_PLANE);
+	ClrScr();
+	DrawStr(65,45,"BEGIN!",A_NORMAL);
+	GraySetAMSPlane(DARK_PLANE);
+	ClrScr();
+	DrawStr(65,45,"BEGIN!",A_NORMAL);
+	drawGunner((POS){14,14});
+	key=ngetchx();
+	if (key==KEY_ESC) return 0;
+	return 1;
+}
+
+// clear planes
+inline void CLRSCR(void) {
+	GraySetAMSPlane(LIGHT_PLANE);
+	ClrScr();
+	GraySetAMSPlane(DARK_PLANE);
+	ClrScr();
+}
+
+// draw gunman
+inline void drawGunner(POS pos) {
+		Sprite16(pos.x,pos.y,16,gunmanLIGHT,GrayGetPlane(LIGHT_PLANE),SPRT_XOR);
+		Sprite16(pos.x,pos.y,16,gunmanDARK,GrayGetPlane(DARK_PLANE),SPRT_XOR);
+}
+
+// delay program
+inline void delay(unsigned int number) {
+	unsigned short loop, loop2;
+	for (loop=0;loop<number;loop++) {
+		for (loop2=0;loop2<10000;loop2++);
+	}
+}
+
+// check if user pressed ESC
+inline short int quit(void) {
+	if (_rowread(~0x0040) & 0x0001) {
+		return 1;
+	}	
+	return 0;
+}

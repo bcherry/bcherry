@@ -1,0 +1,17 @@
+# $Id: test,v 350.2 2005-01-19 12:53:21-08 - - $
+aa=bb
+cc=dd
+ee=ff
+gg=hh
+ii=dd
+=
+
+=dd
+
+gg=
+gg=
+ee=xxxxx
+=
+
+=dd
+
