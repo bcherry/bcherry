@@ -11,7 +11,7 @@
 		prefix = function(str) { 
 			var space = "";
 			if (prefix) {
-				space = " ";
+				space = " -- ";
 			}
 			return _prefix + space + str;
 		};
@@ -51,7 +51,7 @@
 			var fn = function(fn) {
 				return function() {
 					//TODO: better check and add more supported browsers
-					if (window.console && ("firebug" in window.console || "chromium" in window)) {
+					if (window.console && (("firebug" in window.console) || ("chromium" in window))) {
 						return fn.apply(this, arguments);
 					}
 				};
