@@ -1,13 +1,19 @@
 ;(function(){
+	var _on = true;
+
 	var _AGD = function(prefix, on) {
-		if (prefix) {
-			prefix = prefix + " ";
-		} else {
-			prefix = "";
+		if (on === undefined) {
+			on = _on;
 		}
 
-		var _prefix = prefix;
-		prefix = function(str) { return _prefix + str; };
+		var _prefix = prefix || "";
+		prefix = function(str) { 
+			var space = "";
+			if (prefix) {
+				space = " ";
+			}
+			return _prefix + space + str;
+		};
 
 		this.log = function() {
 			arguments[0] = prefix(arguments[0]);
@@ -61,6 +67,24 @@
 			}
 		};
 
+		this.setOn = function(on) {
+			if (on !== undefined && !on) {
+				agd.turnOff();
+			}
+		};
+
+		this.extend = function(prefix, on) {
+			var sep = "";
+			if (_prefix) {
+				sep = "::";
+			}
+			return new _AGD(_prefix + sep + prefix, on);
+		};
+
+		this.rebase = function(prefix) {
+			_prefix = prefix;
+		};
+
 		if (on !== undefined && !on) {
 			this.turnOff();
 		}
@@ -68,15 +92,12 @@
 
 	var agd = new _AGD();
 
+	var _setOn = agd.setOn;
 	agd.setOn = function(on) {
-		if (on !== undefined && !on) {
-			agd.turnOff();
-		}
+		_on = !!on;
+		_setOn(on);
 	};
 
-	agd.extend = function(prefix, on) {
-		return new _AGD(prefix, on);
-	};
 
 	window.AGD = agd;
 })();
