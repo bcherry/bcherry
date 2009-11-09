@@ -1,5 +1,6 @@
 ;(function(){
 	var _on = true;
+	var protectedMethods = ["setOn", "extend", "turnOff"];
 
 	var _AGD = function(prefix, on) {
 		if (on === undefined) {
@@ -61,7 +62,7 @@
 
 		this.turnOff = function() {
 			for (var prop in this) {
-				if (this[prop].constructor == Function) {
+				if (this[prop].constructor == Function && !(prop in protectedMethods)) {
 					this[prop] = function() {return;};
 				}
 			}
