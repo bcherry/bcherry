@@ -1,6 +1,6 @@
 ;(function(){
 	var _on = true;
-	var protectedMethods = ["setOn", "extend", "turnOff"];
+	var protectedMethods = {setOn:1, extend:1, turnOff:1};
 
 	var _AGD = function(prefix, on) {
 		if (on === undefined) {
