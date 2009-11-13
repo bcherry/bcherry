@@ -5,9 +5,9 @@ api_version: 1
 
 handlers:
 # Static CSS/JS/IMG, including sub-apps
-- url: /(.+?/|)?(scripts|images|styles)/(.*)
-  static_files: \1content/\2/\3
-  upload: /content/(scripts|images|styles)/.*?\.(js|css|gif|png|jpg)
+- url: /(.+?/|)?(js|images|css)/(.*)
+  static_files: \1static/\2/\3
+  upload: /static/(js|images|css)/.*?\.(js|css|gif|png|jpg)
 
 # Pets
 - url: /pets
@@ -16,6 +16,11 @@ handlers:
 # AGD Project
 - url: /agd
   script: /agd/main.py
+
+# Blaster Project
+- url: /blaster
+  script: /blaster/main.py
+
 
 # Main Page
 - url: .*

@@ -4,7 +4,7 @@ from google.appengine.ext import webapp
 
 class MainHandler(webapp.RequestHandler):
 	def get(self):
-		self.response.out.write('<a href="http://blog.bcherry.net">My Blog</a>')
+		self.response.out.write('<a href="http://www.adequatelygood.com">My Blog</a>')
 
 def main():
 	application = webapp.WSGIApplication([('/', MainHandler)], debug=True)
