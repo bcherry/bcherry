@@ -7,7 +7,7 @@ handlers:
 # Static CSS/JS/IMG, including sub-apps
 - url: /(.+?/|)?(js|images|css)/(.*)
   static_files: \1static/\2/\3
-  upload: /static/(js|images|css)/.*?\.(js|css|gif|png|jpg)
+  upload: (.*?/)?static/(js|images|css)/.*?\.(js|css|gif|png|jpg)
 
 # Pets
 - url: /pets

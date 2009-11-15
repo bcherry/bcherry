@@ -142,8 +142,9 @@
 		
 		var keyMap = {
 			16	: "shift", 		// Shift
-			17	: "2nd",		// Control
-			90	: "diamond",	// Z
+			32	: "2nd",		// Space
+			17	: "diamond",	// Control
+			13	: "enter",		// Enter/Return
 			38	: "up",			// Up
 			40	: "down",		// Down
 			37	: "left",		// Left
