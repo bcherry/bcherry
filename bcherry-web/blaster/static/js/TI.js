@@ -63,8 +63,12 @@
 		
 		this.pixelOff = function(x, y) {
 			var ctx = canvas.getContext("2d");
-			ctx.fillStyle = params.bgColor;
-			ctx.fillRect(getX(x), getY(y), pixelWidth, pixelHeight);
+			ctx.clearRect(getX(x), getY(y), pixelWidth, pixelHeight);
+		};
+		
+		this.clear = function() {
+			var ctx = canvas.getContext("2d");
+			ctx.clearRect(0, 0, width, height);
 		};
 		
 		this.drawSprite = function(sprite, width, x, y, mode) {
@@ -122,6 +126,11 @@
 			plane2.pixelOff(x, y);
 		};
 		
+		this.clear = function() {
+			plane1.clear();
+			plane2.clear();
+		};
+		
 		this.drawSprite = function(layer1, layer2, width, x, y, mode) {
 			plane1.drawSprite(layer1, width, x, y, mode);
 			plane2.drawSprite(layer2, width, x, y, mode);
@@ -155,11 +164,14 @@
 			"left"		: function(){return;},
 			"right"		: function(){return;}
 		};
-		this.listen = function(name, func) {
+		this.listen = function(name, func, repeat) {
 			assert(name in events, "Unsupported key.");
 			
 			var oldfunc = events[name];
 			events[name] = function() {
+				if (!repeat) {
+					
+				}
 				if (func() === false) {
 					return false;
 				}
@@ -168,8 +180,14 @@
 		};
 		this.press = function(name) {
 			assert(name in events, "Unsupported key.");
+				
+			events[name]();
+		};
+		
+		this.isPressed = function(name) {
+			assert(name in events, "Unsupported key.");
 			
-			return events[name]();
+			return name in pressedKeys;
 		};
 		
 		var translateKeyCode = function(code) {
@@ -180,17 +198,40 @@
 			return keyMap[code];
 		};
 		
+		var pressedKeys = {};
+		var watchKeys = function() {
+			for (var key in pressedKeys) {
+				events[key]();
+			}
+		};
+		
 		var oldfunc = document.onkeydown;
 		document.onkeydown = function(e) {
 			var keyCode = (window.event) ? event.keyCode : e.keyCode;
 			var key = translateKeyCode(keyCode);
-			if (key && _this.press(key) === false) {
-				return false;
+			if (key) {
+				pressedKeys[key] = true;
 			}
+			
 			if (oldfunc) {
 				return oldfunc();
 			}
 		};
+		
+		var oldup = document.onkeyup;
+		document.onkeyup = function(e) {
+			var keyCode = (window.event) ? event.keyCode : e.keyCode;
+			var key = translateKeyCode(keyCode);
+			if (key && pressedKeys[key] !== undefined) {
+				delete pressedKeys[key];
+			}
+			
+			if (oldup) {
+				return oldup();
+			}
+		};
+		
+		setInterval(watchKeys, 100);
 	};
 	
 	// extra internal bits
