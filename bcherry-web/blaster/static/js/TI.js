@@ -1,5 +1,5 @@
 // This file provides a mock JavaScript API for a TI graphing calculator
-// You'll need a browser with <canvas> support, of course
+// It doesn't work in IE, because you need canvas and reasonable key detection
 // Right now, it assumes a TI-89 variety, but adding support for others would be trivial
 ;(function(){
 	var TI = window.TI = {};
@@ -38,6 +38,8 @@
 		}
 		
 		this.getDomElement = this.display.getDomElement;
+		
+		this.keys = new Keys();
 	};
 	
 	var BasicDisplay = function(params, width, height, noWarn) {
@@ -124,7 +126,72 @@
 			plane1.drawSprite(layer1, width, x, y, mode);
 			plane2.drawSprite(layer2, width, x, y, mode);
 		};
-	}
+	};
+	
+	var Keys = function() {
+		var _this = this;
+		
+		var keyMap = {
+			16	: "shift", 		// Shift
+			17	: "2nd",		// Control
+			90	: "diamond",	// Z
+			38	: "up",			// Up
+			40	: "down",		// Down
+			37	: "left",		// Left
+			39	: "right",		// Right
+			27	: "esc",		// Escape
+			112	: "f1",			// F1
+			113	: "f2",			// F2
+			114 : "f3",			// F3
+			115 : "f4",			// F4
+			116 : "f5",			// F5  
+		};
+		var events = {
+			"2nd"		: function(){return;},
+			"diamond"	: function(){return;},
+			"shift"		: function(){return;},
+			"up"		: function(){return;},
+			"down"		: function(){return;},
+			"left"		: function(){return;},
+			"right"		: function(){return;}
+		};
+		this.listen = function(name, func) {
+			assert(name in events, "Unsupported key.");
+			
+			var oldfunc = events[name];
+			events[name] = function() {
+				if (func() === false) {
+					return false;
+				}
+				return oldfunc();
+			};
+		};
+		this.press = function(name) {
+			assert(name in events, "Unsupported key.");
+			
+			return events[name]();
+		};
+		
+		var translateKeyCode = function(code) {
+			if (!(code in keyMap)) {
+				return false;
+			}
+			
+			return keyMap[code];
+		};
+		
+		var oldfunc = document.onkeydown;
+		document.onkeydown = function(e) {
+			var keyCode = (window.event) ? event.keyCode : e.keyCode;
+			var key = translateKeyCode(keyCode);
+			if (key && _this.press(key) === false) {
+				return false;
+			}
+			if (oldfunc) {
+				return oldfunc();
+			}
+		};
+	};
 	
 	// extra internal bits
 	var assert = function(test, msg) {

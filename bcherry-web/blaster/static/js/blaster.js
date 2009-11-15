@@ -13,10 +13,7 @@
 		
 		calc.display.drawSprite(Sprites.jetReg.p1, Sprites.jetReg.p2, Sprites.jetReg.width, 0, 0);
 		
-		calc.display.pixelOn(10, 20, 0);
-		calc.display.pixelOn(11, 20, 1);
-		calc.display.pixelOn(12, 20, 2);
-		calc.display.pixelOn(13, 20, 3);
+		calc.keys.listen("2nd", function(){AGD.log("pressed 2nd");});
 	};
 	
 	$(init);
