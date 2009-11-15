@@ -7,35 +7,97 @@
 	var calcs = {
 		ti89	: {
 			display	: {
-				height	: 100,
 				width	: 160,
+				height	: 100,
 				bgColor	: "#D7E5D2",
 				fgColor	: "#313F42"
 			}
 		}
 	};
 	
-	TI.Calculator = function(model) {
+	TI.Calculator = function(model, params) {
 		assert(model in calcs, "Unsupported Calculator");
 		
-		this.display = new Display(calcs[model].display);
+		params = params || {};
+		defaultParams = {
+			width	: calcs[model].display.width,
+			height	: calcs[model].display.height
+		};
+		for (var key in defaultParams) {
+			if (params[key] === undefined) {
+				params[key] = defaultParams[key];
+			}
+		}
+		
+		this.display = new Display(calcs[model].display, params.width, params.height);
 		
 		this.getDomElement = this.display.getDomElement;
 	};
 	
-	var Display = function(params) {
+	var Display = function(params, width, height) {
 		var canvas = document.createElement("canvas");
-		canvas.height = params.height;
-		canvas.width = params.width;
+		
+		issueWarnings("display", params, width, height);
+		canvas.width = width;
+		canvas.height = height;
+		var pixelWidth = width / params.width;
+		var pixelHeight = height / params.height;
+		
 		canvas.setAttribute("style", "background-color:" + params.bgColor + ";border:solid 1px black;");
 		
 		this.getDomElement = function() { return canvas; };
+		
+		this.pixelOn = function(x, y) {
+			var ctx = canvas.getContext("2d");
+			ctx.fillStyle = params.fgColor;
+			ctx.fillRect(getX(x), getY(y), pixelWidth, pixelHeight);
+		};
+		
+		this.pixelOff = function(x, y) {
+			var ctx = canvas.getContext("2d");
+			ctx.fillStyle = params.bgColor;
+			ctx.fillRect(getX(x), getY(y), pixelWidth, pixelHeight);
+		};
+		
+		var getX = function(x) {
+			return x * pixelWidth;
+		};
+		
+		var getY = function(y) {
+			return y * pixelHeight;
+		};
 	};
 	
 	// extra internal bits
 	var assert = function(test, msg) {
 		if (!test) {
 			throw "TIjs Error: " + msg;
+		}
+	};
+	
+	var warn = function(msg) {
+		if (window.console) {
+			console.warn("TIjs Warning: " + msg);
+		}
+	};
+	
+	var issueWarnings = function(component, params, width, height) {
+		switch (component.toLowerCase()) {
+			case "display":
+				if (width < params.width) {
+					warn("Display width is too small, some pixels will be lost.");
+				} else if (width % params.width !== 0) {
+					warn("Display width is not even multiple of native width and will look bad.");
+				}
+				if (height < params.height) {
+					warn("Display height is too small, some pixels will be lost");
+				} else if (height % params.height !== 0) {
+					warn("Display height is not even multiple of native height and will look bad.");
+				}
+				if (width / height != params.width / params.height) {
+					warn("Display aspect ratio is off, dome distortion will occur.");
+				}
+				break;
 		}
 	};
 })();
