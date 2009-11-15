@@ -21,7 +21,8 @@
 		params = params || {};
 		defaultParams = {
 			width	: calcs[model].display.width,
-			height	: calcs[model].display.height
+			height	: calcs[model].display.height,
+			gfxMode	: "monochrome"
 		};
 		for (var key in defaultParams) {
 			if (params[key] === undefined) {
@@ -29,15 +30,20 @@
 			}
 		}
 		
-		this.display = new BasicDisplay(calcs[model].display, params.width, params.height);
+		assert(params.gfxMode in {"monochrome":1, "grayscale":1}, "Unsupported graphics mode.");
+		if (params.gfxMode == "monochrome") {
+			this.display = new BasicDisplay(calcs[model].display, params.width, params.height);
+		} else if (params.gfxMode == "grayscale") {
+			this.display = new GrayDisplay(calcs[model].display, params.width, params.height);
+		}
 		
 		this.getDomElement = this.display.getDomElement;
 	};
 	
-	var BasicDisplay = function(params, width, height) {
-		var canvas = document.createElement("canvas");
+	var BasicDisplay = function(params, width, height, noWarn) {
+		noWarn || issueWarnings("display", params, width, height);
 		
-		issueWarnings("display", params, width, height);
+		var canvas = document.createElement("canvas");
 		canvas.width = width;
 		canvas.height = height;
 		var pixelWidth = width / params.width;
@@ -63,9 +69,7 @@
 			mode = mode || "xor";
 			
 			for (var row = 0; row < sprite.length; row++) {
-				console.log("row %o", row);
 				for (var col = 0; col < width; col++) {
-					console.log("col %o", col);
 					if ((sprite[row] >> (width - col - 1)) & 1) {
 						this.pixelOn(x + col, y + row);
 					}
@@ -81,6 +85,46 @@
 			return y * pixelHeight;
 		};
 	};
+	
+	var GrayDisplay = function(params, width, height, noWarn) {
+		noWarn || issueWarnings("display", params, width, height);
+		
+		var div = document.createElement("div");
+		div.setAttribute("style", "width:" + width + ";height:" + height + ";background-color:" + params.bgColor + ";border:solid 1px black;position:relative;");
+		
+		var plane1 = new BasicDisplay(params, width, height, true);
+		var plane2 = new BasicDisplay(params, width, height, true);
+		
+		plane1.getDomElement().setAttribute("style", "position:absolute;top:0;left:0;opacity:0.3;");
+		plane2.getDomElement().setAttribute("style", "position:absolute;top:0;left:0;opacity:0.7;");
+		
+		div.appendChild(plane1.getDomElement());
+		div.appendChild(plane2.getDomElement());
+		
+		this.getDomElement = function() { return div; };
+		
+		this.pixelOn = function(x, y, color) {
+			if (color === undefined) {
+				color = 3;
+			}
+			if (color & 1) {
+				plane1.pixelOn(x, y);
+			}
+			if (color & (1 << 1)) {
+				plane2.pixelOn(x, y);
+			}
+		};
+		
+		this.pixelOff = function(x, y) {
+			plane1.pixelOff(x, y);
+			plane2.pixelOff(x, y);
+		};
+		
+		this.drawSprite = function(layer1, layer2, width, x, y, mode) {
+			plane1.drawSprite(layer1, width, x, y, mode);
+			plane2.drawSprite(layer2, width, x, y, mode);
+		};
+	}
 	
 	// extra internal bits
 	var assert = function(test, msg) {
