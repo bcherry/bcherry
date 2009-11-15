@@ -10,12 +10,7 @@
 	var init = function() {
 		document.body.appendChild(calc.display.getDomElement());
 		
-		for (var x = 0; x < 100; x++) {
-			calc.display.pixelOn(x, x);
-			if (x % 2 === 0) {
-				calc.display.pixelOff(x, x);
-			}
-		}
+		calc.display.drawSprite(Sprites.shieldIcon.p1, Sprites.shieldIcon.width, 0, 0);
 	};
 	
 	$(init);

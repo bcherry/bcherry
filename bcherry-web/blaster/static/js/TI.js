@@ -29,12 +29,12 @@
 			}
 		}
 		
-		this.display = new Display(calcs[model].display, params.width, params.height);
+		this.display = new BasicDisplay(calcs[model].display, params.width, params.height);
 		
 		this.getDomElement = this.display.getDomElement;
 	};
 	
-	var Display = function(params, width, height) {
+	var BasicDisplay = function(params, width, height) {
 		var canvas = document.createElement("canvas");
 		
 		issueWarnings("display", params, width, height);
@@ -57,6 +57,20 @@
 			var ctx = canvas.getContext("2d");
 			ctx.fillStyle = params.bgColor;
 			ctx.fillRect(getX(x), getY(y), pixelWidth, pixelHeight);
+		};
+		
+		this.drawSprite = function(sprite, width, x, y, mode) {
+			mode = mode || "xor";
+			
+			for (var row = 0; row < sprite.length; row++) {
+				console.log("row %o", row);
+				for (var col = 0; col < width; col++) {
+					console.log("col %o", col);
+					if ((sprite[row] >> (width - col - 1)) & 1) {
+						this.pixelOn(x + col, y + row);
+					}
+				}
+			}
 		};
 		
 		var getX = function(x) {
