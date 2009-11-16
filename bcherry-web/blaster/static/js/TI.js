@@ -134,7 +134,6 @@
 		
 		this.width = width;
 		this.height = height;
-		
 	};
 	
 	var GrayDisplay = function(params, width, height, noWarn) {
@@ -143,42 +142,88 @@
 		var div = document.createElement("div");
 		div.setAttribute("style", "width:" + width + ";height:" + height + ";background-color:" + params.bgColor + ";border:solid 1px black;position:relative;");
 		
-		var plane1 = new BasicDisplay(params, params.width, params.height, true);
-		var plane2 = new BasicDisplay(params, params.width, params.height, true);
+		var canvas = document.createElement("canvas");
+		canvas.width = params.width;
+		canvas.height = params.height;
 		
-		plane1.getDomElement().setAttribute("style", "position:absolute;top:0;left:0;opacity:0.3;width:100%;height:100%;");
-		plane2.getDomElement().setAttribute("style", "position:absolute;top:0;left:0;opacity:0.7;width:100%;height:100%;");
+		canvas.setAttribute("style", "width:100%;height:100%;");
 		
-		div.appendChild(plane1.getDomElement());
-		div.appendChild(plane2.getDomElement());
+		div.appendChild(canvas);
 		
 		this.getDomElement = function() { return div; };
 		
-		this.pixelOn = function(x, y, color) {
-			if (color === undefined) {
-				color = 3;
-			}
-			if (color & 1) {
-				plane1.pixelOn(x, y);
-			}
-			if (color & (1 << 1)) {
-				plane2.pixelOn(x, y);
-			}
+		this.pixelOn = function(x, y, ctx) {
+			ctx = ctx || canvas.getContext("2d");
+			ctx.fillStyle = params.fgColor;
+			ctx.fillRect(getX(x), getY(y), pixelWidth, pixelHeight);
 		};
 		
-		this.pixelOff = function(x, y) {
-			plane1.pixelOff(x, y);
-			plane2.pixelOff(x, y);
+		this.pixelOff = function(x, y, ctx) {
+			ctx = ctx || canvas.getContext("2d");
+			ctx.clearRect(getX(x), getY(y), pixelWidth, pixelHeight);
 		};
 		
 		this.clear = function() {
-			plane1.clear();
-			plane2.clear();
+			var ctx = canvas.getContext("2d");
+			ctx.clearRect(0, 0, width, height);
 		};
 		
 		this.drawSprite = function(layer1, layer2, width, x, y, mode) {
-			plane1.drawSprite(layer1, width, x, y, mode);
-			plane2.drawSprite(layer2, width, x, y, mode);
+			var ctx = canvas.getContext("2d");
+			
+			var clipX = 0;
+			var clipY = 0;
+			var clippedX = x;
+			var clippedY = y;
+			var clippedWidth = width;
+			var clippedHeight = layer1.length;
+			
+			if (x < 0) {
+				clipX = 0 - x;
+				clippedX = 0;
+				clippedWidth = width - clipX;
+			} else if (x + width > this.width) {
+				clippedWidth = this.width - x;
+			}
+			if (y < 0) {
+				clipY = 0 - y;
+				clippedY = 0;
+				clippedHeight = layer1.length - clipY;
+			} else if (y + layer1.length > this.height) {
+				clippedHeight = this.height - y;
+			}
+			
+			if (clippedWidth <= 0 || clippedHeight <= 0) {
+				return;
+			}
+
+			var imageData;
+			if (ctx.createImageData) {
+				imageData = ctx.createImageData(clippedWidth, clippedHeight);
+			} else if (ctx.getImageData) {
+				imageData = ctx.getImageData(clippedX, clippedY, clippedWidth, clippedHeight);
+			} else {
+				imageData = {'width' : clippedWidth, 'height' : clippedHeight, 'data' : new Array(clippedWidth * clippedHeight *4)};
+			}
+			var pixels = imageData.data;
+			for (var row = 0; row < clippedHeight; row++) {
+				for (var col = 0; col < clippedWidth; col++) {
+					var l1 = (layer1[row + clipY] >> (width - (col + clipX) - 1)) & 1;
+					var l2 = (layer2[row + clipY] >> (width - (col + clipX) - 1)) & 1;
+					
+					var alpha = l1 * 85 + l2 * 85 * 2;
+					
+					if (alpha) {
+						var p = row * clippedWidth * 4 + col * 4;
+						pixels[p] = 49;
+						pixels[p + 1] = 63;
+						pixels[p + 2] = 66;
+						pixels[p + 3] = alpha;
+					}
+				}
+			}
+			
+			ctx.putImageData(imageData, clippedX, clippedY);
 		};
 		
 		this.width = width;
