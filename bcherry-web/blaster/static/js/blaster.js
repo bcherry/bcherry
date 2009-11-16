@@ -2,8 +2,8 @@
 	var console = AGD;
 	
 	var calcParams = {
-		//width	: 160*1,
-		//height	: 100*1,
+		width	: 160*4,
+		height	: 100*4,
 		gfxMode	: "grayscale"
 	};
 	var calc = new TI.Calculator("ti89", calcParams);

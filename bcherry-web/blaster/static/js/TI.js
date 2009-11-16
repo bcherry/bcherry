@@ -143,11 +143,11 @@
 		var div = document.createElement("div");
 		div.setAttribute("style", "width:" + width + ";height:" + height + ";background-color:" + params.bgColor + ";border:solid 1px black;position:relative;");
 		
-		var plane1 = new BasicDisplay(params, width, height, true);
-		var plane2 = new BasicDisplay(params, width, height, true);
+		var plane1 = new BasicDisplay(params, params.width, params.height, true);
+		var plane2 = new BasicDisplay(params, params.width, params.height, true);
 		
-		plane1.getDomElement().setAttribute("style", "position:absolute;top:0;left:0;opacity:0.3;");
-		plane2.getDomElement().setAttribute("style", "position:absolute;top:0;left:0;opacity:0.7;");
+		plane1.getDomElement().setAttribute("style", "position:absolute;top:0;left:0;opacity:0.3;width:100%;height:100%;");
+		plane2.getDomElement().setAttribute("style", "position:absolute;top:0;left:0;opacity:0.7;width:100%;height:100%;");
 		
 		div.appendChild(plane1.getDomElement());
 		div.appendChild(plane2.getDomElement());
@@ -299,9 +299,6 @@
 	var issueWarnings = function(component, params, width, height) {
 		switch (component.toLowerCase()) {
 			case "display":
-				if (width != params.width || height != params.height) {
-					warn("Display scaling is not yet supported, so it probably won't work very well");
-				}
 				if (width < params.width) {
 					warn("Display width is too small, some pixels will be lost.");
 				} else if (width % params.width !== 0) {
