@@ -42,6 +42,14 @@
 			arguments[0] = prefix(arguments[0]);
 			console.error.apply(console, arguments);
 		};
+		
+		this.time = function() {
+			console.time.apply(console, arguments);
+		};
+		
+		this.timeEnd = function() {
+			console.timeEnd.apply(console, arguments);
+		};
 
 		for (var prop in this) {
 			if (this[prop].constructor != Function) {

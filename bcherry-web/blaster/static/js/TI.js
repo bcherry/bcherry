@@ -55,14 +55,14 @@
 		
 		this.getDomElement = function() { return canvas; };
 		
-		this.pixelOn = function(x, y) {
-			var ctx = canvas.getContext("2d");
+		this.pixelOn = function(x, y, ctx) {
+			ctx = ctx || canvas.getContext("2d");
 			ctx.fillStyle = params.fgColor;
 			ctx.fillRect(getX(x), getY(y), pixelWidth, pixelHeight);
 		};
 		
-		this.pixelOff = function(x, y) {
-			var ctx = canvas.getContext("2d");
+		this.pixelOff = function(x, y, ctx) {
+			ctx = ctx || canvas.getContext("2d");
 			ctx.clearRect(getX(x), getY(y), pixelWidth, pixelHeight);
 		};
 		
@@ -71,16 +71,33 @@
 			ctx.clearRect(0, 0, width, height);
 		};
 		
-		this.drawSprite = function(sprite, width, x, y, mode) {
-			mode = mode || "xor";
+		this.drawSprite = function(sprite, width, x, y) {
+			var ctx = canvas.getContext("2d");
 			
+			
+
+			var imageData;
+			if (ctx.createImageData) {
+				imageData = ctx.createImageData(width, sprite.length);
+			} else if (ctx.getImageData) {
+				imageData = ctx.getImageData(x, y, width, sprite.length);
+			} else {
+				imageData = {'width' : width, 'height' : sprite.length, 'data' : new Array(width * sprite.length *4)};
+			}
+			var pixels = imageData.data;
 			for (var row = 0; row < sprite.length; row++) {
 				for (var col = 0; col < width; col++) {
 					if ((sprite[row] >> (width - col - 1)) & 1) {
-						this.pixelOn(x + col, y + row);
+						var p = row * width * 4 + col * 4;
+						pixels[p] = 49;
+						pixels[p + 1] = 63;
+						pixels[p + 2] = 66;
+						pixels[p + 3] = 255;
 					}
 				}
 			}
+			
+			ctx.putImageData(imageData, x, y);
 		};
 		
 		var getX = function(x) {
@@ -90,6 +107,10 @@
 		var getY = function(y) {
 			return y * pixelHeight;
 		};
+		
+		this.width = width;
+		this.height = height;
+		
 	};
 	
 	var GrayDisplay = function(params, width, height, noWarn) {
@@ -135,6 +156,9 @@
 			plane1.drawSprite(layer1, width, x, y, mode);
 			plane2.drawSprite(layer2, width, x, y, mode);
 		};
+		
+		this.width = width;
+		this.height = height;
 	};
 	
 	var Keys = function() {
@@ -251,6 +275,9 @@
 	var issueWarnings = function(component, params, width, height) {
 		switch (component.toLowerCase()) {
 			case "display":
+				if (width != params.width || height != params.height) {
+					warn("Display scaling is not yet supported, so it probably won't work very well");
+				}
 				if (width < params.width) {
 					warn("Display width is too small, some pixels will be lost.");
 				} else if (width % params.width !== 0) {

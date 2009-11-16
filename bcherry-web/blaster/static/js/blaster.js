@@ -2,8 +2,8 @@
 	var console = AGD;
 	
 	var calcParams = {
-		width	: 640,
-		height	: 400,
+		//width	: 160*1,
+		//height	: 100*1,
 		gfxMode	: "grayscale"
 	};
 	var calc = new TI.Calculator("ti89", calcParams);
@@ -36,7 +36,6 @@
 		
 		var thread = new SimpleThread(main);
 		
-		setTimeout(thread.stop, 1000);
 	};
 	
 	var main = function() {
@@ -59,11 +58,16 @@
 		} else if (calc.keys.isPressed("up")) {
 			jetSprite = Sprites.jetUp;
 		}
+
 		calc.display.drawSprite(jetSprite.p1, jetSprite.p2, jetSprite.width, x, y);
 	};
 	
 	var drawMap = function() {
 		for (var col = 0; col < map.length; col++) {
+			if (col * 8 + 7 < screenX || col * 8 > screenX + calc.display.width) {
+				continue;
+			}
+
 			for (var row = 0; row < map[col].length; row++) {
 				if (map[col][row] == 1) {
 					calc.display.drawSprite(Sprites.regular.p1, Sprites.regular.p2, Sprites.regular.width, col * 8 - screenX, row * 8 - screenY);
