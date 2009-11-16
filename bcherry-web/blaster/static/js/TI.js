@@ -74,21 +74,45 @@
 		this.drawSprite = function(sprite, width, x, y) {
 			var ctx = canvas.getContext("2d");
 			
+			var clipX = 0;
+			var clipY = 0;
+			var clippedX = x;
+			var clippedY = y;
+			var clippedWidth = width;
+			var clippedHeight = sprite.length;
 			
+			if (x < 0) {
+				clipX = 0 - x;
+				clippedX = 0;
+				clippedWidth = width - clipX;
+			} else if (x + width > this.width) {
+				clippedWidth = this.width - x;
+			}
+			if (y < 0) {
+				clipY = 0 - y;
+				clippedY = 0;
+				clippedHeight = sprite.length - clipY;
+			} else if (y + sprite.length > this.height) {
+				clippedHeight = this.height - y;
+			}
+			
+			if (clippedWidth <= 0 || clippedHeight <= 0) {
+				return;
+			}
 
 			var imageData;
 			if (ctx.createImageData) {
-				imageData = ctx.createImageData(width, sprite.length);
+				imageData = ctx.createImageData(clippedWidth, clippedHeight);
 			} else if (ctx.getImageData) {
-				imageData = ctx.getImageData(x, y, width, sprite.length);
+				imageData = ctx.getImageData(clippedX, clippedY, clippedWidth, clippedHeight);
 			} else {
-				imageData = {'width' : width, 'height' : sprite.length, 'data' : new Array(width * sprite.length *4)};
+				imageData = {'width' : clippedWidth, 'height' : clippedHeight, 'data' : new Array(clippedWidth * clippedHeight *4)};
 			}
 			var pixels = imageData.data;
-			for (var row = 0; row < sprite.length; row++) {
-				for (var col = 0; col < width; col++) {
-					if ((sprite[row] >> (width - col - 1)) & 1) {
-						var p = row * width * 4 + col * 4;
+			for (var row = 0; row < clippedHeight; row++) {
+				for (var col = 0; col < clippedWidth; col++) {
+					if ((sprite[row + clipY] >> (width - (col + clipX) - 1)) & 1) {
+						var p = row * clippedWidth * 4 + col * 4;
 						pixels[p] = 49;
 						pixels[p + 1] = 63;
 						pixels[p + 2] = 66;
@@ -97,7 +121,7 @@
 				}
 			}
 			
-			ctx.putImageData(imageData, x, y);
+			ctx.putImageData(imageData, clippedX, clippedY);
 		};
 		
 		var getX = function(x) {
