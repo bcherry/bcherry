@@ -23,16 +23,7 @@
 		calc.keys.listen("left", function() {x-=2;});
 		calc.keys.listen("right", function() {x+=2;});
 		
-		for (var col = 0; col < 20; col++) {
-			var c = map[col] = [];
-			for (var row = 0; row < 12; row++) {
-				if (row % 2) {
-					c[row] = 1;
-				} else {
-					c[row] = 2;
-				}
-			}
-		}
+		buildMap();
 		
 		var thread = new SimpleThread(main);
 		
@@ -69,16 +60,45 @@
 			}
 
 			for (var row = 0; row < map[col].length; row++) {
-				if (map[col][row] == 1) {
-					calc.display.drawSprite(Sprites.regular.p1, Sprites.regular.p2, Sprites.regular.width, col * 8 - screenX, row * 8 - screenY);
+				if (map[col][row] !== 0) {
+					var sprite;
+					if (map[col][row] == Blocks.regular) {
+						sprite = Sprites.regular;
+					} else if (map[col][row] == Blocks.indestructible) {
+						sprite = Sprites.indestructible;
+					} else if (map[col][row] == Blocks.mine) {
+						sprite = Sprites.mine1;
+					}
+				
+					calc.display.drawSprite(sprite.p1, sprite.p2, sprite.width, col * 8 - screenX, row * 8 - screenY);
 				}
 			}
 		}
 	}
 	
 	function buildMap() {
+		var proportions = {
+			none			: 70,
+			regular			: 85,
+			indestructible	: 90,
+			mine			: 100
+		};
 		for (var col = 0; col < 160; col++) {
-			
+			map[col] = [];
+			for (var row = 0; row < 12; row++) {
+				var i = Math.floor(Math.random() * 100);
+				if (i > proportions.none) {
+					if (i < proportions.regular) {
+						map[col][row] = Blocks.regular;
+					} else if (i < proportions.indestructible) {
+						map[col][row] = Blocks.indestructible;
+					} else {
+						map[col][row] = Blocks.mine;
+					}
+				} else {
+					map[col][row] = 0;
+				}
+			}
 		}
 	}
 	

@@ -1,5 +1,11 @@
 // Sprites, w00t
 ;(function() {
+	window.Blocks = {
+		regular			: 1,
+		indestructible	: 2,
+		mine			: 3
+	};
+	
 	window.Sprites = {};
 
 	Sprites.mineExplosion1 = {
