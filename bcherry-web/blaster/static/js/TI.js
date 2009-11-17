@@ -1,6 +1,6 @@
 // This file provides a mock JavaScript API for a TI graphing calculator
 // It doesn't work in IE, because you need canvas and reasonable key detection
-// Right now, it assumes a TI-89 variety, but adding support for others would be trivial
+// Right now, it only supports the TI-89 family, but adding support for others would be trivial
 ;(function(){
 	var TI = window.TI = {};
 	
@@ -226,8 +226,8 @@
 			ctx.putImageData(imageData, clippedX, clippedY);
 		};
 		
-		this.width = width;
-		this.height = height;
+		this.width = params.width;
+		this.height = params.height;
 	};
 	
 	var Keys = function() {

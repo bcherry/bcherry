@@ -12,7 +12,7 @@
 	var y = 0;
 	
 	var map = [];
-	var screenX = 0;
+	var screenX = -100;  // start before the map
 	var screenY = 0;
 	
 	var init = function() {
@@ -62,7 +62,7 @@
 		calc.display.drawSprite(jetSprite.p1, jetSprite.p2, jetSprite.width, x, y);
 	};
 	
-	var drawMap = function() {
+	function drawMap() {
 		for (var col = 0; col < map.length; col++) {
 			if (col * 8 + 7 < screenX || col * 8 > screenX + calc.display.width) {
 				continue;
@@ -74,7 +74,13 @@
 				}
 			}
 		}
-	};
+	}
+	
+	function buildMap() {
+		for (var col = 0; col < 160; col++) {
+			
+		}
+	}
 	
 	$(init);
 })();
