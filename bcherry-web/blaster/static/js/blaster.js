@@ -27,10 +27,11 @@
 		
 		var thread = new SimpleThread(main);
 		
+		setInterval(scroll, 20);
+		
 	};
 	
 	var main = function() {
-		scroll();
 		draw();
 	};
 	
