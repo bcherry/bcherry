@@ -12,6 +12,7 @@
 	var y = 0;
 	
 	var map = [];
+	var shots = [];
 	var screenX = -100;  // start before the map
 	var screenY = 0;
 	
@@ -22,7 +23,7 @@
 		calc.keys.listen("down", function() {y+=2;});
 		calc.keys.listen("left", function() {x-=2;});
 		calc.keys.listen("right", function() {x+=2;});
-		
+		calc.keys.listen("2nd", function() {var shot = {x:x,y:y}; shots.unshift(shot);});
 		buildMap();
 		
 		var thread = new SimpleThread(main);
@@ -33,6 +34,7 @@
 	
 	var main = function() {
 		draw();
+		doShots();
 	};
 	
 	var scroll = function() {
@@ -52,7 +54,19 @@
 		}
 
 		calc.display.drawSprite(jetSprite.p1, jetSprite.p2, jetSprite.width, x, y);
+		
+		for (var i = 0; i < shots.length; i++) {
+			var shot = shots[i];
+			calc.display.drawSprite(Sprites.cannon.p1, Sprites.cannon.p2, Sprites.cannon.width, shot.x, shot.y);
+		}
 	};
+	
+	function doShots() {
+		for (var i = 0; i < shots.length; i++) {
+			var shot = shots[i];
+			shot.x+=4;
+		}
+	}
 	
 	function drawMap() {
 		for (var col = 0; col < map.length; col++) {
