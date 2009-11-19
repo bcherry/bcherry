@@ -76,22 +76,40 @@
 		// Wraps a given function from window.console with browser and on/off detection
 		var generateFn = function(prop) {
 			return function() {
-				if (on && isSupported(prop)) {
+				// So we can muck with this value without clobbering the closure for future calls
+				var func = prop;
+				if (on && isSupported(func)) {
 					// This method is supported by our available tools, so let's work through them in order of priority
 					if (tools.firebug.detect() || tools.chromium.detect() || tools.safari.detect()) {
 						// For browsers that don't suck, just re-apply the arguments to the desired window.console method
-						window.console[prop].apply(window.console, arguments);
+						window.console[func].apply(window.console, arguments);
 					} else if (tools.firebuglite.detect()) {
 						// Firebug Lite doesn't suck, but it uses firebug.d.console instead of window.console
-						window.firebug.d.console[prop].apply(window.firebug.d.console, arguments);
+						window.firebug.d.console[func].apply(window.firebug.d.console, arguments);
 					} else if (tools.opera.detect()) {
 						// Opera doesn't suck, per-se, but it also doesn't have any console.* methods AT ALL
-						// So, instead, we pass everything along to opera.postError as for IE, but prepended with the method name
-						window.opera.postError(prop.toUpperCase() + Array.prototype.join.call(arguments, ', '));
+						var args = arguments;
+						if (func == "assert") {
+							// For assert, we need to implement this method here
+							if (args.length === 0 || !(args[0])) {
+								// Assertion failed, we set the func to that for messaging, and remove the first argument
+								func = "Assertion Failed";
+								args = Array.prototype.slice.call(args, 1);
+								// default text if none specified
+								if (args.length === 0) {
+									args = [func];
+								}
+							} else {
+								// Assertion passed, don't log anything
+								return;
+							}
+						}
+						// Now, to post the message, we just pass everything along to opera.postError, but prepended with the method name
+						window.opera.postError(func.toUpperCase() + ": " + Array.prototype.join.call(args, ', '));
 					} else if (tools.ie.detect()) {
 						// For IE dev toolbar, window.console methods aren't real functions, or something.  And they have shitty features.
 						// ...so just string-concatenate all the arguments and pass that along to the right "function"
-						window.console[prop](Array.prototype.join.call(arguments, ', '));
+						window.console[func](Array.prototype.join.call(arguments, ', '));
 					}
 				}
 			};
