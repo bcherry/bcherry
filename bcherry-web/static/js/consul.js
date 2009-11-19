@@ -109,7 +109,15 @@
 					} else if (tools.ie.detect()) {
 						// For IE dev toolbar, window.console methods aren't real functions, or something.  And they have shitty features.
 						// ...so just string-concatenate all the arguments and pass that along to the right "function"
-						window.console[func](Array.prototype.join.call(arguments, ', '));
+						if (func == "assert") {
+							// For assert, we need to pass along the first argument on its own
+							var test = arguments.length > 0 ? arguments[0] : false;
+							var msg = "Assertion Failed: " + Array.prototype.slice.call(arguments, 1).join(', ');
+							window.console[func](test, msg);
+						} else {
+							// Otherwise, just concat and call
+							window.console[func](Array.prototype.join.call(arguments, ', '));
+						}
 					}
 				}
 			};
