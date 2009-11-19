@@ -85,7 +85,7 @@
 						window.console[func].apply(window.console, arguments);
 					} else if (tools.firebuglite.detect()) {
 						// Firebug Lite doesn't suck, but it uses firebug.d.console instead of window.console
-						window.firebug.d.console[func].apply(window.firebug.d.console, arguments);
+						window.firebug.d.console.cmd[func].apply(window.firebug.d.console, arguments);
 					} else if (tools.opera.detect()) {
 						// Opera doesn't suck, per-se, but it also doesn't have any console.* methods AT ALL
 						var args = arguments;
