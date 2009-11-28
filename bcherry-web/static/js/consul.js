@@ -5,7 +5,7 @@
 		var on = true;
 		
 		// This function can turn consul on or off (default is on)
-		this.turnOn = function(bool) { on = (bool == undefined || bool); };
+		this.turnOn = function(bool) { on = (bool === undefined || bool); };
 		
 		// These are the browser JS consoles that consul supports
 		// Each tool needs two fields:
