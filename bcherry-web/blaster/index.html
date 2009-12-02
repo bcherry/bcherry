@@ -6,25 +6,19 @@
 </head>
 <body>
 	<script type="text/javascript" src="/static/lib/js/jquery-1.3.2.min.js"></script>
-	<script type="text/javascript" src="/static/lib/js/LAB.min.js"></script>
-	<script type="text/javascript">
-		// $LAB
-		// 	.script("/js/agd.js")
-		// 	.script("/blaster/js/data.js")
-		// 	.script("/blaster/js/TI.js")
-		// 	.block(function(){
-		// 		AGD.rebase("Blaster");
-		// 		AGD.setOn(true);
-		// 	})
-		// 	.script("/blaster/js/blaster.js");
-	</script>
-	<script type="text/javascript" src="/static/lib/js/consul.js"></script>
-	<script type="text/javascript" src="/static/lib/js/simplethreading.js"></script>
-	<script type="text/javascript" src="/blaster/static/js/data.js"></script>
-	<script type="text/javascript" src="/blaster/static/js/TI.js"></script>
 	<script type="text/javascript">
 		jQuery.noConflict();
 	</script>
-	<script type="text/javascript" src="/blaster/static/js/blaster.js"></script>
+	<script type="text/javascript" src="/static/lib/js/LAB.min.js"></script>
+	<script type="text/javascript">
+		$LAB
+		.script("/static/lib/js/consul.js")
+		.script("/static/lib/js/simplethreading.js")
+		.script("/blaster/static/js/data.js")
+		.wait()
+		.script("/blaster/static/js/TI.js")
+		.wait()
+		.script("/blaster/static/js/blaster.js");
+	</script>
 </body>
 </html>

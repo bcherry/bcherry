@@ -1,4 +1,9 @@
 ;(function($){
+	// Data Imports
+	var Data = JB.Data;
+	var Sprites = JB.Data.Sprites;
+	var Blocks = JB.Data.Blocks;
+	
 	var calcParams = {
 		width	: 160*4,
 		height	: 100*4,
@@ -81,6 +86,7 @@
 	function Shot(shipX, shipY) {
 		this.x = shipX + 16;
 		this.y = shipY;
+		this.strength = 1; // TODO
 		
 		shots.unshift(this);
 	}
@@ -90,10 +96,23 @@
 			var shot = shots[i];
 			shot.x+=4;
 			
-			if (mapCollide(shot.x, shot.y, 8, 8).length > 0) {
+			
+			var collisions = mapCollide(shot.x, shot.y, 8, 8);
+			if (collisions.length > 0) {
+				for (var j = 0; j < collisions.length; j++) {
+					damageBlock(collisions[j], shot.strength);
+				}
 				shots.splice(i, 1);
 			}
 		}
+	}
+	
+	function damageBlock(block, strength) {
+		var newblock = block.block - 1;
+		if (newblock < 0) {
+			newblock = 0;
+		}
+		map[block.col][block.row] = newblock;
 	}
 	
 	function drawMap() {
@@ -103,16 +122,9 @@
 			}
 
 			for (var row = 0; row < map[col].length; row++) {
-				if (map[col][row] !== 0) {
-					var sprite;
-					if (map[col][row] == Blocks.regular) {
-						sprite = Sprites.regular;
-					} else if (map[col][row] == Blocks.indestructible) {
-						sprite = Sprites.indestructible;
-					} else if (map[col][row] == Blocks.mine) {
-						sprite = Sprites.mine1;
-					}
-				
+				var block = map[col][row];
+				if (block !== 0) {
+					var sprite = Blocks.Sprites[block];
 					calc.display.drawSprite(sprite.p1, sprite.p2, sprite.width, col * 8 - screenX, row * 8 - screenY);
 				}
 			}
@@ -127,11 +139,11 @@
 		
 		var collisions = [];
 		for (var col = firstCol; col <= lastCol; col++) {
-			if (col < 0 || col > map.length) {
+			if (col < 0 || col >= map.length) {
 				continue;
 			}
 			for (var row = firstRow; row <= lastRow; row++) {
-				if (row < 0 || row > map[col].length) {
+				if (row < 0 || row >= map[col].length) {
 					continue;
 				}
 				var block = map[col][row];
@@ -160,10 +172,10 @@
 					} else if (i < proportions.indestructible) {
 						map[col][row] = Blocks.indestructible;
 					} else {
-						map[col][row] = Blocks.mine;
+						map[col][row] = Blocks.mine1;
 					}
 				} else {
-					map[col][row] = 0;
+					map[col][row] = Blocks.none;
 				}
 			}
 		}
