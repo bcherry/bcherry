@@ -198,9 +198,7 @@
 			}
 
 			var imageData;
-			if (ctx.createImageData) {
-				imageData = ctx.createImageData(clippedWidth, clippedHeight);
-			} else if (ctx.getImageData) {
+			if (ctx.getImageData) {
 				imageData = ctx.getImageData(clippedX, clippedY, clippedWidth, clippedHeight);
 			} else {
 				imageData = {'width' : clippedWidth, 'height' : clippedHeight, 'data' : new Array(clippedWidth * clippedHeight *4)};

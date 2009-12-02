@@ -39,7 +39,7 @@
 
 	this.SimpleThread = function(workFn,params) {
 		var that = this;
-		var autoStart = (params && params.autoStart !== null) || true;
+		var autoStart = !!(params && params.autoStart);
 		var workArgs = (params && params.workArgs) || [];
 		var _log = (params && params.log !== null) || false;
 		var workFn = workFn;

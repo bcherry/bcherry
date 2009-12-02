@@ -4,23 +4,14 @@ runtime: python
 api_version: 1
 
 handlers:
-# Static CSS/JS/IMG, including sub-apps
-- url: /(.+?/|)?(js|images|css)/(.*)
-  static_files: \1static/\2/\3
-  upload: (.*?/)?static/(js|images|css)/.*?\.(js|css|gif|png|jpg)
-
-# Pets
-- url: /pets
-  script: /pets/main.py
-
-# AGD Project
-- url: /agd
-  script: /agd/main.py
-
+# Static CSS/JS/IMG, including specified sub-apps
+- url: /(blaster/|)static/(lib/|)(js|img|css)/(.*)
+  static_files: \1static/\2\3/\4
+  upload: (blaster/|)static/.*
+    
 # Blaster Project
 - url: /blaster
   script: /blaster/main.py
-
 
 # Main Page
 - url: .*

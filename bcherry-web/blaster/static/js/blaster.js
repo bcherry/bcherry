@@ -1,6 +1,4 @@
-;(function(){
-	var console = AGD;
-	
+;(function($){
 	var calcParams = {
 		width	: 160*4,
 		height	: 100*4,
@@ -15,6 +13,8 @@
 	var shots = [];
 	var screenX = -100;  // start before the map
 	var screenY = 0;
+	var thread;
+	var scrollInterval;
 	
 	var init = function() {
 		document.body.appendChild(calc.display.getDomElement());
@@ -23,25 +23,42 @@
 		calc.keys.listen("down", function() {y+=2;});
 		calc.keys.listen("left", function() {x-=2;});
 		calc.keys.listen("right", function() {x+=2;});
-		calc.keys.listen("2nd", function() {var shot = {x:x,y:y}; shots.unshift(shot);});
+		calc.keys.listen("2nd", function() {var shot = new Shot(x, y);});
 		buildMap();
 		
-		var thread = new SimpleThread(main);
+		thread = new SimpleThread(main, {autoStart: false});
 		
-		setInterval(scroll, 20);
-		
+		play();
 	};
 	
-	var main = function() {
+	function main() {
 		draw();
 		doShots();
 	};
 	
-	var scroll = function() {
+	function scroll() {
 		screenX++;
 	};
 	
-	var draw = function() {
+	function play() {
+		if (thread.isRunning()) {
+			return;
+		}
+		thread.start();
+		scrollInterval = setInterval(scroll, 20);
+	}
+	window.play = play;
+	
+	function pause() {
+		if (!thread.isRunning()) {
+			return;
+		}
+		thread.stop();
+		clearInterval(scrollInterval);
+	}
+	window.pause = pause;
+	
+	function draw() {
 		calc.display.clear();
 		
 		drawMap();
@@ -61,10 +78,21 @@
 		}
 	};
 	
+	function Shot(shipX, shipY) {
+		this.x = shipX + 16;
+		this.y = shipY;
+		
+		shots.unshift(this);
+	}
+	
 	function doShots() {
 		for (var i = 0; i < shots.length; i++) {
 			var shot = shots[i];
 			shot.x+=4;
+			
+			if (mapCollide(shot.x, shot.y, 8, 8).length > 0) {
+				shots.splice(i, 1);
+			}
 		}
 	}
 	
@@ -89,6 +117,30 @@
 				}
 			}
 		}
+	}
+	
+	function mapCollide(x, y, w, h) {
+		var firstCol = Math.floor((screenX + x) / 8);
+		var lastCol = Math.floor((screenX + x + w - 1) / 8);
+		var firstRow = Math.floor(y / 8);
+		var lastRow = Math.floor((y + h - 1) / 8);
+		
+		var collisions = [];
+		for (var col = firstCol; col <= lastCol; col++) {
+			if (col < 0 || col > map.length) {
+				continue;
+			}
+			for (var row = firstRow; row <= lastRow; row++) {
+				if (row < 0 || row > map[col].length) {
+					continue;
+				}
+				var block = map[col][row];
+				if (block !== 0) {
+					collisions.push({col:col, row:row, block:block});
+				}
+			}
+		}
+		return collisions;
 	}
 	
 	function buildMap() {
@@ -118,4 +170,4 @@
 	}
 	
 	$(init);
-})();
+})(jQuery);
