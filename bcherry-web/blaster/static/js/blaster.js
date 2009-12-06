@@ -97,6 +97,12 @@
 			shot.x+=4;
 			
 			
+			// Once they've run off the map we can get rid of them
+			if (shot.x > map.length * 8) {
+				shots.splice(i, 1);
+				continue;
+			}
+			
 			var collisions = mapCollide(shot.x, shot.y, 8, 8);
 			if (collisions.length > 0) {
 				for (var j = 0; j < collisions.length; j++) {

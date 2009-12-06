@@ -1,4 +1,3 @@
-// Sprites, w00t
 ;(function() {
 	window.JB = {};
 	var Data = JB.Data = {};	
