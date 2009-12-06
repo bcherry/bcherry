@@ -5,13 +5,16 @@ api_version: 1
 
 handlers:
 # Static CSS/JS/IMG, including specified sub-apps
-- url: /(blaster/|)static/(lib/|)(js|img|css)/(.*)
+- url: /(blaster/|playground/|)static/(lib/|)(js|img|css)/(.*)
   static_files: \1static/\2\3/\4
-  upload: (blaster/|)static/.*
+  upload: (blaster/|playground/|)static/.*
     
 # Blaster Project
 - url: /blaster
   script: /blaster/main.py
+  
+- url: /playground
+  script: /playground/main.py
 
 # Main Page
 - url: .*
