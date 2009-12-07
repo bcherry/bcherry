@@ -36,16 +36,16 @@
 		play();
 	};
 	
-	function main() {
+	var main = function main() {
 		draw();
 		doShots();
 	};
 	
-	function scroll() {
+	var scroll = function scroll() {
 		screenX++;
 	};
 	
-	function play() {
+	var play = function play() {
 		if (thread.isRunning()) {
 			return;
 		}

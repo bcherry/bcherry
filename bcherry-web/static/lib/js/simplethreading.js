@@ -47,7 +47,7 @@
 		var _callee = arguments.callee;
 
 		var log = function(msg) {
-			if (_log) {
+			if (_log && window.console) {
 				console.log("SimpleThread #" + threadID + ": " + msg);
 			}
 		}
