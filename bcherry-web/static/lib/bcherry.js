@@ -1,3 +1,8 @@
+Function.prototype.method = function (name, fn) {
+	this.prototype[name] = fn;
+	return this;
+};
+
 var isNumber = function isNumber(value) {
 	return typeof value === "number" && isFinite(value);
 }

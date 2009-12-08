@@ -1,27 +1,28 @@
 ;(function($){
-	// Data Imports
-	var Data = JB.Data;
-	var Sprites = JB.Data.Sprites;
-	var Blocks = JB.Data.Blocks;
-	
-	var calcParams = {
+// Data Imports
+var	Data = JB.Data,
+	Sprites = JB.Data.Sprites,
+	Blocks = JB.Data.Blocks,
+	calcParams = {
 		width	: 160*4,
 		height	: 100*4,
 		gfxMode	: "grayscale"
 	};
-	var calc = new TI.Calculator("ti89", calcParams);
 	
-	var x = 0;
-	var y = 0;
+JB.load = function () {
 	
-	var map = [];
-	var shots = [];
-	var screenX = -100;  // start before the map
-	var screenY = 0;
-	var thread;
-	var scrollInterval;
+	var calc = new TI.Calculator("ti89", calcParams),
+		x = 0, // FIXME
+		y = 0, // FIXME
+		map = [],
+		shots = [],
+		screenX = -100,  // start before the map
+		screenY = 0,
+		thread,
+		scrollInterval;
+
 	
-	var init = function() {
+	function init() {
 		document.body.appendChild(calc.display.getDomElement());
 
 		calc.keys.listen("up", function() {y-=2;});
@@ -34,25 +35,24 @@
 		thread = new SimpleThread(main, {autoStart: false});
 		
 		play();
-	};
+	}
 	
-	var main = function main() {
+	function main() {
 		draw();
 		doShots();
-	};
+	}
 	
-	var scroll = function scroll() {
+	function scroll() {
 		screenX++;
-	};
+	}
 	
-	var play = function play() {
+	function play() {
 		if (thread.isRunning()) {
 			return;
 		}
 		thread.start();
 		scrollInterval = setInterval(scroll, 20);
 	}
-	window.play = play;
 	
 	function pause() {
 		if (!thread.isRunning()) {
@@ -61,7 +61,6 @@
 		thread.stop();
 		clearInterval(scrollInterval);
 	}
-	window.pause = pause;
 	
 	function draw() {
 		calc.display.clear();
@@ -81,7 +80,7 @@
 			var shot = shots[i];
 			calc.display.drawSprite(Sprites.cannon.p1, Sprites.cannon.p2, Sprites.cannon.width, shot.x, shot.y);
 		}
-	};
+	}
 	
 	function Shot(shipX, shipY) {
 		this.x = shipX + 16;
@@ -187,5 +186,7 @@
 		}
 	}
 	
-	$(init);
+	init();
+};
+$(JB.load);
 })(jQuery);
