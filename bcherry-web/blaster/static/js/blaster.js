@@ -18,7 +18,7 @@
 			gfxMode	: "grayscale"
 		},
 		
-	// The game
+	// The game (duh!)
 		game;
 		
 	buildGame = function buildGame(spec) {
@@ -40,8 +40,8 @@
 			
 		// Game data
 			jet = {x: 0, y: 0},
-			map = buildMap({}), // FIXME: pass in spec
-			shots = [], // FIXME: Make Array.dim and use here
+			map = buildMap({width: 160, height: 12}),
+			shots = [],
 			screen = {x: -100, y: 0},
 			
 		// Control vars
@@ -113,7 +113,8 @@
 		draw = function draw() {
 			var	i,
 				shot,
-				jetSprite;
+				jetSprite,
+				len = shots.length;
 			
 			calc.display.clear();
 			
@@ -128,7 +129,7 @@
 			
 			calc.display.drawSprite(jetSprite.p1, jetSprite.p2, jetSprite.width, jet.x, jet.y);
 			
-			for (i = 0; i < shots.length; i = i + 1) {
+			for (i = 0; i < len; i += 1) {
 				shot = shots[i];
 				calc.display.drawSprite(Sprites.cannon.p1, Sprites.cannon.p2, Sprites.cannon.width, shot.x, shot.y);
 			}
@@ -144,15 +145,25 @@
 			var i,
 				j,
 				shot,
-				collisions;
-			for (i = 0; i < shots.length; i = i + 1) {
+				collisions,
+				clearShot,
+				len = shots.length;
+			
+			// When we want to pull out a shot, we need to adjust our loop iterators
+			clearShot = function clearShot() {
+				shots.splice(i, 1);
+				i -= 1;
+				len -= 1;
+			};
+				
+			for (i = 0; i < len; i += 1) {
 				shot = shots[i];
 				shot.x = shot.x + 4;
 				
 				
 				// Once they've run off the map we can get rid of them
 				if (map.outOfBounds(shot.x + screen.x, shot.y + screen.y, 8, 8, "right")) {
-					shots.splice(i, 1);
+					clearShot();
 					continue;
 				}
 				
@@ -161,7 +172,7 @@
 					for (j = 0; j < collisions.length; j = j + 1) {
 						map.damage(collisions[j], shot.strength);
 					}
-					shots.splice(i, 1);
+					clearShot();
 				}
 			}
 		};
@@ -177,9 +188,13 @@
 			collision,
 			damage,
 			outOfBounds,
+		
+		// Config values
+			width = spec.width,
+			height = spec.height,
 			
 		// Local data
-			map = [], // TODO: make Array.matrix and use here
+			map = Array.matrix(width, height, 0),
 			proportions = { // TODO: take these as parameter
 				none			: 70,
 				regular			: 85,
@@ -190,26 +205,28 @@
 		// Loop iterators
 			col,
 			row,
-			i;
+			i,
+			a;
 		
 		that = {};
+		that.width = width;
+		that.height = height;
+		
+		consul.log("%o", that);
 		
 		// Populate our map
-		// TODO: make map size configurable
-		for (col = 0; col < 160; col = col + 1) {
-			map[col] = [];
-			for (row = 0; row < 12; row = row + 1) {
-				i = Math.floor(Math.random() * 100);
+		for (col = 0; col < 160; col += 1) {
+			for (row = 0; row < 12; row += 1) {
+				i = Math.randInt(100);
+				a = map[col];
 				if (i > proportions.none) {
 					if (i < proportions.regular) {
-						map[col][row] = Blocks.regular;
+						a[row] = Blocks.regular;
 					} else if (i < proportions.indestructible) {
-						map[col][row] = Blocks.indestructible;
+						a[row] = Blocks.indestructible;
 					} else {
-						map[col][row] = Blocks.mine1;
+						a[row] = Blocks.mine1;
 					}
-				} else {
-					map[col][row] = Blocks.none;
 				}
 			}
 		}
@@ -217,16 +234,21 @@
 		drawTo = that.drawTo = function drawTo(display, offset) {
 			var col,
 				row,
+				a,
 				block,
-				sprite;
+				sprite,
+				mapWidth = width,
+				mapHeight = height,
+				displayWidth = display.width;
 			
-			for (col = 0; col < map.length; col = col + 1) {
-				if (col * 8 + 7 < offset.x || col * 8 > offset.x + display.width) {
+			for (col = 0; col < mapWidth; col += 1) {
+				if (col * 8 + 7 < offset.x || col * 8 > offset.x + displayWidth) {
 					continue;
 				}
 				
-				for (row = 0; row < map[col].length; row = row + 1) {
-					block = map[col][row];
+				a = map[col];
+				for (row = 0; row < mapHeight; row += 1) {
+					block = a[row];
 					if (block !== 0) {
 						sprite = Blocks.Sprites[block];
 						display.drawSprite(sprite.p1, sprite.p2, sprite.width, col * 8 - offset.x, row * 8 - offset.y);
@@ -236,25 +258,30 @@
 		};
 		
 		collision = that.collision = function collision(x, y, w, h) {
-			var firstCol = Math.floor(x / 8),
-				lastCol = Math.floor((x + w - 1) / 8),
-				firstRow = Math.floor(y / 8),
-				lastRow = Math.floor((y + h - 1) / 8),
+			var firstCol = (x / 8).integer(),
+				lastCol = ((x + w - 1) / 8).integer(),
+				firstRow = (y / 8).integer(),
+				lastRow = ((y + h - 1) / 8).integer(),
 				
 				collisions = [],
 				col,
 				row,
-				block;
+				block,
+				a,
+				mapWidth = width,
+				mapHeight = height;
 			
 			for (col = firstCol; col <= lastCol; col = col + 1) {
-				if (col < 0 || col >= map.length) {
+				if (col < 0 || col >= mapWidth) {
 					continue;
 				}
+				
+				a = map[col];
 				for (row = firstRow; row <= lastRow; row = row + 1) {
-					if (row < 0 || row >= map[col].length) {
+					if (row < 0 || row >= mapHeight) {
 						continue;
 					}
-					block = map[col][row];
+					block = a[row];
 					if (block !== 0) {
 						collisions.push({
 							col: col,
@@ -267,10 +294,10 @@
 		};
 		
 		outOfBounds = that.outOfBounds = function outOfBounds(x, y, w, h, dirs) {
-			var firstCol = Math.floor(x / 8),
-				lastCol = Math.floor((x + w - 1) / 8),
-				firstRow = Math.floor(y / 8),
-				lastRow = Math.floor((y + h - 1) / 8),
+			var firstCol = (x / 8).integer(),
+				lastCol = ((x + w - 1) / 8).integer(),
+				firstRow = (y / 8).integer(),
+				lastRow = ((y + h - 1) / 8).integer(),
 				checkLeft,
 				checkRight,
 				checkUp,
@@ -284,7 +311,7 @@
 			checkUp = dirs === "all" || dirs === "y" || dirs === "up";
 			checkDown = dirs === "all" || dirs === "y" || dirs === "down";
 			
-			return (checkLeft && lastCol < 0) || (checkRight && firstCol >= map.length) || (checkUp && lastRow < 0) || (checkDown && firstRow >= map[0].length);
+			return (checkLeft && lastCol < 0) || (checkRight && firstCol >= map.width) || (checkUp && lastRow < 0) || (checkDown && firstRow >= map.height);
 		};
 		
 		damage = that.damage = function damage(block, strength) {
