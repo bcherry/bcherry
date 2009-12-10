@@ -3,6 +3,9 @@ version: 1
 runtime: python
 api_version: 1
 
+inbound_services:
+- xmpp_message
+
 handlers:
 # Static CSS/JS/IMG, including specified sub-apps
 - url: /(blaster/|playground/|)static/(lib/|)(js|img|css)/(.*)
@@ -13,9 +16,15 @@ handlers:
 - url: /blaster
   script: /blaster/main.py
   
+# Playground
 - url: /playground
   script: /playground/main.py
+
+# XMPP
+- url: /_ah/xmpp/message/chat/
+  script: xmpp.py
 
 # Main Page
 - url: .*
   script: main.py
+

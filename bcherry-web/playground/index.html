@@ -5,10 +5,6 @@
 	<link rel="stylesheet" type="text/css" href="/playground/static/css/css.css" />
 </head>
 <body>
-	<div id="container">
-		<button id="agd">agd</button>
-	</div>
-	
 	<script type="text/javascript" src="/static/lib/js/jquery-1.3.2.min.js"></script>
 	<script type="text/javascript">
 		jQuery.noConflict();
@@ -16,6 +12,7 @@
 	<script type="text/javascript" src="/static/lib/js/LAB.min.js"></script>
 	<script type="text/javascript">
 		$LAB
+		.script("/static/lib/js/strophe.js")
 		.script("/static/lib/js/consul.js")
 		.wait()
 		.script("/playground/static/js/js.js")
