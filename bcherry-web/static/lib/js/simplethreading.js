@@ -41,7 +41,7 @@
 		var that = this;
 		var autoStart = !!(params && params.autoStart);
 		var workArgs = (params && params.workArgs) || [];
-		var _log = (params && params.log !== null) || false;
+		var _log = (params && params.log !== undefined) || false;
 		var workFn = workFn;
 		var threadID = null;
 		var _callee = arguments.callee;
