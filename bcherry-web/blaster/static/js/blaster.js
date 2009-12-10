@@ -12,7 +12,8 @@
 		buildMap,
 		
 	// Global config stuff
-		calcParams = {
+		calcSpec = {
+			model	: "ti89",
 			width	: 160 * 4,
 			height	: 100 * 4,
 			gfxMode	: "grayscale"
@@ -36,7 +37,7 @@
 			doShots,
 			
 		// Calc API
-			calc = new TI.Calculator("ti89", calcParams), // FIXME: fix TI.Calculator to not use "new"
+			calc = TI.makeCalculator(spec.calcSpec),
 			
 		// Game data
 			jet = {x: 0, y: 0},
@@ -212,8 +213,6 @@
 		that.width = width;
 		that.height = height;
 		
-		consul.log("%o", that);
-		
 		// Populate our map
 		for (col = 0; col < 160; col += 1) {
 			for (row = 0; row < 12; row += 1) {
@@ -326,7 +325,7 @@
 	};
 	
 	game = JB.game = buildGame({
-		calcParams: calcParams
+		calcSpec: calcSpec
 	});
 	$(game.start);
 }(jQuery));
