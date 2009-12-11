@@ -11,7 +11,9 @@
 			broken1			: 2,
 			regular			: 3,
 			indestructible	: 4,
-			mine1			: 5
+			mine1			: 5,
+			mine2			: 6,
+			mine3			: 7
 		};
 
 	Sprites.mineExplosion1 = {
@@ -257,4 +259,6 @@
 	Blocks.Sprites[Blocks.regular]			= Sprites.regular;
 	Blocks.Sprites[Blocks.indestructible]	= Sprites.indestructible;
 	Blocks.Sprites[Blocks.mine1]			= Sprites.mine1;
+	Blocks.Sprites[Blocks.mine2]			= Sprites.mine2;
+	Blocks.Sprites[Blocks.mine3]			= Sprites.mine3;
 }());

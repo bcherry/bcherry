@@ -48,7 +48,8 @@
 		// Control vars
 			thread,
 			scrollInterval,
-			started = false;
+			started = false,
+			frame = 0;
 		
 		that = {};
 		
@@ -89,6 +90,7 @@
 		main = function main() {
 			draw();
 			doShots();
+			frame = (frame + 1) % 120;
 		};
 		keyListeners = function keyListeners() {
 			// TODO: Clean these up (seriously!)
@@ -119,7 +121,7 @@
 			
 			calc.display.clear();
 			
-			map.drawTo(calc.display, screen);
+			map.drawTo(calc.display, screen, (frame % 12) === 0);
 			
 			jetSprite = Sprites.jetReg;
 			if (calc.keys.isPressed("down")) {
@@ -189,6 +191,8 @@
 			collision,
 			damage,
 			outOfBounds,
+			isMine,
+			isRegular,
 		
 		// Config values
 			width = spec.width,
@@ -230,7 +234,7 @@
 			}
 		}
 		
-		drawTo = that.drawTo = function drawTo(display, offset) {
+		drawTo = that.drawTo = function drawTo(display, offset, rotate) {
 			var col,
 				row,
 				a,
@@ -248,9 +252,17 @@
 				a = map[col];
 				for (row = 0; row < mapHeight; row += 1) {
 					block = a[row];
-					if (block !== 0) {
+					if (block !== Blocks.none) {
 						sprite = Blocks.Sprites[block];
 						display.drawSprite(sprite.p1, sprite.p2, sprite.width, col * 8 - offset.x, row * 8 - offset.y);
+						// If it's a mine, rotate it
+						if (rotate && isMine(block)) {
+							block -= 1;
+							if (block < Blocks.mine1) {
+								block = Blocks.mine3;
+							}
+							a[row] = block;
+						}
 					}
 				}
 			}
@@ -314,11 +326,30 @@
 		};
 		
 		damage = that.damage = function damage(block, strength) {
-			var newblock = map[block.col][block.row] - 1;
+			var b = map[block.col][block.row],
+				newblock = b;
+			if (isRegular(b)) {
+				newblock = b - strength;
+			} else if (b === Blocks.indestructible) {
+				if (strength === 4) {
+					newblock = b - 3;
+				}
+			} else if (isMine(b)) {
+				newblock = 0;
+			}
+			
 			if (newblock < 0) {
 				newblock = 0;
 			}
 			map[block.col][block.row] = newblock;
+		};
+		
+		isMine = function isMine(block) {
+			return block >= Blocks.mine1 && block <= Blocks.mine3;
+		};
+		
+		isRegular = function isRegular(block) {
+			return block >= Blocks.broken2 && block <= Blocks.regular;
 		};
 		
 		return that;
