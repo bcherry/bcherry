@@ -121,7 +121,7 @@
 			
 			calc.display.clear();
 			
-			map.drawTo(calc.display, screen, (frame % 12) === 0);
+			map.drawTo(calc.display, screen, (frame % 12) === 0, (frame % 6) === 0);
 			
 			jetSprite = Sprites.jetReg;
 			if (calc.keys.isPressed("down")) {
@@ -193,6 +193,7 @@
 			outOfBounds,
 			isMine,
 			isRegular,
+			isExplosion,
 		
 		// Config values
 			width = spec.width,
@@ -234,12 +235,17 @@
 			}
 		}
 		
-		drawTo = that.drawTo = function drawTo(display, offset, rotate) {
+		drawTo = that.drawTo = function drawTo(display, offset, rotate, explode) {
 			var col,
 				row,
+				i,
+				j,
+				c,
 				a,
 				block,
 				sprite,
+				x,
+				y,
 				mapWidth = width,
 				mapHeight = height,
 				displayWidth = display.width;
@@ -254,12 +260,36 @@
 					block = a[row];
 					if (block !== Blocks.none) {
 						sprite = Blocks.Sprites[block];
-						display.drawSprite(sprite.p1, sprite.p2, sprite.width, col * 8 - offset.x, row * 8 - offset.y);
+						x = col * 8;
+						y = row * 8;
+						if (sprite.width === 16) {
+							x -= 4;
+							y -= 4;
+						}
+						display.drawSprite(sprite.p1, sprite.p2, sprite.width, x - offset.x, y - offset.y);
+						
 						// If it's a mine, rotate it
 						if (rotate && isMine(block)) {
 							block -= 1;
 							if (block < Blocks.mine1) {
 								block = Blocks.mine3;
+							}
+							a[row] = block;
+						} else if (explode && isExplosion(block)) {
+							block -= 1;
+							if (block < Blocks.mineExplosion4) {
+								block = 0;
+							} else if (block === Blocks.mineExplosion3) {
+								for (i = col - 1; i <= col + 1; i += 1) {
+									if (col >= 0 && col < mapWidth) {
+										c = map[i];
+										for (j = row - 1; j <= row + 1; j += 1) {
+											if (row >= 0 && row < mapHeight) {
+												damage({col: i, row: j}, 5);
+											}
+										}
+									}
+								}
 							}
 							a[row] = block;
 						}
@@ -293,7 +323,7 @@
 						continue;
 					}
 					block = a[row];
-					if (block !== 0) {
+					if (block > 0 && block <= Blocks.mineExplosion4) {
 						collisions.push({
 							col: col,
 							row: row
@@ -331,11 +361,11 @@
 			if (isRegular(b)) {
 				newblock = b - strength;
 			} else if (b === Blocks.indestructible) {
-				if (strength === 4) {
-					newblock = b - 3;
+				if (strength >= 4) {
+					newblock = b - strength + 1;
 				}
 			} else if (isMine(b)) {
-				newblock = 0;
+				newblock = Blocks.mineExplosion1;
 			}
 			
 			if (newblock < 0) {
@@ -348,8 +378,13 @@
 			return block >= Blocks.mine1 && block <= Blocks.mine3;
 		};
 		
+		// OPTIMIZATION: changing the order of the comparisons here could produce good savings
 		isRegular = function isRegular(block) {
 			return block >= Blocks.broken2 && block <= Blocks.regular;
+		};
+		
+		isExplosion = function isExplosion(block) {
+			return block >= Blocks.mineExplosion4 && block <= Blocks.mineExplosion1;
 		};
 		
 		return that;
