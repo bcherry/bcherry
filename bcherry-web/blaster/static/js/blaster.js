@@ -281,10 +281,10 @@
 								block = 0;
 							} else if (block === Blocks.mineExplosion3) {
 								for (i = col - 1; i <= col + 1; i += 1) {
-									if (col >= 0 && col < mapWidth) {
+									if (i >= 0 && i < mapWidth) {
 										c = map[i];
 										for (j = row - 1; j <= row + 1; j += 1) {
-											if (row >= 0 && row < mapHeight) {
+											if (j >= 0 && j < mapHeight) {
 												damage({col: i, row: j}, 5);
 											}
 										}
