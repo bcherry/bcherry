@@ -14,8 +14,8 @@
 	// Global config stuff
 		calcSpec = {
 			model	: "ti89",
-			width	: 160 * 4,
-			height	: 100 * 4,
+			width	: 160 * 3,
+			height	: 100 * 3,
 			gfxMode	: "grayscale"
 		},
 		
@@ -29,12 +29,14 @@
 			start,
 			play,
 			pause,
+			stop,
 			main,
 			keyListeners,
 			scroll,
 			draw,
 			Shot,
 			doShots,
+			checkDeath,
 			
 		// Calc API
 			calc = TI.makeCalculator(spec.calcSpec),
@@ -85,11 +87,17 @@
 			thread.stop();
 			clearInterval(scrollInterval);
 		};
+		stop = that.stop = function stop() {
+			thread.stop();
+			clearInterval(scrollInterval);
+			consul.log("dead");
+		};
 		
 		// Game methods
 		main = function main() {
 			draw();
 			doShots();
+			checkDeath();
 			frame = (frame + 1) % 120;
 		};
 		keyListeners = function keyListeners() {
@@ -179,6 +187,13 @@
 				}
 			}
 		};
+		checkDeath = function checkDeath() {
+			var collisions = map.collision(jet.x + screen.x, jet.y + screen.y, 16, 8);
+			
+			if (collisions.length > 0) {
+				that.stop();
+			}
+		};
 		
 		return that;
 	};
@@ -202,9 +217,9 @@
 		// Local data
 			map = Array.matrix(width, height, 0),
 			proportions = { // TODO: take these as parameter
-				none			: 70,
-				regular			: 85,
-				indestructible	: 90,
+				none			: 80,
+				regular			: 90,
+				indestructible	: 92,
 				mine			: 100
 			},
 			
@@ -298,11 +313,12 @@
 			}
 		};
 		
+		// TODO: I think this function needs to be optimized
 		collision = that.collision = function collision(x, y, w, h) {
-			var firstCol = (x / 8).integer(),
-				lastCol = ((x + w - 1) / 8).integer(),
-				firstRow = (y / 8).integer(),
-				lastRow = ((y + h - 1) / 8).integer(),
+			var firstCol = (x / 8).floor(),
+				lastCol = ((x + w - 1) / 8).floor(),
+				firstRow = (y / 8).floor(),
+				lastRow = ((y + h - 1) / 8).floor(),
 				
 				collisions = [],
 				col,
@@ -323,7 +339,7 @@
 						continue;
 					}
 					block = a[row];
-					if (block > 0 && block <= Blocks.mineExplosion4) {
+					if (block > 0 && block < Blocks.mineExplosion4) {
 						collisions.push({
 							col: col,
 							row: row
@@ -335,10 +351,10 @@
 		};
 		
 		outOfBounds = that.outOfBounds = function outOfBounds(x, y, w, h, dirs) {
-			var firstCol = (x / 8).integer(),
-				lastCol = ((x + w - 1) / 8).integer(),
-				firstRow = (y / 8).integer(),
-				lastRow = ((y + h - 1) / 8).integer(),
+			var firstCol = (x / 8).floor(),
+				lastCol = ((x + w - 1) / 8).floor(),
+				firstRow = (y / 8).floor(),
+				lastRow = ((y + h - 1) / 8).floor(),
 				checkLeft,
 				checkRight,
 				checkUp,

@@ -31,8 +31,16 @@ Array.matrix = function (m, n, initial) {
 	return mat;
 };
 
-Number.method("integer", function () {
+Number.method("round", function () {
 	return Math[this < 0 ? "ceil" : "floor"](this);
+});
+
+Number.method("floor", function () {
+	return Math.floor(this);
+});
+
+Number.method("ceil", function () {
+	return Math.ceil(this);
 });
 
 String.method("trim", function () {
@@ -40,5 +48,5 @@ String.method("trim", function () {
 });
 
 Math.randInt = function (range) {
-	return (Math.random() * range).integer();
+	return (Math.random() * range).floor();
 };
