@@ -10,6 +10,7 @@
 	// Functions in this module
 		buildGame,
 		buildMap,
+		buildJet,
 		
 	// Global config stuff
 		calcSpec = {
@@ -34,7 +35,6 @@
 			keyListeners,
 			scroll,
 			draw,
-			Shot,
 			doShots,
 			checkDeath,
 			
@@ -42,8 +42,8 @@
 			calc = TI.makeCalculator(spec.calcSpec),
 			
 		// Game data
-			jet = {x: 0, y: 0},
 			map = buildMap({width: 160, height: 12}),
+			jet = buildJet({map: map}),
 			shots = [],
 			screen = {x: -100, y: 0},
 			
@@ -73,6 +73,7 @@
 			thread = new SimpleThread(main, {autoStart: false});
 			that.play();
 		};
+		
 		play = that.play = function play() {
 			if (thread.isRunning()) {
 				return;
@@ -80,6 +81,7 @@
 			thread.start();
 			scrollInterval = setInterval(scroll, 20);
 		};
+		
 		pause = that.pause = function pause() {
 			if (!thread.isRunning()) {
 				return;
@@ -87,6 +89,7 @@
 			thread.stop();
 			clearInterval(scrollInterval);
 		};
+		
 		stop = that.stop = function stop() {
 			thread.stop();
 			clearInterval(scrollInterval);
@@ -100,27 +103,30 @@
 			checkDeath();
 			frame = (frame + 1) % 120;
 		};
+		
 		keyListeners = function keyListeners() {
 			// TODO: Clean these up (seriously!)
 			calc.keys.listen("up", function () {
-				jet.y = jet.y - 2;
+				jet.moveUp();
 			});
 			calc.keys.listen("down", function () {
-				jet.y = jet.y + 2;
+				jet.moveDown();
 			});
 			calc.keys.listen("left", function () {
-				jet.x = jet.x - 2;
+				jet.moveLeft();
 			});
 			calc.keys.listen("right", function () {
-				jet.x = jet.x + 2;
+				jet.moveRight();
 			});
 			calc.keys.listen("2nd", function () {
-				var shot = new Shot(jet.x, jet.y);
+				shots.push(jet.fire());
 			});
 		};
+		
 		scroll = function scroll() {
 			screen.x = screen.x + 1;
 		};
+		
 		draw = function draw() {
 			var	i,
 				shot,
@@ -131,27 +137,14 @@
 			
 			map.drawTo(calc.display, screen, (frame % 12) === 0, (frame % 6) === 0);
 			
-			jetSprite = Sprites.jetReg;
-			if (calc.keys.isPressed("down")) {
-				jetSprite = Sprites.jetDown;
-			} else if (calc.keys.isPressed("up")) {
-				jetSprite = Sprites.jetUp;
-			}
-			
-			calc.display.drawSprite(jetSprite.p1, jetSprite.p2, jetSprite.width, jet.x, jet.y);
+			jet.drawTo(calc.display, calc.keys, frame);
 			
 			for (i = 0; i < len; i += 1) {
 				shot = shots[i];
 				calc.display.drawSprite(Sprites.cannon.p1, Sprites.cannon.p2, Sprites.cannon.width, shot.x, shot.y);
 			}
 		};
-		Shot = function Shot(shipX, shipY) {
-			this.x = shipX + 16;
-			this.y = shipY;
-			this.strength = 1; // TODO
-			
-			shots.push(this);
-		};
+		
 		doShots = function doShots() {
 			var i,
 				j,
@@ -187,6 +180,7 @@
 				}
 			}
 		};
+		
 		checkDeath = function checkDeath() {
 			var collisions = map.collision(jet.x + screen.x, jet.y + screen.y, 16, 8);
 			
@@ -194,6 +188,66 @@
 				that.stop();
 			}
 		};
+		
+		return that;
+	};
+	
+	buildJet = function buildJet(my) {
+		var that = {},
+			map = my.map;
+		
+		that.fire = function fire(type) {
+			//TODO: Shot types
+			var shot = {
+				x: that.x + 16,
+				y: that.y,
+				strength: that.cannonStrength
+			};
+			
+			return shot;
+		};
+		
+		// Movement functions
+		that.moveUp = function moveUp() {
+			that.y -= 2;
+		};
+		that.moveDown = function moveDown() {
+			that.y += 2;
+		};
+		that.moveLeft = function moveLeft() {
+			that.x -= 2;
+		};
+		that.moveRight = function moveRight() {
+			that.x += 2;
+		};
+		
+		that.drawTo = function drawTo(display, keys, frame) {
+			var sprite = Sprites.jetReg;
+			if (keys.isPressed("down")) {
+				sprite = Sprites.jetDown;
+			} else if (keys.isPressed("up")) {
+				sprite = Sprites.jetUp;
+			}
+			
+			display.drawSprite(sprite.p1, sprite.p2, sprite.width, that.x, that.y);
+			
+			frame = frame % 24;
+			if (frame < 8) {
+				sprite = Sprites.regExhaust1;
+			} else if (frame < 16) {
+				sprite = Sprites.regExhaust2;
+			} else {
+				sprite = Sprites.regExhaust3;
+			}
+			display.drawSprite(sprite.p1, sprite.p2, sprite.width, that.x - sprite.width, that.y);
+		};
+		
+		// Initialize our location
+		that.x = 0;
+		that.y = 0;
+		
+		// Stats
+		that.cannonStrength = 1;
 		
 		return that;
 	};
