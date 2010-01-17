@@ -5,11 +5,11 @@
 	<link rel="stylesheet" type="text/css" href="/blaster/static/css/blaster.css" />
 </head>
 <body>
-	<script type="text/javascript" src="/static/lib/js/jquery-1.3.2.min.js"></script>
+	<script type="text/javascript" src="/static/lib/js/jquery-1.4.min.js"></script>
 	<script type="text/javascript">
 		jQuery.noConflict();
 	</script>
-	<script type="text/javascript" src="/static/lib/js/LAB.min.js"></script>
+	<script type="text/javascript" src="/static/lib/js/LAB.js"></script>
 	<script type="text/javascript">
 		$LAB
 		.script("/static/lib/js/consul.js")
@@ -19,7 +19,8 @@
 		.wait()
 		.script("/blaster/static/js/TI.js")
 		.wait()
-		.script("/blaster/static/js/blaster.js");
+		.script("/blaster/static/js/blaster.js")
+		.wait();
 	</script>
 </body>
 </html>
