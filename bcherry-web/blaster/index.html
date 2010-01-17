@@ -5,13 +5,14 @@
 	<link rel="stylesheet" type="text/css" href="/blaster/static/css/blaster.css" />
 </head>
 <body>
-	<script type="text/javascript" src="/static/lib/js/jquery-1.4.min.js"></script>
+	<script type="text/javascript" src="/static/lib/js/LAB.src.js"></script>
 	<script type="text/javascript">
-		jQuery.noConflict();
-	</script>
-	<script type="text/javascript" src="/static/lib/js/LAB.js"></script>
-	<script type="text/javascript">
+		$LAB.setGlobalDefaults({UseLocalXHR:false});
 		$LAB
+		.script("/static/lib/js/jquery-1.4.min.js")
+		.wait(function () {
+			jQuery.noConflict();
+		})
 		.script("/static/lib/js/consul.js")
 		.script("/static/lib/js/simplethreading.js")
 		.script("/static/lib/js/bcherry.js")

@@ -1,6 +1,6 @@
 /*jslint white: true, onevar: true, browser: true, devel: true, undef: true, nomen: true, eqeqeq: true, plusplus: true, bitwise: true, regexp: true, strict: false, newcap: true, immed: true */
-/*globals JB: false, TI: false, SimpleThread: false, jQuery: false, consul: false	 */
-(function ($) {
+/*globals JB: false, TI: false, window: false, SimpleThread: false, jQuery: false, consul: false	 */
+(function (window) {
 	// Data Imports
 	var	Data = JB.Data,
 		Sprites = JB.Data.Sprites,
@@ -18,6 +18,9 @@
 			height	: 100 * 3,
 			gfxMode	: "grayscale"
 		},
+	
+	// mungable aliases
+		$ = window.jQuery,
 		
 	// The game (duh!)
 		game;
@@ -463,4 +466,4 @@
 		calcSpec: calcSpec
 	});
 	$(game.start);
-}(jQuery));
+}(window));

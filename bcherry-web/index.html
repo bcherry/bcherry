@@ -3,8 +3,18 @@
 	<title>bcherry.net</title>
 </head>
 <body>
-	<script type="text/javascript" src="/static/lib/js/jquery-1.3.2.min.js"></script>
-	<script type="text/javascript" src="/static/lib/js/LAB.min.js"></script>
-	<script type="text/javascript" src="/static/lib/js/consul.js"></script>
+	<div></div>
+	<script type="text/javascript" src="/static/lib/js/LAB.js"></script>
+	<script type="text/javascript">
+		$LAB
+		.script("/static/lib/js/jquery-1.4.min.js")
+		.wait()
+		.script("/static/lib/js/consul.js")
+		.wait(function () {
+			jQuery(function () {
+				jQuery("div").text("DOM ready at " + new Date().toString());
+			});
+		});
+	</script>
 </body>
 </html>
