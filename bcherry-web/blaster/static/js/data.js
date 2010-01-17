@@ -1,6 +1,5 @@
-/*jslint white: true, onevar: true, browser: true, devel: true, undef: true, nomen: true, eqeqeq: true, plusplus: true, bitwise: true, regexp: true, strict: true, newcap: true, immed: true */
+/*jslint white: true, onevar: true, browser: true, devel: true, undef: true, nomen: true, eqeqeq: true, plusplus: true, bitwise: true, regexp: true, strict: false, newcap: true, immed: true */
 /*globals JB: true, window: false */
-"use strict";
 (function () {
 	var JB = window.JB = {},
 		Data = JB.Data = {},	

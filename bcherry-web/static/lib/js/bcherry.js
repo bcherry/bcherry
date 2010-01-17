@@ -1,8 +1,7 @@
 // The stuff in this file is culled from lots of sources, and from experience
 // In particular, a lot of it comes from JavaScript: The Good Parts, by Douglas Crockford
 
-/*jslint white: true, onevar: true, devel: true, undef: true, nomen: true, eqeqeq: true, plusplus: true, bitwise: true, regexp: true, strict: true, newcap: true, immed: true */
-"use strict";
+/*jslint white: true, onevar: true, devel: true, undef: true, nomen: true, eqeqeq: true, plusplus: true, bitwise: true, regexp: true, strict: false, newcap: true, immed: true */
 
 Function.prototype.method = function (name, func) {
 	if (!this.prototype[name]) {

@@ -2,9 +2,8 @@
 // It doesn't work in IE, because you need canvas and reasonable key detection
 // Right now, it only supports the TI-89 family, but adding support for others would be trivial
 
-/*jslint white: true, onevar: true, browser: true, devel: true, undef: true, nomen: true, eqeqeq: true, plusplus: true, bitwise: false, regexp: true, strict: true, newcap: true, immed: true */
+/*jslint white: true, onevar: true, browser: true, devel: true, undef: true, nomen: true, eqeqeq: true, plusplus: true, bitwise: false, regexp: true, strict: false, newcap: true, immed: true */
 /*globals window: false */
-"use strict";
 (function () {
 	var	TI = window.TI = {},
 		calcs = {
