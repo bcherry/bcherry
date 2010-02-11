@@ -1,5 +1,8 @@
 /*jslint white: true, onevar: true, devel: true, undef: true, nomen: true, eqeqeq: true, plusplus: true, bitwise: true, regexp: true, strict: false, newcap: true, immed: true */
 /*globals window: false */
+
+// Include this script BEFORE any scripts you want to scan for bad globals.
+// After the scripts you want to scan, run BADGLOBALS.check() and watch firebug.
 var BADGLOBALS = (function (window) {
 	var report = {
 			badGlobals: []
@@ -7,7 +10,7 @@ var BADGLOBALS = (function (window) {
 		skip = {},
 		that = {
 			check: function () {
-				var	prop,
+				var prop,
 					val;
 				
 				report.badGlobals = [];
