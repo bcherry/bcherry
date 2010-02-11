@@ -1,0 +1,53 @@
+<html>
+<head>
+	<title>Bad Globals Demo Page</title>
+	<style type="text/css">
+		h2, h3, h4, p {
+			font-family: Helvetica, Arial, sans-serif;
+			font-weight: normal;
+		}
+		
+		h2, h3, h4 {
+			letter-spacing: -.08em;
+		}
+		
+		pre {
+			font-family: Monaco, monospace;
+		}
+	</style>
+</head>
+<body>
+	<h2>The Bad Globals Demo Page</h2>
+	<h3>Open up Firebug or Chrome Developer Tools</h3>
+	<h4>This won't work in Internet Explorer (but it doesn't need to)</h4>
+	<p>This page contains the following JavaScript:</p>
+	<pre>// some variables
+var x = 1; // good
+y = 2; // bad (always)
+window.z = 3; // bad (sometimes)
+window[0] = 4; // bad (sometimes)
+window.iWantThisOne = 5; // sometimes bad, but we are ok with this one
+
+BADGLOBALS.exclude("iWantThisOne", "jQuery"); // exclude the globals we don't mind as properties
+BADGLOBALS.check(); // do the check
+
+
+console.log("Report is %o", BADGLOBALS.report());</pre>
+
+	<script type="text/javascript" src="/static/lib/js/badglobals.js"></script>
+	<script type="text/javascript">
+		// some variables
+		var x = 1; // good
+		y = 2; // bad (always)
+		window.z = 3; // bad (sometimes)
+		window[0] = 4; // bad (sometimes)
+		window.iWantThisOne = 5; // sometimes bad, but we are ok with this one
+		
+		BADGLOBALS.exclude("iWantThisOne", "jQuery"); // exclude the globals we don't mind as properties
+		BADGLOBALS.check(); // do the check
+		
+		
+		console.log("Report is %o", BADGLOBALS.report());
+	</script>
+</body>
+</html>

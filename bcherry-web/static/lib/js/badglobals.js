@@ -43,16 +43,12 @@ var BADGLOBALS = (function (window) {
 					skipped: skipped
 				}
 			},
-			exclude: function (names) {
+			exclude: function () {
 				var i = 0,
-					l;
+					l = arguments.length;
 				
-				if (typeof names === "string") {
-					names = [names];
-				}
-				
-				for (l = names.length; i < l; i += 1) {
-					skip.push(names[i]);
+				for (; i < l; i += 1) {
+					skip.push(arguments[i]);
 				}
 			},
 			report: function () {

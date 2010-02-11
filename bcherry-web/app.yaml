@@ -20,6 +20,10 @@ handlers:
 - url: /playground
   script: /playground/main.py
 
+# Bad Globals Demo Page
+- url: /badglobals
+  script: /badglobals/main.py
+
 # XMPP
 - url: /_ah/xmpp/message/chat/
   script: xmpp.py
