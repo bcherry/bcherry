@@ -5,7 +5,7 @@
 // After the scripts you want to scan, run BADGLOBALS.check() and watch firebug.
 // This script will only work in Firefox or Chrome, NOT in Internet Explorer.
 var BADGLOBALS = (function (window) {
-	var report = {},		
+	var report,		
 		skip = [],
 		that = {
 			check: function (exclude) {
@@ -41,7 +41,7 @@ var BADGLOBALS = (function (window) {
 					bad: bad,
 					good: good,
 					skipped: skipped
-				}
+				};
 			},
 			exclude: function () {
 				var i = 0,
@@ -52,6 +52,9 @@ var BADGLOBALS = (function (window) {
 				}
 			},
 			report: function () {
+				if (!report) {
+					that.check();
+				}
 				return report;
 			}
 		},
