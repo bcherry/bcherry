@@ -14,6 +14,7 @@
 	<h1>How Fast is setTimeout in Your Browswer?</h1>
 	<p id="target">Please wait, running tests...<br />
 		<img src="/static/img/ajax-loader.gif" /></p>
+	<p>This test discovers the <em>real</em> delay when using setTimeout(fn, 0), which is never actually 0.</p>
 	<script type="text/javascript">
 		var target = document.getElementById("target"),
 			results = 0,
