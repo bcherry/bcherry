@@ -9,8 +9,16 @@ class MainHandler(webapp.RequestHandler):
 		path = os.path.join(os.path.dirname(__file__), 'index.html')
 		self.response.out.write(template.render(path, {}))
 
+class SetTimeoutHandler(webapp.RequestHandler):
+	def get(self):
+		path = os.path.join(os.path.dirname(__file__), 'settimeout.html')
+		self.response.out.write(template.render(path, {}))
+
 def main():
-	application = webapp.WSGIApplication([('/playground', MainHandler)], debug=True)
+	application = webapp.WSGIApplication([
+		('/playground', MainHandler),
+		('/playground/settimeout', SetTimeoutHandler),
+	], debug=True)
 	wsgiref.handlers.CGIHandler().run(application)
 
 if __name__ == '__main__':

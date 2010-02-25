@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>How fast is setTimeout really?</title>
+	<style>
+		body {
+			font-family: Helvetica, Arial, sans-serif;
+			text-align: center;
+		}
+	</style>
+</head>
+<body>
+	<h1>How Fast is setTimeout in Your Browswer?</h1>
+	<p id="target">Please wait, running tests...<br />
+		<img src="/static/img/ajax-loader.gif" /></p>
+	<script type="text/javascript">
+		var target = document.getElementById("target"),
+			results = 0,
+			iterations = 1000,
+			i = 0;
+		
+		function go() {
+			var fn = function () {
+					results += new Date().getTime() - d;
+					i += 1;
+					if (i < iterations) {
+						go();
+					} else {
+						finish();
+					}
+				},
+				d = new Date().getTime();
+			setTimeout(fn, 0);
+		}
+		
+		function finish() {
+			target.innerHTML = "Average timer delay was <span class=\"num\">" + results/iterations + "</span>, over <span class=\"num\">" + iterations + "</span> iterations.";
+		}
+		
+		go();
+	</script>
+</body>
+</html>
+	
