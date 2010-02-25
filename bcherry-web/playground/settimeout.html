@@ -8,10 +8,13 @@
 			font-family: Helvetica, Arial, sans-serif;
 			text-align: center;
 		}
+		.num {
+			font-weight: bold;
+		}
 	</style>
 </head>
 <body>
-	<h1>How Fast is setTimeout in Your Browswer?</h1>
+	<h1>How Fast is setTimeout in Your Browser?</h1>
 	<p id="target">Please wait, running tests...<br />
 		<img src="/static/img/ajax-loader.gif" /></p>
 	<p>This test discovers the <em>real</em> delay when using <code>setTimeout(fn, 0)</code>, which is never actually 0.</p>
@@ -36,7 +39,7 @@
 		}
 		
 		function finish() {
-			target.innerHTML = "Average timer delay was <span class=\"num\">" + results/iterations + "</span>, over <span class=\"num\">" + iterations + "</span> iterations.";
+			target.innerHTML = "Average timer delay was <span class=\"num\">" + results/iterations + "</span>ms, over <span class=\"num\">" + iterations + "</span> iterations.";
 		}
 		
 		go();
