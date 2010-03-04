@@ -21,7 +21,7 @@
 		var that = {},
 			map = my.map;
 		
-		that.fire = function fire(type) {
+		that.fire = function (type) {
 			//TODO: Shot types
 			var shot = {
 				x: that.x + 16,
@@ -395,7 +395,6 @@
 
 			// Load the display
 			document.body.appendChild(calc.display.getDomElement()); // FIXME: should pass in dom location in spec
-
 
 			// Set up key listeners
 			keyListeners();

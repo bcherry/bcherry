@@ -3,6 +3,32 @@
 
 /*jslint white: true, onevar: true, devel: true, undef: true, nomen: true, eqeqeq: true, plusplus: true, bitwise: true, regexp: true, strict: false, newcap: true, immed: true */
 
+var BC = (function (window, console) {
+	var my = {};
+	
+	function log() {
+		if (console) {
+			console.log.apply(this, Array.prototype.slice.apply(arguments));
+		}
+	}
+	
+	my.profile = function (func) {
+		return function () {
+			var start = new Date().getTime(),
+				name = func.name || func.toString().split('\n')[0] + " ... }",
+				retval;
+			
+			retval = func.apply(this, Array.prototype.slice.call(arguments));
+			
+			log("BC.profile: function %o took %dms", name, new Date().getTime() - start);
+			return retval;
+		}
+	};
+	
+	return my;
+}(window, window.console));
+
+// Extenstions to built-in prototypes and such
 Function.prototype.method = function (name, func) {
 	if (!this.prototype[name]) {
 		this.prototype[name] = func;
