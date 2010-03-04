@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Comparing Comparisons</title>
+	<style>
+		body {
+			font-family: Helvetica, Arial, sans-serif;
+			text-align: center;
+		}
+		.num {
+			font-weight: bold;
+		}
+		table {
+			margin: 0 auto;
+		}
+	</style>
+</head>
+<body>
+	<h1>Comparing Comparisons</h1>
+	<p id="target">Running tests...<br />
+		<img src="/static/img/ajax-loader.gif" /></p>
+	<p>This test is a benchmark for the use of <code>==</code> and <code>===</code> in JavaScript.</p>
+	<p>Test whipped up by Ben Cherry, who has a blog at <a href="http://www.adequatelygood.com">www.adequatelygood.com</a>.</p>
+	<script type="text/javascript">
+		var target = document.getElementById("target"),
+			results = 0,
+			iterations = 2000000,
+			i = 0,
+			z,
+			tests = {
+				throwaway: {
+					integers: {
+						equal: {
+							"==": function () {
+								var x = 1,
+									y = 1;
+							
+								for (i = 0; i < iterations; i += 1) {
+									x == y
+								}
+							},
+							"===": function () {
+								var x = 1,
+									y = 1;
+							
+								for (i = 0; i < iterations; i += 1) {
+									x === y;
+								}
+							}
+						},
+						unequal: {
+							"==": function () {
+								var x = 1,
+									y = 0;
+							
+								for (i = 0; i < iterations; i += 1) {
+									x == y;
+								}
+							},
+							"===": function () {
+								var x = 1,
+									y = 0;
+							
+								for (i = 0; i < iterations; i += 1) {
+									x === y;
+								}
+							}
+						}
+					},
+					strings: {
+						equal: {
+							"==": function () {
+								var x = "somestring",
+									y = "somestring";
+							
+								for (i = 0; i < iterations; i += 1) {
+									x == y;
+								}
+							},
+							"===": function () {
+								var x = "somestring",
+									y = "somestring";
+							
+								for (i = 0; i < iterations; i += 1) {
+									x === y;
+								}
+							}
+						},
+						unequal: {
+							"==": function () {
+								var x = "somestring",
+									y = "someothers";
+							
+								for (i = 0; i < iterations; i += 1) {
+									x == y;
+								}
+							},
+							"===": function () {
+								var x = "somestring",
+									y = "someothers";
+							
+								for (i = 0; i < iterations; i += 1) {
+									x === y;
+								}
+							}
+						}
+					},
+					mixed: {
+						equal: {
+							"==": function () {
+								var x = 1,
+									y = "1";
+							
+								for (i = 0; i < iterations; i += 1) {
+									x == y;
+								}
+							},
+							"===": function () {
+								var x = 1,
+									y = "1";
+							
+								for (i = 0; i < iterations; i += 1) {
+									x === +y;
+								}
+							}
+						},
+						unequal: {
+							"==": function () {
+								var x = 1,
+									y = "0";
+							
+								for (i = 0; i < iterations; i += 1) {
+									x == y;
+								}
+							},
+							"===": function () {
+								var x = 1,
+									y = "0";
+							
+								for (i = 0; i < iterations; i += 1) {
+									x === +y;
+								}
+							}
+						}
+					}
+				},
+				assigned: {
+					integers: {
+						equal: {
+							"==": function () {
+								var x = 1,
+									y = 1;
+							
+								for (i = 0; i < iterations; i += 1) {
+									z = x == y
+								}
+							},
+							"===": function () {
+								var x = 1,
+									y = 1;
+							
+								for (i = 0; i < iterations; i += 1) {
+									z = x === y;
+								}
+							}
+						},
+						unequal: {
+							"==": function () {
+								var x = 1,
+									y = 0;
+							
+								for (i = 0; i < iterations; i += 1) {
+									x == y;
+								}
+							},
+							"===": function () {
+								var x = 1,
+									y = 0;
+							
+								for (i = 0; i < iterations; i += 1) {
+									z = x === y;
+								}
+							}
+						}
+					},
+					strings: {
+						equal: {
+							"==": function () {
+								var x = "somestring",
+									y = "somestring";
+							
+								for (i = 0; i < iterations; i += 1) {
+									x == y;
+								}
+							},
+							"===": function () {
+								var x = "somestring",
+									y = "somestring";
+							
+								for (i = 0; i < iterations; i += 1) {
+									z = x === y;
+								}
+							}
+						},
+						unequal: {
+							"==": function () {
+								var x = "somestring",
+									y = "someothers";
+							
+								for (i = 0; i < iterations; i += 1) {
+									z = x == y;
+								}
+							},
+							"===": function () {
+								var x = "somestring",
+									y = "someothers";
+							
+								for (i = 0; i < iterations; i += 1) {
+									z = x === y;
+								}
+							}
+						}
+					},
+					mixed: {
+						equal: {
+							"==": function () {
+								var x = 1,
+									y = "1";
+							
+								for (i = 0; i < iterations; i += 1) {
+									z = x == y;
+								}
+							},
+							"===": function () {
+								var x = 1,
+									y = "1";
+							
+								for (i = 0; i < iterations; i += 1) {
+									z = x === +y;
+								}
+							}
+						},
+						unequal: {
+							"==": function () {
+								var x = 1,
+									y = "0";
+							
+								for (i = 0; i < iterations; i += 1) {
+									z = x == y;
+								}
+							},
+							"===": function () {
+								var x = 1,
+									y = "0";
+							
+								for (i = 0; i < iterations; i += 1) {
+									z = x === +y;
+								}
+							}
+						}
+					}
+				}
+			};
+		
+		function run(iterations) {
+			var use,
+				comparison,
+				operands,
+				useCase,
+				comparisonTest,
+				results = "Results over " + iterations + " iterations<br />"
+					+ "<table><tr><th>Use</th><th>Comparison</th><th>Operands</th><th>Operator</th><th>Time (ms)</th></tr>",
+				testCount = 0,
+				testsDone = 0;
+			
+			function log(use, comparison, operands, operator, time) {
+				results += "<tr><td>%s</td><td>%s</td><td>%s</td><td><code>%s</code></td><td><span class='num'>%dms</span></td></tr>"
+					.replace("%s", use).replace("%s", comparison).replace("%s", operands).replace("%s", operator).replace("%d", time);
+				if (window.console) {
+					console.log("Result used as %s, comparing %s, with operands %s, using operator %s, it took %dms.",
+						use, comparison, operands, operator, time)
+				}
+			}
+			
+			for (use in tests) {
+				useCase = tests[use];
+				for (comparison in useCase) {
+					comparisonTest = useCase[comparison];
+					for (operands in comparisonTest) {
+						(function (use, comparison, operands) {
+							testCount += 1;
+							var  operandsSide = comparisonTest[operands];
+							setTimeout(function () { // I break out into timers to prevent long-running script in IE
+								var operator,
+									operatorFunc,
+									start,
+									end;
+								
+								for (operator in operandsSide) {
+									operatorFunc = operandsSide[operator];
+									start = new Date().getTime();
+									operatorFunc();
+									end = new Date().getTime();
+									log(use, comparison, operands, operator, end - start);
+								}
+								testsDone += 1;
+								if (testsDone === testCount) {
+									results += "</table>";
+
+									target.innerHTML = results;
+								}
+							}, 0);
+						}(use, comparison, operands));
+					}
+				}
+			}
+			
+		}
+		
+		if (navigator.userAgent && navigator.userAgent.indexOf("MSIE") > 0) {
+			iterations = iterations / 4;
+		}
+		
+		run(iterations);
+		
+	</script>
+</body>
+</html>

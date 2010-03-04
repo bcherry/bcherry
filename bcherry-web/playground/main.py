@@ -14,10 +14,16 @@ class SetTimeoutHandler(webapp.RequestHandler):
 		path = os.path.join(os.path.dirname(__file__), 'settimeout.html')
 		self.response.out.write(template.render(path, {}))
 
+class ComparingComparisonsHandler(webapp.RequestHandler):
+	def get(self):
+		path = os.path.join(os.path.dirname(__file__), 'comparisonperformance.html')
+		self.response.out.write(template.render(path, {}))
+
 def main():
 	application = webapp.WSGIApplication([
 		('/playground', MainHandler),
 		('/playground/settimeout', SetTimeoutHandler),
+		('/playground/comparisons', ComparingComparisonsHandler),
 	], debug=True)
 	wsgiref.handlers.CGIHandler().run(application)
 
