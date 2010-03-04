@@ -1,200 +1,23 @@
 /*jslint white: true, onevar: true, browser: true, devel: true, undef: true, nomen: true, eqeqeq: true, plusplus: true, bitwise: true, regexp: true, strict: false, newcap: true, immed: true */
 /*globals JB: false, TI: false, window: false, SimpleThread: false, jQuery: false, consul: false	 */
-(function (window) {
+(function (window, $, JB) {
 	// Data Imports
 	var	Data = JB.Data,
-		Sprites = JB.Data.Sprites,
-		Blocks = JB.Data.Blocks,
-		
-	// Functions in this module
-		buildGame,
-		buildMap,
-		buildJet,
+		Sprites = Data.Sprites,
+		Blocks = Data.Blocks,
 		
 	// Global config stuff
 		calcSpec = {
-			model	: "ti89",
-			width	: 160 * 3,
-			height	: 100 * 3,
-			gfxMode	: "grayscale"
+			model: "ti89",
+			width: 160 * 3,
+			height: 100 * 3,
+			gfxMode: "grayscale"
 		},
-	
-	// mungable aliases
-		$ = window.jQuery,
 		
 	// The game (duh!)
 		game;
-		
-	buildGame = function buildGame(spec) {
-		var	that,
-		
-		// Functions in this module
-			start,
-			play,
-			pause,
-			stop,
-			main,
-			keyListeners,
-			scroll,
-			draw,
-			doShots,
-			checkDeath,
-			
-		// Calc API
-			calc = TI.makeCalculator(spec.calcSpec),
-			
-		// Game data
-			map = buildMap({width: 160, height: 12}),
-			jet = buildJet({map: map}),
-			shots = [],
-			screen = {x: -100, y: 0},
-			
-		// Control vars
-			thread,
-			scrollInterval,
-			started = false,
-			frame = 0;
-		
-		that = {};
-		
-		// Control methods
-		start = that.start = function start() {
-			if (started) {
-				return false;
-			}
-			started = true;
-			
-			// Load the display
-			document.body.appendChild(calc.display.getDomElement()); // FIXME: should pass in dom location in spec
-			
-			
-			// Set up key listeners
-			keyListeners();
-			
-			// Set up the game thread, and start the game
-			thread = new SimpleThread(main, {autoStart: false});
-			that.play();
-		};
-		
-		play = that.play = function play() {
-			if (thread.isRunning()) {
-				return;
-			}
-			thread.start();
-			scrollInterval = setInterval(scroll, 20);
-		};
-		
-		pause = that.pause = function pause() {
-			if (!thread.isRunning()) {
-				return;
-			}
-			thread.stop();
-			clearInterval(scrollInterval);
-		};
-		
-		stop = that.stop = function stop() {
-			thread.stop();
-			clearInterval(scrollInterval);
-			consul.log("dead");
-		};
-		
-		// Game methods
-		main = function main() {
-			draw();
-			doShots();
-			checkDeath();
-			frame = (frame + 1) % 120;
-		};
-		
-		keyListeners = function keyListeners() {
-			// TODO: Clean these up (seriously!)
-			calc.keys.listen("up", function () {
-				jet.moveUp();
-			});
-			calc.keys.listen("down", function () {
-				jet.moveDown();
-			});
-			calc.keys.listen("left", function () {
-				jet.moveLeft();
-			});
-			calc.keys.listen("right", function () {
-				jet.moveRight();
-			});
-			calc.keys.listen("2nd", function () {
-				shots.push(jet.fire());
-			});
-		};
-		
-		scroll = function scroll() {
-			screen.x = screen.x + 1;
-		};
-		
-		draw = function draw() {
-			var	i,
-				shot,
-				jetSprite,
-				len = shots.length;
-			
-			calc.display.clear();
-			
-			map.drawTo(calc.display, screen, (frame % 12) === 0, (frame % 6) === 0);
-			
-			jet.drawTo(calc.display, calc.keys, frame);
-			
-			for (i = 0; i < len; i += 1) {
-				shot = shots[i];
-				calc.display.drawSprite(Sprites.cannon.p1, Sprites.cannon.p2, Sprites.cannon.width, shot.x, shot.y);
-			}
-		};
-		
-		doShots = function doShots() {
-			var i,
-				j,
-				shot,
-				collisions,
-				clearShot,
-				len = shots.length;
-			
-			// When we want to pull out a shot, we need to adjust our loop iterators
-			clearShot = function clearShot() {
-				shots.splice(i, 1);
-				i -= 1;
-				len -= 1;
-			};
-				
-			for (i = 0; i < len; i += 1) {
-				shot = shots[i];
-				shot.x = shot.x + 4;
-				
-				
-				// Once they've run off the map we can get rid of them
-				if (map.outOfBounds(shot.x + screen.x, shot.y + screen.y, 8, 8, "right")) {
-					clearShot();
-					continue;
-				}
-				
-				collisions = map.collision(shot.x + screen.x, shot.y + screen.y, 8, 8);
-				if (collisions.length > 0) {
-					for (j = 0; j < collisions.length; j = j + 1) {
-						map.damage(collisions[j], shot.strength);
-					}
-					clearShot();
-				}
-			}
-		};
-		
-		checkDeath = function checkDeath() {
-			var collisions = map.collision(jet.x + screen.x, jet.y + screen.y, 16, 8);
-			
-			if (collisions.length > 0) {
-				that.stop();
-			}
-		};
-		
-		return that;
-	};
-	
-	buildJet = function buildJet(my) {
+
+	function buildJet(my) {
 		var that = {},
 			map = my.map;
 		
@@ -210,20 +33,20 @@
 		};
 		
 		// Movement functions
-		that.moveUp = function moveUp() {
+		that.moveUp = function () {
 			that.y -= 2;
 		};
-		that.moveDown = function moveDown() {
+		that.moveDown = function () {
 			that.y += 2;
 		};
-		that.moveLeft = function moveLeft() {
+		that.moveLeft = function () {
 			that.x -= 2;
 		};
-		that.moveRight = function moveRight() {
+		that.moveRight = function () {
 			that.x += 2;
 		};
 		
-		that.drawTo = function drawTo(display, keys, frame) {
+		that.drawTo = function (display, keys, frame) {
 			var sprite = Sprites.jetReg;
 			if (keys.isPressed("down")) {
 				sprite = Sprites.jetDown;
@@ -252,19 +75,10 @@
 		that.cannonStrength = 1;
 		
 		return that;
-	};
+	}
 	
-	buildMap = function buildMap(spec) {
-		var that,
-			
-		// Functions in this module
-			drawTo,
-			collision,
-			damage,
-			outOfBounds,
-			isMine,
-			isRegular,
-			isExplosion,
+	function buildMap(spec) {
+		var that = {},
 		
 		// Config values
 			width = spec.width,
@@ -273,10 +87,10 @@
 		// Local data
 			map = Array.matrix(width, height, 0),
 			proportions = { // TODO: take these as parameter
-				none			: 80,
-				regular			: 90,
-				indestructible	: 92,
-				mine			: 100
+				none: 80,
+				regular: 90,
+				indestructible: 92,
+				mine: 100
 			},
 			
 		// Loop iterators
@@ -285,7 +99,19 @@
 			i,
 			a;
 		
-		that = {};
+		function isMine(block) {
+			return block >= Blocks.mine1 && block <= Blocks.mine3;
+		}
+
+		// OPTIMIZATION: changing the order of the comparisons here could produce good savings
+		function isRegular(block) {
+			return block >= Blocks.broken2 && block <= Blocks.regular;
+		}
+
+		function isExplosion(block) {
+			return block >= Blocks.mineExplosion4 && block <= Blocks.mineExplosion1;
+		}
+		
 		that.width = width;
 		that.height = height;
 		
@@ -306,7 +132,7 @@
 			}
 		}
 		
-		drawTo = that.drawTo = function drawTo(display, offset, rotate, explode) {
+		that.drawTo = function (display, offset, rotate, explode) {
 			var col,
 				row,
 				i,
@@ -356,7 +182,7 @@
 										c = map[i];
 										for (j = row - 1; j <= row + 1; j += 1) {
 											if (j >= 0 && j < mapHeight) {
-												damage({col: i, row: j}, 5);
+												that.damage({col: i, row: j}, 5);
 											}
 										}
 									}
@@ -370,7 +196,7 @@
 		};
 		
 		// TODO: I think this function needs to be optimized
-		collision = that.collision = function collision(x, y, w, h) {
+		that.collision = function (x, y, w, h) {
 			var firstCol = (x / 8).floor(),
 				lastCol = ((x + w - 1) / 8).floor(),
 				firstRow = (y / 8).floor(),
@@ -406,7 +232,7 @@
 			return collisions;
 		};
 		
-		outOfBounds = that.outOfBounds = function outOfBounds(x, y, w, h, dirs) {
+		that.outOfBounds = function (x, y, w, h, dirs) {
 			var firstCol = (x / 8).floor(),
 				lastCol = ((x + w - 1) / 8).floor(),
 				firstRow = (y / 8).floor(),
@@ -427,7 +253,7 @@
 			return (checkLeft && lastCol < 0) || (checkRight && firstCol >= map.width) || (checkUp && lastRow < 0) || (checkDown && firstRow >= map.height);
 		};
 		
-		damage = that.damage = function damage(block, strength) {
+		that.damage = function (block, strength) {
 			var b = map[block.col][block.row],
 				newblock = b;
 			if (isRegular(b)) {
@@ -446,24 +272,168 @@
 			map[block.col][block.row] = newblock;
 		};
 		
-		isMine = function isMine(block) {
-			return block >= Blocks.mine1 && block <= Blocks.mine3;
-		};
-		
-		// OPTIMIZATION: changing the order of the comparisons here could produce good savings
-		isRegular = function isRegular(block) {
-			return block >= Blocks.broken2 && block <= Blocks.regular;
-		};
-		
-		isExplosion = function isExplosion(block) {
-			return block >= Blocks.mineExplosion4 && block <= Blocks.mineExplosion1;
-		};
-		
 		return that;
-	};
+	}
+	
+	function buildGame(spec) {
+		var	that = {},
+
+		// Calc API
+			calc = TI.makeCalculator(spec.calcSpec),
+
+		// Game data
+			map = buildMap({width: 160, height: 12}),
+			jet = buildJet({map: map}),
+			shots = [],
+			screen = {x: -100, y: 0},
+
+		// Control vars
+			thread,
+			scrollInterval,
+			started = false,
+			frame = 0;
+
+		// Game methods
+		function keyListeners() {
+			// TODO: Clean these up (seriously!)
+			calc.keys.listen("up", function () {
+				jet.moveUp();
+			});
+			calc.keys.listen("down", function () {
+				jet.moveDown();
+			});
+			calc.keys.listen("left", function () {
+				jet.moveLeft();
+			});
+			calc.keys.listen("right", function () {
+				jet.moveRight();
+			});
+			calc.keys.listen("2nd", function () {
+				shots.push(jet.fire());
+			});
+		}
+
+		function scroll() {
+			screen.x = screen.x + 1;
+		}
+
+		function draw() {
+			var	i,
+				shot,
+				jetSprite,
+				len = shots.length;
+
+			calc.display.clear();
+
+			map.drawTo(calc.display, screen, (frame % 12) === 0, (frame % 6) === 0);
+
+			jet.drawTo(calc.display, calc.keys, frame);
+
+			for (i = 0; i < len; i += 1) {
+				shot = shots[i];
+				calc.display.drawSprite(Sprites.cannon.p1, Sprites.cannon.p2, Sprites.cannon.width, shot.x, shot.y);
+			}
+		}
+
+		function doShots() {
+			var i,
+				j,
+				shot,
+				collisions,
+				clearShot,
+				len = shots.length;
+
+			// When we want to pull out a shot, we need to adjust our loop iterators
+			clearShot = function clearShot() {
+				shots.splice(i, 1);
+				i -= 1;
+				len -= 1;
+			};
+
+			for (i = 0; i < len; i += 1) {
+				shot = shots[i];
+				shot.x = shot.x + 4;
+
+
+				// Once they've run off the map we can get rid of them
+				if (map.outOfBounds(shot.x + screen.x, shot.y + screen.y, 8, 8, "right")) {
+					clearShot();
+					continue;
+				}
+
+				collisions = map.collision(shot.x + screen.x, shot.y + screen.y, 8, 8);
+				if (collisions.length > 0) {
+					for (j = 0; j < collisions.length; j = j + 1) {
+						map.damage(collisions[j], shot.strength);
+					}
+					clearShot();
+				}
+			}
+		}
+
+		function checkDeath() {
+			var collisions = map.collision(jet.x + screen.x, jet.y + screen.y, 16, 8);
+
+			if (collisions.length > 0) {
+				that.stop();
+			}
+		}
+		
+		function main() {
+			draw();
+			doShots();
+			checkDeath();
+			frame = (frame + 1) % 120;
+		}
+
+		// Control methods
+		that.start = function () {
+			if (started) {
+				return false;
+			}
+			started = true;
+
+			// Load the display
+			document.body.appendChild(calc.display.getDomElement()); // FIXME: should pass in dom location in spec
+
+
+			// Set up key listeners
+			keyListeners();
+
+			// Set up the game thread, and start the game
+			thread = new SimpleThread(main, {autoStart: false});
+			that.play();
+		};
+
+		that.play = function () {
+			if (thread.isRunning()) {
+				return;
+			}
+			thread.start();
+			scrollInterval = setInterval(scroll, 20);
+		};
+
+		that.pause = function () {
+			if (!thread.isRunning()) {
+				return;
+			}
+			thread.stop();
+			clearInterval(scrollInterval);
+		};
+
+		that.stop = function () {
+			thread.stop();
+			clearInterval(scrollInterval);
+			consul.log("dead");
+		};
+
+		return that;
+	}
 	
 	game = JB.game = buildGame({
 		calcSpec: calcSpec
 	});
+	
 	$(game.start);
-}(window));
+	
+}(window, jQuery, JB));
