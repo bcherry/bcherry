@@ -1,22 +1,22 @@
 /*jslint white: true, onevar: true, browser: true, devel: true, undef: true, nomen: true, eqeqeq: true, plusplus: true, bitwise: true, regexp: true, strict: false, newcap: true, immed: true */
 /*globals JB: true, window: false */
-(function () {
-	var JB = window.JB = {},
-		Data = JB.Data = {},	
+var JB = (function () {
+	var JB = {},
+		Data = JB.Data = {},
 		Sprites = Data.Sprites = {},
 		Blocks = Data.Blocks = {
-			none			: 0,
-			broken2			: 1,
-			broken1			: 2,
-			regular			: 3,
-			indestructible	: 4,
-			mine1			: 5,
-			mine2			: 6,
-			mine3			: 7,
-			mineExplosion4	: 8,
-			mineExplosion3	: 9,
-			mineExplosion2	: 10,
-			mineExplosion1	: 11
+			none: 0,
+			broken2: 1,
+			broken1: 2,
+			regular: 3,
+			indestructible: 4,
+			mine1: 5,
+			mine2: 6,
+			mine3: 7,
+			mineExplosion4: 8,
+			mineExplosion3: 9,
+			mineExplosion2: 10,
+			mineExplosion1: 11
 		};
 
 	Sprites.mineExplosion1 = {
@@ -257,15 +257,17 @@
 	};
 	
 	Blocks.Sprites = {};
-	Blocks.Sprites[Blocks.broken1]			= Sprites.broken1;
-	Blocks.Sprites[Blocks.broken2]			= Sprites.broken2;
-	Blocks.Sprites[Blocks.regular]			= Sprites.regular;
-	Blocks.Sprites[Blocks.indestructible]	= Sprites.indestructible;
-	Blocks.Sprites[Blocks.mine1]			= Sprites.mine1;
-	Blocks.Sprites[Blocks.mine2]			= Sprites.mine2;
-	Blocks.Sprites[Blocks.mine3]			= Sprites.mine3;
-	Blocks.Sprites[Blocks.mineExplosion4]	= Sprites.mineExplosion4;
-	Blocks.Sprites[Blocks.mineExplosion3]	= Sprites.mineExplosion3;
-	Blocks.Sprites[Blocks.mineExplosion2]	= Sprites.mineExplosion2;
-	Blocks.Sprites[Blocks.mineExplosion1]	= Sprites.mineExplosion1;
+	Blocks.Sprites[Blocks.broken1] = Sprites.broken1;
+	Blocks.Sprites[Blocks.broken2] = Sprites.broken2;
+	Blocks.Sprites[Blocks.regular] = Sprites.regular;
+	Blocks.Sprites[Blocks.indestructible] = Sprites.indestructible;
+	Blocks.Sprites[Blocks.mine1] = Sprites.mine1;
+	Blocks.Sprites[Blocks.mine2] = Sprites.mine2;
+	Blocks.Sprites[Blocks.mine3] = Sprites.mine3;
+	Blocks.Sprites[Blocks.mineExplosion4] = Sprites.mineExplosion4;
+	Blocks.Sprites[Blocks.mineExplosion3] = Sprites.mineExplosion3;
+	Blocks.Sprites[Blocks.mineExplosion2] = Sprites.mineExplosion2;
+	Blocks.Sprites[Blocks.mineExplosion1] = Sprites.mineExplosion1;
+	
+	return JB;
 }());
