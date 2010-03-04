@@ -1,92 +1,123 @@
-;(function(){
-	var threadManager = {
-		seed: 0,
-		current: 0,
-		threads: [],
-		start: function() {
-			if (this.current) {
-				return;
-			}
-			(function(){
-				for (var i = 0; i < threadManager.threads.length; i++ ) {
-					if (threadManager.threads[i].run() === false ) {
-						threadManager.threads[i].stop(true);
-						threadManager.threads.splice(i,1);
-						i--;
-					}
+/*jslint white: true, onevar: true, browser: true, devel: true, undef: true, nomen: true, eqeqeq: true, plusplus: true, bitwise: true, regexp: true, strict: true, newcap: true, immed: true */
+/*globals window: false, SimpleThread: false */
+"use strict";
+var simpleThreading = (function (window, console) {
+	var my = {},
+		threads = [],
+		timer,
+		
+		// co-dependent functions
+		process,
+		iterate;
+	
+	function log() {
+		if (console) {
+			console.log.apply(this, Array.prototype.slice.call(arguments));
+		}
+	}
+	
+	function add(thread) {
+		threads.push(thread);
+		
+		// to ensure we're running
+		my.run();
+	}
+	
+	function remove(thread) {
+		var index,
+			i,
+			l;
+		
+		// Modern browsers have an indexOf method for arrays
+		if (Array.prototype.indexOf) {
+			index = threads.indexOf(thread);
+		
+		// But Internet Explorer does not
+		} else {
+			index = -1;
+			for (i = 0, l = threads.length; i < l; i += 1) {
+				if (threads[i] === thread) {
+					index = i;
+					break;
 				}
-				threadManager.current = setTimeout(arguments.callee, 0);
-			})();
-		},
-		stop: function() {
-			clearTimeout(this.current);
-			this.current = 0;
-		},
-		add: function(thread) {
-			thread.__threadID = this.seed++;
-			this.threads.push(thread);
-			this.start();
-			return thread.__threadID;
-		},
-		remove: function(threadID) {
-			for (var i = 0; i < threadManager.threads.length; i++) {
-				if (threadManager.threads[i].__threadID == threadID) {
-					threadManager.threads.splice(i,1);
-				}
 			}
+		}
+		
+		if (index < 0) {
+			return false; // thread was not found
+		}
+		
+		// At least IE has splice though
+		threads.splice(index, 1);
+		
+		return true;
+	}
+	
+	my.make = function (func, options) {
+		var priv,
+			pub;
+		
+		options = options || {};
+		
+		priv = {
+			func: func,
+			options: options
+		};
+		
+		pub = {
+			start: function () {
+				add(priv);
+			},
+			stop: function () {
+				remove(priv);
+			}
+		};
+		
+		if (options.autoStart !== false) {
+			pub.start();
+		}
+		
+		return pub;
+	};
+	
+	process = function () {
+		var i,
+			l,
+			thread,
+			newThreads = [];
+		
+		for (i = 0, l = threads.length; i < l; i += 1) {
+			thread = threads[i];
+			if (thread.func() !== false) {
+				newThreads.push(thread);
+			}
+		}
+		
+		threads = newThreads;
+		
+		iterate();
+	};
+	
+	iterate = function () {
+		if (threads.length) {
+			timer = setTimeout(process, 0);
+		} else {
+			timer = undefined;
 		}
 	};
-
-	this.SimpleThread = function(workFn,params) {
-		var that = this;
-		var autoStart = !!(params && params.autoStart);
-		var workArgs = (params && params.workArgs) || [];
-		var _log = (params && params.log !== undefined) || false;
-		var workFn = workFn;
-		var threadID = null;
-		var _callee = arguments.callee;
-
-		var log = function(msg) {
-			if (_log && window.console) {
-				console.log("SimpleThread #" + threadID + ": " + msg);
-			}
-		}
-
-		// Control functions
-		this.start = function() {
-			if (!this.isRunning()) {
-				threadID = threadManager.add(that);
-				log("started");
-			}
-		};
-		this.stop = function(skipThreadManager) {
-			if (!skipThreadManager) {
-				threadManager.remove(threadID);
-			}
-			if (that.isRunning()) {
-				log("stopped");
-				threadID = null;
-			}
-		};
-		this.isRunning = function() {
-			return threadID !== null;
-		};
-		this.run = function() {
-			return workFn.apply(_callee,workArgs);
-		};
-
-		// Getters/Setters
-		this.getBatchSize	= function()	{ return batchSize; };
-		this.setBatchSize	= function(n)	{ batchSize = n; };
-		this.getWorkFn		= function() 	{ return workFn; };
-		this.setWorkFn		= function(fn)	{ workFn = fn; };
-		this.getWorkArgs	= function()	{ return workArgs; };
-		this.setWorkArgs	= function(args){ workArgs = args; };
-		this.getThreadID	= function()	{ return threadID; };
-
-		if (autoStart) {
-			this.start();
+	
+	my.run = function () {
+		if (!timer) {
+			iterate();
 		}
 	};
-})();
-
+	
+	my.pauseAll = function () {
+		if (timer) {
+			clearTimeout(timer);
+			timer = undefined;
+		}
+	};
+	
+	return my;
+}(window, window.console));
