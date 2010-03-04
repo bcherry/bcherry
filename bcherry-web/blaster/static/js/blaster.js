@@ -1,6 +1,6 @@
 /*jslint white: true, onevar: true, browser: true, devel: true, undef: true, nomen: true, eqeqeq: true, plusplus: true, bitwise: true, regexp: true, strict: false, newcap: true, immed: true */
-/*globals JB: false, TI: false, window: false, SimpleThread: false, jQuery: false, consul: false	 */
-(function (window, $, JB) {
+/*globals JB: false, TI: false, BC: false, window: false, SimpleThread: false, jQuery: false, consul: false	 */
+(function (window, $, JB, BC) {
 	// Data Imports
 	var	Data = JB.Data,
 		Sprites = Data.Sprites,
@@ -344,7 +344,7 @@
 				len = shots.length;
 
 			// When we want to pull out a shot, we need to adjust our loop iterators
-			clearShot = function clearShot() {
+			clearShot = function () {
 				shots.splice(i, 1);
 				i -= 1;
 				len -= 1;
@@ -394,7 +394,7 @@
 			started = true;
 
 			// Load the display
-			document.body.appendChild(calc.display.getDomElement()); // FIXME: should pass in dom location in spec
+			$("#game").append(calc.display.getDomElement());
 
 			// Set up key listeners
 			keyListeners();
@@ -425,14 +425,28 @@
 			clearInterval(scrollInterval);
 			consul.log("dead");
 		};
+		
+		that.destroy = function () {
+			that.stop();
+			$("#game").empty();
+		}
 
 		return that;
 	}
 	
-	game = JB.game = buildGame({
-		calcSpec: calcSpec
+	$(function () {
+		$("#start").click(function () {
+			
+			if (JB.game) {
+				JB.game.destroy();
+			}
+			
+			JB.game = buildGame({
+				calcSpec: calcSpec
+			});
+			
+			JB.game.start();
+		});
 	});
 	
-	$(game.start);
-	
-}(window, jQuery, JB));
+}(window, jQuery, JB, BC));

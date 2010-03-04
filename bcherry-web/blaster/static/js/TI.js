@@ -204,7 +204,7 @@ var TI = (function (window) {
 		}
 		
 		div = document.createElement("div");
-		div.setAttribute("style", "width:" + width + ";height:" + height + ";background-color:" + bgColor + ";border:solid 1px black;position:relative;");
+		div.setAttribute("style", "width:" + width + "px;height:" + height + "px;background-color:" + bgColor + ";border:solid 1px black;position:relative;");
 		
 		canvas = document.createElement("canvas");
 		canvas.width = params.width;
@@ -307,9 +307,9 @@ var TI = (function (window) {
 	makeKeys = function (spec) {
 		var that,
 			keyMap = {
-				16: "shift",	// Shift
 				32: "2nd",		// Space
 				17: "diamond",	// Control
+				16: "shift",	// Shift
 				13: "enter",		// Enter/Return
 				38: "up",			// Up
 				40: "down",		// Down
@@ -329,10 +329,17 @@ var TI = (function (window) {
 				"2nd": dummy,
 				diamond: dummy,
 				shift: dummy,
+				enter: dummy,
 				up: dummy,
 				down: dummy,
 				left: dummy,
-				right: dummy
+				right: dummy,
+				esc: dummy,
+				f1: dummy,
+				f2: dummy,
+				f3: dummy,
+				f4: dummy,
+				f5: dummy
 			},
 			translateKeyCode,
 			pressedKeys = {},
@@ -393,6 +400,7 @@ var TI = (function (window) {
 		document.onkeydown = function (e) {
 			var	keyCode = (window.event) ? event.keyCode : e.keyCode,
 				key = translateKeyCode(keyCode);
+			
 			if (key) {
 				pressedKeys[key] = true;
 			}

@@ -1,10 +1,27 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+	<meta charset="utf-8">
 	<title>Jet Blaster JS!</title>
-	
-	<link rel="stylesheet" type="text/css" href="/blaster/static/css/blaster.css" />
+	<link rel="stylesheet" type="text/css" media="print, screen" href="/blaster/static/css/blaster.css" />
 </head>
 <body>
+	<h1>Jet Blaster - Mach II</h1>
+	
+	<h2>About</h2>
+	<p>This game is a partial port of <a href="http://www.ticalc.org/archives/files/fileinfo/333/33386.html" target="_blank">Jet Blaster Mach II</a>, for the TI-89 graphing calculator, which is the first program of reasonable quality <a href="http://www.adequatelygood.com">Ben Cherry</a> ever wrote.  The game was originally written in C, and compiled using <a href="http://tigcc.ticalc.org/" target="_blank">TIGCC</a>.  This port is written in pure JavaScript, using the HTML5 &lt;canvas&gt; tag, with no external images or other files.  Part of the porting effort involved the creation of a new JavaScript library for simulation of a TI graphing calculator, <a href="/blaster/static/js/TI.js" target="_blank">TI.js</a> (only TI-89 simulation is supported at this time).</p>
+	
+	<h2>Controls</h2>
+	<p>Controls are very simple, and reflect the original game controls mapped to a keyboard.</p>
+	<ul>
+		<li>[Up], [Down], [Left], [Right] - maneuver</li>
+		<li>[Space] ([2nd]) - fire cannon</li>
+	</ul>
+	
+	<div id="game"></div>
+	
+	<button id="start">New Game</button>
+	
 	<script type="text/javascript" src="/static/lib/js/LAB.src.js"></script>
 	<script type="text/javascript">
 		$LAB.setGlobalDefaults({UseLocalXHR:false});
