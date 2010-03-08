@@ -1,20 +1,21 @@
+<!DOCTYPE html>
 <html>
 <head>
-	<title>bcherry.net</title>
+	<meta charset="utf-8" />
+	<title>Ben Cherry's Random Things</title>
 </head>
 <body>
-	<div></div>
-	<script type="text/javascript" src="/static/lib/js/LAB.js"></script>
+	<p>This is Ben Cherry's domain for random things.  It's hosted on Google AppEngine, and is wholly uninteresting.  There used to be a blog here, but it got moved to <a href="http://www.adequatelygood.com">adequatelygood.com</a></p>
 	<script type="text/javascript">
-		$LAB
-		.script("/static/lib/js/jquery-1.4.min.js")
-		.wait()
-		.script("/static/lib/js/consul.js")
-		.wait(function () {
-			jQuery(function () {
-				jQuery("div").text("DOM ready at " + new Date().toString());
-			});
-		});
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', 'UA-251077-6']);
+	  _gaq.push(['_trackPageview']);
+
+	  (function() {
+	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
+	  })();
 	</script>
 </body>
 </html>
