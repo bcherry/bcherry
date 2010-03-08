@@ -276,7 +276,11 @@
 	}
 	
 	function buildGame(spec) {
-		var	that = {},
+		var that = {},
+		
+		// DOM location
+			domTarget = spec.target,
+			startButton = spec.startButton,
 
 		// Calc API
 			calc = TI.makeCalculator(spec.calcSpec),
@@ -318,7 +322,7 @@
 		}
 
 		function draw() {
-			var	i,
+			var i,
 				shot,
 				jetSprite,
 				len = shots.length;
@@ -375,11 +379,12 @@
 			var collisions = map.collision(jet.x + screen.x, jet.y + screen.y, 16, 8);
 
 			if (collisions.length > 0) {
-				that.stop();
+				that.destroy();
 			}
 		}
 		
 		function main() {
+			debugger;
 			draw();
 			doShots();
 			checkDeath();
@@ -394,7 +399,7 @@
 			started = true;
 
 			// Load the display
-			$("#game").append(calc.display.getDomElement());
+			domTarget.append(calc.display.getDomElement());
 
 			// Set up key listeners
 			keyListeners();
@@ -421,31 +426,35 @@
 		};
 
 		that.stop = function () {
+			started = false;
 			thread.stop();
 			clearInterval(scrollInterval);
-			consul.log("dead");
 		};
 		
 		that.destroy = function () {
-			that.stop();
-			$("#game").empty();
-		}
+			if (started) {
+				that.stop();
+			}
+		};
 
 		return that;
 	}
 	
 	$(function () {
-		$("#start").click(function () {
-			
-			if (JB.game) {
-				JB.game.destroy();
-			}
-			
-			JB.game = buildGame({
-				calcSpec: calcSpec
+		var startButton = $("#start"),
+			gameTarget = $("#game"),
+			game;
+		
+		startButton.click(function () {
+			game = buildGame({
+				calcSpec: calcSpec,
+				target: gameTarget,
+				startButton: startButton
 			});
 			
-			JB.game.start();
+			startButton.hide();
+			
+			game.start();
 		});
 	});
 	

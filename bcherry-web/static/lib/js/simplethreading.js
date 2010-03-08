@@ -8,7 +8,8 @@ var simpleThreading = (function (window, console) {
 		
 		// co-dependent functions
 		process,
-		iterate;
+		iterate,
+		count = 0;
 	
 	function log() {
 		if (console) {
@@ -49,8 +50,6 @@ var simpleThreading = (function (window, console) {
 		// At least IE has splice though
 		threads.splice(index, 1);
 		
-		console.log("removed thread at %o, threads=%o", index, threads);
-		
 		return true;
 	}
 	
@@ -71,12 +70,16 @@ var simpleThreading = (function (window, console) {
 		
 		pub = {
 			start: function () {
-				add(priv);
-				running = true;
+				if (!running) {
+					add(priv);
+					running = true;
+				}
 			},
 			stop: function () {
-				remove(priv);
-				running = false;
+				if (running) {
+					remove(priv);
+					running = false;
+				}
 			},
 			isRunning: function () {
 				return running;
@@ -96,6 +99,7 @@ var simpleThreading = (function (window, console) {
 			thread,
 			newThreads = [];
 		
+		log("process %d", count++);
 		for (i = 0, l = threads.length; i < l; i += 1) {
 			thread = threads[i];
 			if (thread.func() !== false) {
