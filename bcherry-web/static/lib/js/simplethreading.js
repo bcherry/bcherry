@@ -31,7 +31,6 @@ var simpleThreading = (function (window, console) {
 		// Modern browsers have an indexOf method for arrays
 		if (Array.prototype.indexOf) {
 			index = threads.indexOf(thread);
-		
 		// But Internet Explorer does not
 		} else {
 			index = -1;
@@ -50,26 +49,37 @@ var simpleThreading = (function (window, console) {
 		// At least IE has splice though
 		threads.splice(index, 1);
 		
+		console.log("removed thread at %o, threads=%o", index, threads);
+		
 		return true;
 	}
 	
 	my.make = function (func, options) {
 		var priv,
-			pub;
+			pub,
+			running = false;
 		
 		options = options || {};
 		
 		priv = {
 			func: func,
-			options: options
+			options: options,
+			killed: function () {
+				running = false;
+			}
 		};
 		
 		pub = {
 			start: function () {
 				add(priv);
+				running = true;
 			},
 			stop: function () {
 				remove(priv);
+				running = false;
+			},
+			isRunning: function () {
+				return running;
 			}
 		};
 		
@@ -90,6 +100,8 @@ var simpleThreading = (function (window, console) {
 			thread = threads[i];
 			if (thread.func() !== false) {
 				newThreads.push(thread);
+			} else {
+				thread.killed();
 			}
 		}
 		

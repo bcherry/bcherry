@@ -1,5 +1,5 @@
 /*jslint white: true, onevar: true, browser: true, devel: true, undef: true, nomen: true, eqeqeq: true, plusplus: true, bitwise: true, regexp: true, strict: false, newcap: true, immed: true */
-/*globals JB: false, TI: false, BC: false, window: false, SimpleThread: false, jQuery: false, consul: false	 */
+/*globals JB: false, TI: false, BC: false, window: false, simpleThreading: false, jQuery: false, consul: false	 */
 (function (window, $, JB, BC) {
 	// Data Imports
 	var	Data = JB.Data,
@@ -400,7 +400,7 @@
 			keyListeners();
 
 			// Set up the game thread, and start the game
-			thread = new SimpleThread(main, {autoStart: false});
+			thread = simpleThreading.make(main, {autoStart: false});
 			that.play();
 		};
 
