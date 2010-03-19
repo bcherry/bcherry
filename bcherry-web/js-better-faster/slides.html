@@ -1,0 +1,649 @@
+<div class="slide " ref="title/title/1">
+<h1>JavaScript: Better and Faster</h1>
+
+<h2>Ben Cherry</h2>
+
+<h3>SuperPoke! Pets Performance Engineer</h3></div><div class="slide  overview" ref="title/title/2">
+<h1>what we'll cover</h1>
+
+<ol>
+<li>the JavaScript language</li>
+<li>run-time performance pitfalls</li>
+
+<li>inheritance</li>
+<li>DOM performance</li>
+<li>long-running scripts</li>
+<li>page-load performance</li>
+<li>performance tools</li>
+<li>random extras</li>
+<li>other resources</li>
+</ol>
+
+
+<hr/>
+
+<h2>and we'll try to do it in one hour</h2></div><div class="slide " ref="jslang/jslang/1">
+<h1>The JavaScript Language</h1>
+
+<h3>just what you need to know to understand this talk</h3></div><div class="slide " ref="jslang/jslang/2">
+<h1>variables and functions</h1>
+
+<hr/>
+
+<pre class="sh_javascript"><code>var foo = 1; // variable statement
+
+function bar() {} // function statement
+
+(function baz() {}); // function expression
+
+(function (spam) {}(1)); // function parameter</code></pre>
+
+<hr/>
+
+<h2>those are the <em>only ways</em> you should declare things</h2></div><div class="slide " ref="jslang/jslang/3">
+<h1>scope</h1>
+
+<hr/>
+
+<pre class="sh_javascript"><code>var foo = 1;
+(function () {
+    var baz = 2;
+    foo = 3;
+}());
+alert(foo); // 3
+alert(baz); // ReferenceError</code></pre>
+
+<hr/>
+
+<h2>JavaScript has <em>function-level scope</em></h2></div><div class="slide " ref="jslang/jslang/4">
+<h1>hoisting</h1>
+
+<hr/>
+
+<pre class="sh_javascript"><code>var foo = 1;
+(function () {
+    alert(foo); // undefined
+    var foo = 2;
+}());
+alert(foo); // 1</code></pre>
+
+<hr/>
+
+<h2>names are always <em>hoisted</em> to the top of their scope</h2>
+
+<h2>and always initialized to <code>undefined</code></h2></div><div class="slide " ref="jslang/jslang/5">
+<h1>closure</h1>
+
+<hr/>
+
+<pre class="sh_javascript"><code>var foo = (function () {
+    var bar = 5;
+
+    return function () {
+        alert(bar);
+    };
+}());
+foo(); // 5
+setTimeout(foo, 10000); // 5, 10s later</code></pre>
+
+<hr/>
+
+<h2>functions have access to their original <em>scope chain</em></h2></div><div class="slide " ref="pitfalls/pitfalls/1">
+
+<h1>Run-Time Performance</h1>
+
+<h2>common pitfalls</h2></div><div class="slide  subsection" ref="pitfalls/pitfalls/2">
+<h1>"namespaces"</h1></div><div class="slide " ref="pitfalls/pitfalls/3">
+<h2>Python</h2>
+
+<pre class="sh_python"><code>import apps.pet.util
+apps.pet.util.some_function()
+
+# this is quite fast</code></pre>
+
+<hr/>
+
+<h2>JavaScript</h2>
+
+<pre class="sh_javascript"><code>SP.util.someFunction();
+
+// but this is very slow</code></pre></div><div class="slide  process" ref="pitfalls/pitfalls/4">
+<h1>here's what happens</h1>
+
+<hr/>
+
+<pre class="sh_javascript"><code>SP.util.someFunction();</code></pre>
+
+<ol>
+<li>lookup <code>SP</code></li>
+<li>resolve property <code>util</code></li>
+
+<li>resolve property <code>someFunction</code></li>
+<li>execute function</li>
+</ol>
+
+
+<hr/>
+
+<h2>imagine that in a loop!</h2></div><div class="slide " ref="pitfalls/pitfalls/5">
+<h1>store that reference</h1>
+
+<hr/>
+
+<pre class="sh_javascript"><code>var some_function = SP.util.some_function,
+    i;
+
+for (i = 0; i &lt; 1000000; i += 1) {
+    some_function();
+}</code></pre>
+
+<hr/>
+
+<h2>this is much faster</h2></div><div class="slide  subsection" ref="pitfalls/pitfalls/6">
+<h1>scope chains</h1></div><div class="slide " ref="pitfalls/pitfalls/7">
+<h1>the slow way</h1>
+
+<hr/>
+
+<pre class="sh_javascript"><code>var foo = 1;
+function bar() {
+    var i;
+    for (i = 0; i &lt; 10000; i += 1) {
+        alert(foo);
+    }
+}
+bar();</code></pre>
+
+<hr/>
+
+<h2><code>foo</code> is one step down the chain</h2></div><div class="slide " ref="pitfalls/pitfalls/8">
+<h1>faster</h1>
+
+<hr/>
+
+<pre class="sh_javascript"><code>var foo = 1;
+function bar() {
+    var myFoo = foo, i;
+    for (i = 0; i &lt; 10000; i += 1) {
+        alert(myFoo);
+    }
+}
+bar();</code></pre>
+
+<hr/>
+
+<h2>now <code>myFoo</code> is on the end of the chain</h2></div><div class="slide  subsection" ref="pitfalls/pitfalls/9">
+<h1>arrays</h1></div><div class="slide " ref="pitfalls/pitfalls/10">
+<h1>arrays are objects, not arrays</h1>
+
+<hr/>
+
+<pre class="sh_javascript"><code>var a = [];
+typeof a; // "object"
+a.length; // 0
+
+a[10] = 1;
+a.length; // 11
+
+a["something_else"] = 1;
+a.something_else; // 1
+a.length; // 11</code></pre></div><div class="slide " ref="pitfalls/pitfalls/11">
+<h1>this means arrays are slower than you expect</h1>
+
+<h2>but some browsers do optimize them</h2></div><div class="slide  subsection" ref="pitfalls/pitfalls/12">
+<h1>loops</h1></div><div class="slide " ref="pitfalls/pitfalls/13">
+<h1>for loops</h1>
+
+<hr/>
+
+<pre class="sh_javascript"><code>// slow method
+var i;
+for (i = 0; i &lt; someArray.length; i += 1) {
+    // ...
+}</code></pre>
+
+<hr/>
+
+<pre class="sh_javascript"><code>// faster
+var i, l;
+for (i = 0, l = someArray.length; i &lt; l; i += 1) {
+    // ...
+}</code></pre></div><div class="slide " ref="pitfalls/pitfalls/14">
+<h1>for-in loops</h1>
+
+<hr/>
+
+<pre class="sh_javascript"><code>var key;
+for (key in someObject) {
+    // ...
+}</code></pre>
+
+<hr/>
+
+<h2>these are slow, avoid them</h2></div><div class="slide " ref="pitfalls/pitfalls/15">
+<h1>for-in alternative</h1>
+
+<hr/>
+
+<pre class="sh_javascript"><code>var keys = ["foo", "bar", "baz"], i, l, key;
+for (i = 0, l = keys.length; i &lt; l; i += 1) {
+    key = keys[key];
+    // ... someObject[key] ...
+}</code></pre>
+
+<hr/>
+
+<h2>this is much faster, and is preferred</h2></div><div class="slide  subsection" ref="pitfalls/pitfalls/16">
+<h1>arguments</h1></div><div class="slide " ref="pitfalls/pitfalls/17">
+<pre class="sh_javascript"><code>function foo() {
+    return arguments[0];
+}
+foo(1); // 1</code></pre>
+
+<hr/>
+
+<h2>much slower (up to 100x) than using parameters</h2>
+
+<h2><code>arguments</code> should be avoided if possible</h2></div><div class="slide " ref="inheritance/inheritance/1">
+<h1>Inheritance</h1></div><div class="slide " ref="inheritance/inheritance/2">
+<h1>don't use it</h1>
+
+<h2>unless you have to</h2>
+
+<h3>and that's all I have to say about that</h3></div><div class="slide " ref="modules/modules/1">
+<h1>modules</h1>
+
+<h2>how to make <code>SP.util</code>?</h2>
+
+<h3><em>not</em> the same as inheritance</h3></div><div class="slide " ref="modules/modules/2">
+<pre class="sh_javascript"><code>SP.util = (function (SP) {
+    var util = {},
+        foo; // private variable
+
+    // public
+    util.someFunction = function () {};
+
+    // private
+    function someOther() {}
+
+    return util;
+}(SP));</code></pre>
+
+<hr/>
+
+<h2>this a fast, reusable pattern</h2></div><div class="slide " ref="dom/dom/1">
+<h1>The DOM</h1>
+
+<h2>it's absolutely terrible</h2>
+
+<h3>but I have three simple rules to make it better</h3></div><div class="slide  subsection" ref="dom/dom/2">
+<h1>rule 1</h1>
+
+<h2>never edit the live tree</h2></div><div class="slide " ref="dom/dom/3">
+
+<h1>you can detach sub-trees</h1>
+
+<hr/>
+
+<pre class="sh_javascript"><code>var elem = $("#myelem"),
+    parent = elem.parent();
+
+elem.detach();
+// ... muck with elem and sub-elements ...
+parent.append(elem);</code></pre>
+
+<hr/>
+
+<h3><code>.detach()</code> is new in jQuery 1.4</h3></div><div class="slide " ref="dom/dom/4">
+<h1>or you can clone and replace</h1>
+
+<hr/>
+
+<pre class="sh_javascript"><code>var old = $("#myelem"),
+    clone = old.clone();
+
+// ... muck with the clone ...
+old.replaceWith(clone);</code></pre>
+
+<hr/>
+
+<h2>but be careful about event handlers</h2>
+
+<h2>use <code>.clone(true)</code> to preserve them</h2></div><div class="slide  subsection" ref="dom/dom/5">
+<h1>rule 2</h1>
+
+<h2>build bottom-up</h2></div><div class="slide " ref="dom/dom/6">
+<h1>bottom-up construction</h1>
+
+<hr/>
+
+<pre class="sh_javascript"><code>var child = document.createElement("div"),
+    parent = document.createElement("div"),
+    grand = document.createElement("div");
+
+parent.appendChild(child);
+grand.appendChild(parent);
+document.body.appendChild(grand);</code></pre></div><div class="slide  subsection" ref="dom/dom/7">
+<h1>rule 3</h1>
+
+<h2>minimize event handlers</h2></div><div class="slide " ref="dom/dom/8">
+<h1>memory leaks in IE</h1>
+
+<pre class="sh_javascript"><code>$(".myelems").bind("click", function () {/* ... */});
+
+// ...
+
+$(".myelems").remove();
+
+// aww snap, memory leak!</code></pre>
+
+<hr/>
+
+<h2>was that really that surprising?</h2></div><div class="slide " ref="dom/dom/9">
+<h1>unbind before removal</h1>
+
+<hr/>
+
+<pre class="sh_javascript"><code>$(".myelems").unbind("click").remove();
+// phew!</code></pre>
+
+<hr/>
+
+<h2>but that kind of sucks too</h2></div><div class="slide " ref="dom/dom/10">
+<h1>use event delegation</h1>
+
+<hr/>
+
+<pre class="sh_javascript"><code>$(".myelems").live("click", function () {/* ... */});
+
+$(".myelems").remove();
+
+$("&lt;div/&gt;").addClass("myelems").appendTo($("body"));</code></pre>
+
+<hr/>
+
+<h2>the new <code>&lt;div&gt;</code> gets the handler for free</h2></div><div class="slide " ref="dom/dom/11">
+
+<h1>avoid handlers in loops</h1>
+
+<hr/>
+
+<pre class="sh_javascript"><code>function makeElem(id) {
+    return $("&lt;div/&gt;").attr("id", id).click(function () {
+        alert($(this).attr("id"));
+    });
+}
+
+var i;
+for (i = 0; i &lt; 1000; i += 1) {
+    someParent.append(makeElem(i));
+}</code></pre>
+
+<hr/>
+
+<h2>this is slow!</h2></div><div class="slide " ref="dom/dom/12">
+<h1>faster</h1>
+
+<hr/>
+
+<pre class="sh_javascript"><code>function handler() {
+    alert(this.attr("id"));
+}
+
+function makeElem(id) {
+    return $("&lt;div/&gt;").attr("id", i).click(handler);
+}
+
+var i;
+for (i = 0; i &lt; 1000; i += 1) {
+    someParent.append(makeElem(i));
+}</code></pre></div><div class="slide " ref="timers/timers/1">
+<h1>long-running operations</h1>
+
+<h2>sometimes you can't avoid it</h2></div><div class="slide " ref="timers/timers/2">
+<h1>problem script</h1>
+
+<hr/>
+
+<pre class="sh_javascript"><code>var i;
+for (i = 0; i &lt; 10000; i += 1) {
+    oneMillisecondOperation(i);
+}</code></pre>
+
+<hr/>
+
+<h2>browser locks for 10s!</h2></div><div class="slide " ref="timers/timers/3">
+<h1>solution: timers</h1>
+
+<hr/>
+
+<pre class="sh_javascript"><code>var i = 0;
+setTimeout(function iterate() {
+    var stop = i + 500;
+    for (; i &lt; stop; i += 1) {
+        oneMillisecondOperation(i);
+    }
+    setTimeout(iterate, 20);
+}, 0);</code></pre>
+
+<hr/>
+
+<h2>split into half-second chunks, with 20ms in between</h2></div><div class="slide  bullets" ref="timers/timers/4">
+<h1>minimum intervals</h1>
+
+<hr/>
+
+<pre class="sh_javascript"><code>setTimeout(function () {
+    alert("foo");
+}, 0);
+// how long until "foo"?</code></pre>
+
+<hr/>
+
+<h2>no browser really does 0ms</h2>
+
+<h2>Chrome is ~5ms, but IE is ~18ms</h2>
+
+<h2>others are ~10-12ms</h2></div><div class="slide " ref="pageload/pageload/1">
+<h1>page-load performance</h1>
+
+<h2>getting your script running quickly</h2></div><div class="slide " ref="pageload/pageload/2">
+<pre class="sh_html"><code>&lt;html&gt;
+&lt;head&gt;&lt;/head&gt;
+&lt;body&gt;
+
+    &lt;!-- all scripts at the bottom of &lt;body&gt;--&gt;
+    &lt;script&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+<hr/>
+
+<h2>always at the bottom, so the page is not blocked</h2>
+
+<h1>no exceptions!</h1></div><div class="slide " ref="pageload/pageload/3">
+<h1>avoid inline scripts</h1>
+
+<pre class="sh_html"><code>&lt;script&gt;
+    function foo() {
+        // ...
+    }
+&lt;/script&gt;</code></pre>
+
+<hr/>
+
+<h2>these cannot be cached or minified</h2>
+
+<h2>only put dynamic values here</h2></div><div class="slide " ref="pageload/pageload/4">
+<h1>minification</h1>
+
+<hr/>
+
+<pre class="sh_javascript"><code>function foo() {
+    var bar = 1;
+    return bar + 5;
+}</code></pre>
+
+<hr/>
+
+<pre class="sh_javascript"><code>function foo(){var a=1;return a+5}</code></pre>
+
+<hr/>
+
+<h2>our build process does this for you</h2>
+
+<h2>make sure you're using it!</h2></div><div class="slide " ref="tools/tools/1">
+<h1>Performance Tools</h1></div><div class="slide " ref="tools/tools/2">
+<h1>SP.Performance.profiler</h1>
+
+<hr/>
+
+<pre class="sh_javascript"><code>var profiler = SP.Performance.profiler();
+function foo() {
+    profiler.begin("body");
+    // ... some operations ...
+    profiler.end("body");
+}
+// ... repeated calls to foo() ...
+profiler.report(); // alerts time spent in "body"</code></pre>
+
+<hr/>
+
+<h2>allows complex instrumentation</h2></div><div class="slide  " ref="tools/tools/3">
+<h1>apps.pet.dependencies</h1>
+
+<hr/>
+
+<pre class="sh_python"><code>B('fb_lib.js',
+    I('js/fb_superpet.js'),
+    # ...
+)</code></pre>
+
+<hr/>
+
+<pre class="sh_python"><code>$apps.pet.dependencies.include('fb_lib.js')</code></pre>
+
+<hr/>
+
+<h2>handles minification on live, raw scripts on dev</h2></div><div class="slide  biblioteca" ref="tools/tools/4">
+<h1>other tools</h1>
+
+<ul>
+<li>JSLint (JavaScript syntax checker) <a href="http://jslint.com/">http://jslint.com/</a></li>
+<li>YSlow (Firebug extension) <a href="http://developer.yahoo.com/yslow/">http://developer.yahoo.com/yslow/</a></li>
+<li>Page Speed (Firebug extension) <a href="http://code.google.com/speed/page-speed/">http://code.google.com/speed/page-speed/</a></li>
+<li>Speed Tracer (Chrome extension) <a href="http://code.google.com/webtoolkit/speedtracer/">http://code.google.com/webtoolkit/speedtracer/</a></li>
+
+<li>dynaTrace AJAX (Windows program/IE plugin) <a href="http://ajax.dynatrace.com/pages/">http://ajax.dynatrace.com/pages/</a></li>
+</ul>
+</div><div class="slide " ref="unrelated/unrelated/1">
+<h1>random extras</h1>
+
+<h2>somewhat important</h2></div><div class="slide " ref="unrelated/unrelated/2">
+<h1><code>parseInt</code> needs radix!</h1>
+
+<hr/>
+
+<pre class="sh_javascript"><code>parseInt("123"); // 123
+parseInt("10"); // 10
+parseInt("010"); // 8 -&gt; WTF?
+
+// with a radix
+parseInt("010", 10); // 10 -&gt; crisis averted!</code></pre>
+
+<hr/>
+
+<h2>never forget your radix</h2></div><div class="slide " ref="unrelated/unrelated/3">
+<h1><code>sort</code> has issues</h1>
+
+<hr/>
+
+<pre class="sh_javascript"><code>var a = [3,1,2];
+a.sort(); // [1,2,3]
+a = [10,1,2];
+
+a.sort(); // [1,10,2] - f**ing javascript!
+
+a.sort(betterComparison); // [1,2,10]</code></pre>
+
+<hr/>
+
+<h2><code>.sort()</code> sorts alphabetically</h2>
+
+<h2>write your own comparison function</h2></div><div class="slide " ref="unrelated/unrelated/4">
+<h1>CSS expressions are evaluated <em>right-to-left</em>!</h1>
+
+<hr/>
+
+<pre class="sh_css"><code>#foo div a {/* ... */}</code></pre>
+
+<hr/>
+
+<h2>this starts by looking at every <code>&lt;a&gt;</code></h2>
+
+<h2>then it looks for those whose parent is <code>&lt;div&gt;</code></h2>
+
+<h2>then it checks to see if its parent is <code>#foo</code></h2></div><div class="slide  biblioteca" ref="unrelated/unrelated/5">
+
+<h1>browser share on FB SPP</h1>
+
+<ul>
+<li>54% Internet Explorer
+
+<ul>
+<li>31.8% IE8</li>
+<li>19.7% IE7</li>
+<li>2.6% IE6</li>
+<li>68 visits from IE 999.1 (it probably has HTML5 support)</li>
+</ul>
+</li>
+<li>31% Firefox/Win</li>
+
+<li>10% Google Chrome</li>
+<li>2% Firefox/Mac</li>
+<li>1.5% Safari/Mac</li>
+<li>1.5% other</li>
+</ul>
+</div><div class="slide " ref="resources/resources/1">
+<h1>Useful Resources</h1>
+
+<h2>because this was not nearly exhaustive</h2></div><div class="slide  biblioteca" ref="resources/resources/2">
+<h1>dead trees</h1>
+
+<ul>
+<li><em>High Performance Web Sites</em>, by Steve Souders (Yahoo!, at the time)</li>
+<li><em>Even Faster Web Sites</em>, by Steve Souders (Google, now)</li>
+<li><em>JavaScript: The Good Parts</em>, by Douglas Crockford (Yahoo!)</li>
+<li><em>High Performance JavaScript</em>, by Nicholas Zakas (Yahoo!) (<em>coming soon</em>)</li>
+<li><em>Secrets of the JavaScript Ninja</em>, by John Resig (Mozilla/jQuery) (<em>coming soon</em>)</li>
+
+</ul>
+</div><div class="slide  biblioteca" ref="resources/resources/3">
+<h1>blogs</h1>
+
+<ul>
+<li><em>High Performance Web Sites</em>, by Steve Souders <a href="http://www.stevesouders.com/blog/">http://www.stevesouders.com/blog/</a></li>
+<li><em>NCZOnline</em>, by Nicholas Zakas <a href="http://www.nczonline.net/blog/">http://www.nczonline.net/blog/</a></li>
+<li><em>Douglas Crockford's JavaScript</em>, by Doug Crockford <a href="http://javascript.crockford.com/">http://javascript.crockford.com/</a></li>
+
+<li><em>Perfection Kills</em>, by @kangax <a href="http://perfectionkills.com/">http://perfectionkills.com/</a> (author of Prototype.js)</li>
+<li><em>John Resig - Blog</em>, by John Resig <a href="http://ejohn.org/blog/">http://ejohn.org/blog/</a> (creator of jQuery)</li>
+<li><em>Software is Hard</em>, by Jan Odvarko <a href="http://www.softwareishard.com/blog/">http://www.softwareishard.com/blog/</a> (Firebug developer)</li>
+
+</ul>
+</div><div class="slide  biblioteca" ref="credits/credits">
+<h1>this slideshow</h1>
+
+<h2>was running in the browser, with JavaScript</h2>
+
+<ul>
+<li>source on GitHub at <a href="http://github.com/bcherry/js-better-faster">http://github.com/bcherry/js-better-faster</a></li>
+<li>plan to put online at <a href="http://bcherry.net/js-better-faster">http://bcherry.net/js-better-faster</a></li>
+<li>built with ShowOff - <a href="http://github.com/schacon/showoff">http://github.com/schacon/showoff</a></li>
+
+</ul>
+
+
+<hr/>
+
+<h2>thanks for coming!</h2></div>
