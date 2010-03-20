@@ -43,7 +43,7 @@ function loadSlides() {
       showFirstSlide()
       slidesLoaded = true
     }
-    sh_highlightDocument('talks/static/js/sh_lang/', '.min.js')
+    sh_highlightDocument('/talks/static/js/sh_lang/', '.min.js')
    })
 }
 

@@ -1,0 +1,78 @@
+@charset "UTF-8";
+
+/* Header links should display like normal header text */ 
+h1 a, h1 a:visited, h1 a:hover, h1 a:link, h1 a:focus, h2 a, h2 a:visited, h2 a:hover, h2 a:link, h2 a:focus, h3 a, h3 a:visited, h3 a:hover, h3 a:link, h3 a:focus, h4 a, h4 a:visited, h4 a:hover, h4 a:link, h4 a:focus, h5 a, h5 a:visited, h5 a:hover, h5 a:link, h5 a:focus, h6 a, h6 a:visited, h6 a:hover, h6 a:link, h6 a:focus {
+	text-decoration: inherit;
+	color: inherit;
+}
+
+/* Standard link styles */
+a, a:link, a:visited {
+	color: #666666;
+	text-decoration: none;
+}
+
+a:hover, a:focus {
+	color: #191919;
+	text-decoration: underline;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	letter-spacing: -0.08em;
+}
+
+code {
+	display: block;
+	margin: 0.5em;
+	padding: 0;
+	word-wrap: break-word;
+}
+
+/* Mainly used for inline code, but no reason to make it exclusive */
+.inline {
+	display: inline;
+	margin: 0;
+	padding: 0;
+}
+
+.smallalts .alt {
+	font-size: 0.7em;
+}
+
+.tight {
+	letter-spacing: -0.08em;
+}
+
+/* tweaks to jquery-ui -- TODO: rebuild jquery-ui with these rolled in */
+.ui-dialog-title {
+	font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+	letter-spacing: -0.08em;
+	font-size: 12pt;
+	line-height: 1em;
+}
+.ui-dialog-buttonpane button {
+	font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+	letter-spacing: -0.08em;
+	font-size: 12pt;
+}
+
+/* tweaks to blueprint -- TODO: rebuild blueprint with these rolled in */
+div.colborder {
+	border-color: #CCCCCC;
+}
+
+hr {
+	height: 1px;
+}
+
+header, footer, nav, article {
+	float: left;
+	margin-right: 10px;
+}
+
+/* tweaks to blueprint/jqueryUI combos!!!! */
+.ui-state-error .box {
+	margin: 0;
+	padding: .5em;
+	background: none;
+}
