@@ -1,0 +1,23 @@
+.biblioteca ul {
+	font-size: 20pt;
+}
+
+.biblioteca ul li {
+	line-height: 32pt;
+}
+
+.process ol {
+	font-size: 20pt;
+}
+
+.process ol li {
+	line-height: 32pt;
+}
+
+.overview ol {
+	font-size: 24pt;
+}
+
+.overview ol li {
+	line-height: 32pt;
+}

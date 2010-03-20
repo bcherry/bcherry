@@ -8,9 +8,9 @@ inbound_services:
 
 handlers:
 # Static CSS/JS/IMG, including specified sub-apps
-- url: /(blaster/|playground/|arguments/|spptoolbar/|js-better-faster/|)static/(lib/|)(js|img|css)/(.*)
+- url: /(blaster/|playground/|arguments/|spptoolbar/|js-better-faster/|talks/|)static/(lib/|)(js|img|css)/(.*)
   static_files: \1static/\2\3/\4
-  upload: (blaster/|playground/|arguments/|spptoolbar/|js-better-faster/|)static/.*
+  upload: (blaster/|playground/|arguments/|spptoolbar/|js-better-faster/|talks/|)static/.*
     
 # Blaster Project
 - url: /blaster
@@ -32,10 +32,17 @@ handlers:
 - url: /spptoolbar
   script: /spptoolbar/main.py
   
-# JavaScript: Better, Faster Presentation
+# JavaScript: Better, Faster Presentation (original Slide version)
 - url: /js-better-faster/?.*
   script: /js-better-faster/main.py
  
+- url: /talks/(.*)/(.*).css
+  static_files: talks/\1/\2.css
+  upload: talks/(.*)/(.*).css
+
+# Talks and Presentations
+- url: /talks/?.*
+  script: /talks/main.py
 
 # XMPP
 - url: /_ah/xmpp/message/chat/
