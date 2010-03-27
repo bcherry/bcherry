@@ -119,7 +119,32 @@
 			}
 		];
 		
+		
+		
+		var iterations = 1000000,
+			i,
+			r,
+			startTime,
+			endTime,
+			results = "";
+			
+		
+		startTime = new Date().getTime();
+		for (i = 0; i < iterations; i += 1) {
+			r = [].join(obj);
+		}
+		endTime = new Date().getTime();
+		results += "<p>Time for implicit cast, over " + iterations + " iterations: <strong>" + (endTime - startTime) + "</strong></p>";
+		
+		startTime = new Date().getTime();
+		for (i = 0; i < iterations; i += 1) {
+			r = [].join(obj.toString());
+		}
+		endTime = new Date().getTime();
+		results += "<p>Time for explicit cast, over " + iterations + " iterations: <strong>" + (endTime - startTime) + "</strong></p>";
+
 		$(function () {
+			$("#target").append(results);
 			for (var i = 0; i < tests.length; i++) {
 				var test = tests[i];
 				$("#target").append(
@@ -127,6 +152,7 @@
 				);
 			}
 		});
+		
 	</script>
 </body>
 </html>
