@@ -24,12 +24,18 @@ class DefaultValuesHandler(webapp.RequestHandler):
 		path = os.path.join(os.path.dirname(__file__), 'defaultvalues.html')
 		self.response.out.write(template.render(path, {}))
 
+class ChainingHandler(webapp.RequestHandler):
+	def get(self):
+		path = os.path.join(os.path.dirname(__file__), 'chaining.html')
+		self.response.out.write(template.render(path, {}))
+
 def main():
 	application = webapp.WSGIApplication([
 		('/playground', MainHandler),
 		('/playground/settimeout', SetTimeoutHandler),
 		('/playground/comparisons', ComparingComparisonsHandler),
 		('/playground/defaultvalues', DefaultValuesHandler),
+		('/playground/chaining', ChainingHandler),
 	], debug=True)
 	wsgiref.handlers.CGIHandler().run(application)
 
