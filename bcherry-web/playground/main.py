@@ -29,13 +29,18 @@ class ChainingHandler(webapp.RequestHandler):
 		path = os.path.join(os.path.dirname(__file__), 'chaining.html')
 		self.response.out.write(template.render(path, {}))
 
+class SpyConstructorsHandler(webapp.RequestHandler):
+	def get(self):
+		path = os.path.join(os.path.dirname(__file__), 'spying-constructors.html')
+		self.response.out.write(template.render(path, {}))
+
 def main():
 	application = webapp.WSGIApplication([
 		('/playground', MainHandler),
 		('/playground/settimeout', SetTimeoutHandler),
 		('/playground/comparisons', ComparingComparisonsHandler),
 		('/playground/defaultvalues', DefaultValuesHandler),
-		('/playground/chaining', ChainingHandler),
+		('/playground/spying-constructors', SpyConstructorsHandler),
 	], debug=True)
 	wsgiref.handlers.CGIHandler().run(application)
 
