@@ -59,3 +59,25 @@ f2.log();
 
 console.log("verify Foo(\"spied\", 2): %o", verify(Foo)("spied", 2));
 console.log("verify Foo(\"something\", 2): %o", verify(Foo)("something", 2));
+
+function bar(a) {
+	console.log("calling bar with %o", a);
+}
+bar = spy(bar);
+
+bar(1);
+console.log("verify bar(1): %o", verify(bar)(1));
+console.log("verify bar(2): %o", verify(bar)(2));
+
+baz = {
+	spam: function (a) {
+		console.log("calling baz.spam(%o), this.other=%o", a, this.other);
+	},
+	other: 10
+};
+
+baz.spam = spy(baz.spam);
+
+baz.spam(1);
+console.log("verify baz.spam(1)", verify(baz.spam)(1));
+console.log("verify baz.spam(2)", verify(baz.spam)(2));
