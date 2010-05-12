@@ -59,6 +59,7 @@ f2.log();
 
 console.log("verify Foo(\"spied\", 2): %o", verify(Foo)("spied", 2));
 console.log("verify Foo(\"something\", 2): %o", verify(Foo)("something", 2));
+console.log("new Foo() instanceof Foo --> %o", new Foo() instanceof Foo);
 
 function bar(a) {
 	console.log("calling bar with %o", a);
@@ -69,7 +70,7 @@ bar(1);
 console.log("verify bar(1): %o", verify(bar)(1));
 console.log("verify bar(2): %o", verify(bar)(2));
 
-baz = {
+var baz = {
 	spam: function (a) {
 		console.log("calling baz.spam(%o), this.other=%o", a, this.other);
 	},
