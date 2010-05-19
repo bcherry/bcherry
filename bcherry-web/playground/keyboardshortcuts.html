@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+
+  <title>Keyboard Shortcuts</title>
+
+  <link rel="stylesheet" href="/static/lib/css/blueprint/blueprint.min.css" media="screen, projection" />
+  <link rel="stylesheet" href="/static/lib/css/blueprint/print.min.css" media="print" />
+  <!--[if lt IE 8]>
+    <link rel="stylesheet" href="/static/lib/css/blueprint/ie.min.css" media="screen, projection">
+  <![endif]-->
+  <link rel="stylesheet" href="/static/lib/css/jquery-ui-smoothness/jquery-ui-1.7.2.custom.min.css" />
+
+  <link href="/static/lib/css/bcherry.css" rel="stylesheet" media="screen" />
+
+  <style type="text/css" media="screen">
+    #stream {
+      list-style-type: none;
+    }
+    .focused {
+      font-weight: bold;
+    }
+    #tweet-box {
+      height: 50px;
+    }
+    .tweet {
+      font-size: 14px;
+      cursor: pointer;
+    }
+    .fav, .retweeted, .replied {
+      margin: 0 3px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="prepend-top prepend-4 span-16 append-4">
+      <strong>j/k</strong> to navigate.  <strong>f</strong> to fav/unfav. <strong>rt</strong> to retweet. <strong>rp</strong> to reply.  <strong>cmd-z/cmd-y</strong> to undo/redo favs, retweets and replies.
+    </div>
+    <div id="target" class="prepend-top prepend-4 span-16 append-4">
+      <textarea id="tweet-box"></textarea>
+      <ul id="stream">
+        <script>
+          for (var i = 0; i < 20; i++) {
+            document.write("<li id='tweet_" + i + "' class='tweet'>tweet " + i + "</li>");
+          }
+        </script>
+      </ul>
+    </div>
+  </div>
+  <script src="/static/lib/js/jquery-1.4.2.js"></script>
+  <script src="/static/lib/js/jquery.hotkeys.js"></script>
+  <script src="/playground/static/js/keyboardshortcuts.js"></script>
+</body>
+</html>

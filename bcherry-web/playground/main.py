@@ -34,6 +34,12 @@ class SpyConstructorsHandler(webapp.RequestHandler):
 		path = os.path.join(os.path.dirname(__file__), 'spying-constructors.html')
 		self.response.out.write(template.render(path, {}))
 
+
+class KeyboardShortcutsHandler(webapp.RequestHandler):
+	def get(self):
+		path = os.path.join(os.path.dirname(__file__), 'keyboardshortcuts.html')
+		self.response.out.write(template.render(path, {}))
+
 def main():
 	application = webapp.WSGIApplication([
 		('/playground', MainHandler),
@@ -41,6 +47,7 @@ def main():
 		('/playground/comparisons', ComparingComparisonsHandler),
 		('/playground/defaultvalues', DefaultValuesHandler),
 		('/playground/spying-constructors', SpyConstructorsHandler),
+		('/playground/keyboard-shortcuts', KeyboardShortcutsHandler),
 	], debug=True)
 	wsgiref.handlers.CGIHandler().run(application)
 
