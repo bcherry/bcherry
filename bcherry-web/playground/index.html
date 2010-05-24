@@ -1,85 +1,18 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+  <meta charset="utf-8" />
 	<title>pg</title>
+	<script src="http://www.google.com/jsapi?key=ABQIAAAABbFCEDxiveCnKXlxFr3XkBT2yXp_ZAY8_ufC3CFXhHIE1NvwkxQogZS5Oy7QKC2sOTHwP2_12_HAYA"></script>
 </head>
 <body>
 	<script type="text/javascript">
-		var calc = (function () {
-			var calc,
-				sum,
-				negasum,
-				product,
-				dividend;
-				
-			sum = function(args) {
-				var r = calc(args[0]),
-					i,
-					l;
-				
-				for (i = 1, l = args.length; i < l; i += 1) {
-					r += calc(args[i]);
-				}
-				
-				return r;
-			};
-			
-			negasum = function(args) {
-				var r = calc(args[0]),
-					i,
-					l;
-				
-				for (i = 1, l = args.length; i < l; i += 1) {
-					r -= calc(args[i]);
-				}
-				
-				return r;
-			};
-			
-			product = function(args) {
-				var r = calc(args[0]),
-					i,
-					l;
-				
-				for (i = 1, l = args.length; i < l; i += 1) {
-					r *= calc(args[i]);
-				}
-				
-				return r;
-			};
-			
-			dividend = function(args) {
-				var r = calc(args[0]),
-					i,
-					l;
-				
-				for (i = 1, l = args.length; i < l; i += 1) {
-					r /= calc(args[i]);
-				}
-				
-				return r;
-			};
-			
-			calc = function(input) {
-				if (input.indexOf("+") >= 0) {
-					return sum(input.split("+"));
-				} else if (input.indexOf("-") >= 0) {
-					return negasum(input.split("-"));
-				} else if (input.indexOf("*") >= 0) {
-					return product(input.split("*"));
-				} else if (input.indexOf("/") >= 0) {
-					return dividend(input.split("/"));
-				} else {
-					return parseInt(input, 10);
-				}
-			};
-			
-			return calc;
-		}());
-		
-		var string = "2+3*4/5";
-		console.log("calc(%s) -> %o", string, calc(string));
-		console.log("eval(%s) -> %o", string, eval(string));
-	</script>
+    google.load("maps", "3", {sensor: false});
+
+    google.setOnLoadCallback(function () {
+      console.log("Loaded");
+    })
+  </script>
 	<script type="text/javascript">
 	  var _gaq = _gaq || [];
 	  _gaq.push(['_setAccount', 'UA-251077-6']);
