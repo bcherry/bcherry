@@ -7,15 +7,15 @@ inbound_services:
 - xmpp_message
 
 handlers:
-# Static CSS/JS/IMG, including specified sub-apps
-- url: /(blaster/|playground/|arguments/|spptoolbar/|js-better-faster/|talks/|)static/(lib/|)(js|img|css)/(.*)
+# Static CSS/JS/IMG/JSON including specified sub-apps
+- url: /(blaster/|playground/|arguments/|spptoolbar/|js-better-faster/|talks/|)static/(lib/|)(js|img|css|data)/(.*)
   static_files: \1static/\2\3/\4
   upload: (blaster/|playground/|arguments/|spptoolbar/|js-better-faster/|talks/|)static/.*
-    
+
 # Blaster Project
 - url: /blaster
   script: /blaster/main.py
-  
+
 # Playground
 - url: /playground/?.*
   script: /playground/main.py
@@ -31,11 +31,11 @@ handlers:
 # SPP Toolbar Demo Page
 - url: /spptoolbar
   script: /spptoolbar/main.py
-  
+
 # JavaScript: Better, Faster Presentation (original Slide version)
 - url: /js-better-faster/?.*
   script: /js-better-faster/main.py
- 
+
 - url: /talks/(.*)/(.*).css
   static_files: talks/\1/\2.css
   upload: talks/(.*)/(.*).css

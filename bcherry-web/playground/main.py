@@ -43,7 +43,7 @@ class KeyboardShortcutsHandler(webapp.RequestHandler):
 class AnyHandler(webapp.RequestHandler):
   def get(self, path):
     file_path = os.path.join(os.path.dirname(__file__), path + '.html')
-    self.response.out.write(template.render(file_path, {}))
+    self.response.out.write(open(file_path).read())
 
 def main():
 	application = webapp.WSGIApplication([
