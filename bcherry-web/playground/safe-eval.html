@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+
+	<title>Safe Eval</title>
+	
+	<link rel="stylesheet" href="/static/lib/css/blueprint/blueprint.min.css" media="screen, projection" />
+	<link rel="stylesheet" href="/static/lib/css/blueprint/print.min.css" media="print" />
+	<!--[if lt IE 8]>
+	  <link rel="stylesheet" href="/static/lib/css/blueprint/ie.min.css" media="screen, projection">
+	<![endif]-->
+	<link rel="stylesheet" href="/static/lib/css/jquery-ui-smoothness/jquery-ui-1.7.2.custom.min.css" />
+	
+	<link href="/static/lib/css/bcherry.css" rel="stylesheet" media="screen" />
+	<style type="text/css">
+		button code {
+			display: inline;
+		}
+		
+	</style>
+	
+	<link href="/favicon.ico" rel="shortcut icon" />
+</head>
+<body>
+	<div class="container">
+		<div id="target" class="prepend-top prepend-4 span-16 append-4">
+			<textarea id="code-area"></textarea>
+			<button id="run-button">Safe <code>eval</code> it!</button>
+			<div><code id="result-area"></code></div>
+		</div>
+	</div>
+	<script src="/static/lib/js/jquery-1.4.2.js"></script>
+	<script src="/playground/static/js/safe-eval.js"></script>
+	<script>
+		$(function () {
+			$("#run-button").click(function (e) {
+				$("#result-area").text(safe_eval($("#code-area").val()));
+			});
+		});
+	</script>
+</body>
+</html>
