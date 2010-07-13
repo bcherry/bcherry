@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+
+  <title>Progressive Loader - Full Response</title>
+
+  <link rel="stylesheet" href="/static/lib/css/blueprint/blueprint.min.css" media="screen, projection" />
+  <link rel="stylesheet" href="/static/lib/css/blueprint/print.min.css" media="print" />
+  <!--[if lt IE 8]>
+    <link rel="stylesheet" href="/static/lib/css/blueprint/ie.min.css" media="screen, projection">
+  <![endif]-->
+  <link rel="stylesheet" href="/static/lib/css/jquery-ui-smoothness/jquery-ui-1.7.2.custom.min.css" />
+  <link href="/static/lib/css/bcherry.css" rel="stylesheet" media="screen" />
+  <link href="/playground/static/css/progressive-load.css" rel="stylesheet" media="screen" />
+  <script type="text/html" id="article_tmpl">
+    <div data-article-id="{{id}}" class="article from-client">
+      <h2>{{title}}</h2>
+      <p>{{text}}</p>
+      <div class="meta">
+       <a href="/articles/{{slug}}">written by {{author}} on {{date_formatted}}</a>
+      </div>
+    </div>
+  </script>
+</head>
+<body>
+  <div id="doc" class="server-rendered">
+    <div id="articles">
+      
+      <div data-json='{"id": 5, "title": "Quite the Article", "author": "Ben Cherry", "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "slug": "quite-the-article", "date": 1277917085389}'>
+        <div data-article-id="5" class="article from-server">
+          <h2><a href="/articles/quite-the-article">Quite the Article</a></h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          <div class="meta">
+            <a href="/articles/quite-the-article">written by Ben Cherry on Jun 30 2010</a>
+          </div>
+        </div>
+      </div>
+      
+      <div data-json='{"id": 4, "title": "Fascinating Shit", "author": "Dustin Diaz", "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "slug": "fascinating-shit", "date": 1277458434012}'>
+        <div data-article-id="4" class="article from-server">
+          <h2><a href="/articles/fascinating-shit">Fascinating Shit</a></h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          <div class="meta">
+            <a href="/articles/fascinating-shit">written by Dustin Diaz on Jun 25 2010</a>
+          </div>
+        </div>
+      </div>
+      
+      <div data-json='{"id": 3, "title": "Hilarious Parody", "author": "Patrick Ewing", "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "slug": "hilarious-parody", "date": 1277376890957}'>
+        <div data-article-id="3" class="article from-server">
+          <h2><a href="/articles/hilarious-parody">Hilarious Parody</a></h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          <div class="meta">
+            <a href="/articles/hilarious-parody">written by Patrick Ewing on Jun 24 2010</a>
+          </div>
+        </div>
+      </div>
+      
+      <div data-json='{"id": 2, "title": "The Cutest LOL Cats on the Internet", "author": "Britt Selvitelle", "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "slug": "the-cutest-lol-cats-on-the-internet", "date": 1277273575592}'>
+        <div data-article-id="2" class="article from-server">
+          <h2><a href="/articles/the-cutest-lol-cats-on-the-internet">The Cutest LOL Cats on the Internet</a></h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          <div class="meta">
+            <a href="/articles/the-cutest-lol-cats-on-the-internet">written by Britt Selvitelle on Jun 22 2010</a>
+          </div>
+        </div>
+      </div>
+      
+      <div data-json='{"id": 1, "title": "Incredible Insight", "author": "Marcus Phillips", "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "slug": "incredible-insight", "date": 1277262106268}'>
+        <div data-article-id="1" class="article from-server">
+          <h2><a href="/articles/incredible-insight">Incredible Insight</a></h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          <div class="meta">
+            <a href="/articles/incredible-insight">written by Marcus Phillips on Jun 22 2010</a>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+  <script src="/static/lib/js/jquery-1.4.2.js"></script>
+  <script src="/static/lib/js/mustache.js"></script>
+  <script src="/playground/static/js/progressive_load.js"></script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+#doc {
+  width: 1024px;
+  margin: 0 auto;
+}
+
+.article {
+  margin-bottom: 15px;
+}
+
+.article h2 {
+  cursor: pointer;
+}
+
+.article p {
+  margin: 0;
+}
+
+.article .meta {
+  text-indent: 2em;
+  margin: 5px 0;
+  color: #666;
+  font-style: italic;
+}
+
+.server-rendered .from-client {
+  border: solid 2px red;
+}
