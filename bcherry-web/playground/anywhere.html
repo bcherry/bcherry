@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+
+  <title>@anywhere playground</title>
+
+  <link rel="stylesheet" href="/static/lib/css/blueprint/blueprint.min.css" media="screen, projection" />
+  <link rel="stylesheet" href="/static/lib/css/blueprint/print.min.css" media="print" />
+  <!--[if lt IE 8]>
+    <link rel="stylesheet" href="/static/lib/css/blueprint/ie.min.css" media="screen, projection">
+  <![endif]-->
+  <link rel="stylesheet" href="/static/lib/css/jquery-ui-smoothness/jquery-ui-1.7.2.custom.min.css" />
+  <link href="/static/lib/css/bcherry.css" rel="stylesheet" media="screen" />
+  <style>
+  </style>
+</head>
+<body>
+  <div id="login"></div>
+
+  <script src="/static/lib/js/jquery-1.4.2.js"></script>
+  <script src="/static/lib/js/mustache.js"></script>
+  <script src="http://platform.twitter.com/anywhere.js?id=Q3Q52o7VI2dws3cmcWmcTw&amp;v=chirp_preview"></script>
+  <script>
+  twttr.anywhere.config({
+    assetHost: 'twitter-any.s3.amazonaws.com'
+  });
+  twttr.anywhere(function(T) {
+    if (T.isConnected()) {
+      twttr.API = T;
+      if (window.console && console.log) {
+        (console.info || console.log)("Connected to ", T);
+      }
+
+    } else {
+      T('#login').connectButton();
+    }
+  });
+  </script>
+  
+</body>
+</html>
