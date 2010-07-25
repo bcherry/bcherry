@@ -3,6 +3,7 @@ import os
 import wsgiref.handlers
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import template
+import time
 
 class MainHandler(webapp.RequestHandler):
 	def get(self):
@@ -45,6 +46,12 @@ class AnyHandler(webapp.RequestHandler):
     file_path = os.path.join(os.path.dirname(__file__), path + '.html')
     self.response.out.write(open(file_path).read())
 
+class PushStateImgHandler(webapp.RequestHandler):
+  def get(self):
+    time.sleep(1)
+    self.response.headers["Content-Type"] = "image/jpeg"
+    self.response.out.write('')
+
 def main():
 	application = webapp.WSGIApplication([
 		('/playground', MainHandler),
@@ -53,6 +60,7 @@ def main():
 		('/playground/defaultvalues', DefaultValuesHandler),
 		('/playground/spying-constructors', SpyConstructorsHandler),
 		('/playground/keyboard-shortcuts', KeyboardShortcutsHandler),
+		('/playground/pushstate.jpg', PushStateImgHandler),
 		('/playground/(.*)', AnyHandler),
 	], debug=True)
 	wsgiref.handlers.CGIHandler().run(application)

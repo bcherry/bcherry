@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+
+  <title>Push State</title>
+
+  <link rel="stylesheet" href="/static/lib/css/blueprint/blueprint.min.css" media="screen, projection" />
+  <link rel="stylesheet" href="/static/lib/css/blueprint/print.min.css" media="print" />
+  <!--[if lt IE 8]>
+    <link rel="stylesheet" href="/static/lib/css/blueprint/ie.min.css" media="screen, projection">
+  <![endif]-->
+  <link href="/static/lib/css/bcherry.css" rel="stylesheet" media="screen" />
+  <style>
+    #n {
+      font-size: 48px;
+    }
+    p {
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div id="n"></div>
+  <p>There's a bug in the HTML5 "popstate" event, as implemented in WebKit (Safari and Chrome).  View this page in one of those browsers.  Your browser has had history entries added from #0 to #19 (you should start at #19).  Hitting back/forward will navigate through these.  On each URL, the large number above should reflect the hash value.  If you hit back/forward quickly, you'll notice that your number gets out of sync with the URL.  This is because WebKit is dropping popstate events (they are not firing).  It seems to happen when outbound network requests are made within a popstate handler, and are not completed yet when the next popstate happens.  In this case, your browser is downloading an image that takes 1s to serve on every popstate, so you'll have to wait 1s between backs/forwards to have the feature work correctly.  View the source for more info.</p>
+  <p>This is put together by <a href="http://www.adequatelygood.com">Ben Cherry</a>.  Ben is a front-end engineer at <a href="http://twitter.com/">Twitter</a>, and you can follow him at <a href="http://twitter.com/bcherry">@bcherry</a>.</p>
+  <script src="/static/lib/js/jquery-1.4.2.js"></script>
+  <script>
+    // Seed the browser history
+    for (var i = 0; i < 20; i++) {
+      window.history.pushState({n:i}, i, "/playground/pushstate#" + i);
+      $("#n").text(i);
+    }
+    // Bind to popstate
+    $(window).bind("popstate", function(e) {
+      // log that this event was fired, and the current URL
+      console.log("popstate", e, window.location.hash);
+      // update the page
+      $("#n").text(e.originalEvent.state.n);
+      // Make an outbound image request that will take 1s. This request seems to be the cause of dropped popstates.
+      // Removing this, or replacing it with something else, avoids the issue.  Even if it's replaced with slow, blocking code (i.e. 1s of execution) events are not dropped.
+      (new Image()).src = "/playground/pushstate.jpg";
+    });
+  </script>
+</body>
+</html>
