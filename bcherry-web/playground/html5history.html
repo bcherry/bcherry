@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 
-  <title>A Sane HTML5 History App</title>
+  <title>A Saner HTML5 History App</title>
 
   <link rel="stylesheet" href="/static/lib/css/blueprint/blueprint.min.css" media="screen, projection" />
   <link rel="stylesheet" href="/static/lib/css/blueprint/print.min.css" media="print" />
@@ -45,20 +45,20 @@
       <input type="submit" id="go" value="Go"/>
     </form>
     <p class="links">
-      <a href="/playground/sanehtml5history/foo">/foo</a> &middot;
-      <a href="/playground/sanehtml5history/foo/bar">/foo/bar</a> &middot;
-      <a href="/playground/sanehtml5history/foo#bar">/foo#bar</a>
+      <a href="/playground/sanerhtml5history/foo">/foo</a> &middot;
+      <a href="/playground/sanerhtml5history/foo/bar">/foo/bar</a> &middot;
+      <a href="/playground/sanerhtml5history/foo#bar">/foo#bar</a>
     </p>
     <p class="links">
-      <a href="/playground/sanehtml5history/#bar">/#bar</a> &middot;
-      <a href="/playground/sanehtml5history/#bar/baz">/#bar/baz</a>
+      <a href="/playground/sanerhtml5history/#bar">/#bar</a> &middot;
+      <a href="/playground/sanerhtml5history/#bar/baz">/#bar/baz</a>
     </p>
     <p class="links">
-      <a href="/playground/sanehtml5history/#baz">/#baz</a>
+      <a href="/playground/sanerhtml5history/#baz">/#baz</a>
     </p>
   </div>
   <p id="tech"></p>
-  <p>This app is a demo that shows a saner use of HTML5 History Management and Hashchange than the approach implied by the standard.  It notably differs from the way <a href="http://benalman.com/projects/jquery-bbq-plugin/">jQuery BBQ</a> encourages app development.  In this case, the app is built to respond to the URL, not the other way around.  In this way, the app can always enter the same, unique state, based only on the contents of the URL.  This is essentially like making a RESTful client application.  The app listens to changes to the URL through the "pathchange" event, which is provided by a jQuery plugin, <a href="/static/lib/js/jquery.pathchange.js">jquery.pathchange.js</a>.  If your browser supports it, this app should be making use of HTML5 History Management and the HTML5 Hashchange event to provide the notifications.  If your browser does not support it, some URLs will require a new page load, but the app will still enter the correct state.  All of this means that browser back/forward, refresh, and bookmarking is supported throughout the app.</p>
+  <p>This app is a demo that shows a saner use of HTML5 History Management and Hashchange than the approach implied by the standard.  In this case, the app is built to respond to the URL, not the other way around.  In this way, the app can always enter the same, unique state, based only on the contents of the URL.  This is essentially like making a RESTful client application.  The app listens to changes to the URL through the "pathchange" event, which is provided by a jQuery plugin, <a href="/static/lib/js/jquery.pathchange.js">jquery.pathchange.js</a>.  If your browser supports it, this app should be making use of HTML5 History Management and the HTML5 Hashchange event to provide the notifications.  If your browser does not support it, some URLs will require a new page load, but the app will still enter the correct state.  All of this means that browser back/forward, refresh, and bookmarking is supported throughout the app.</p>
   <p>Hashchange is supported by Internet Explorer 8, Firefox 3, Safari, and Chrome.  Support is created for Internet Explorer 6 and 7 by polling the hash on the window, 4 times per second.  History Management is supported by Chrome, Safari, and the Firefox 4 beta, but suffers from a <a href="/playground/pushstate">disappointing bug</a> in Safari and Chrome.</p>
   <p>This is put together by <a href="http://www.adequatelygood.com">Ben Cherry</a>.  Ben is a front-end engineer at <a href="http://twitter.com/">Twitter</a>, and you can follow him at <a href="http://twitter.com/bcherry">@bcherry</a>.  All of the code in this demo is MIT Licensed.</p>
   <script src="/static/lib/js/jquery-1.4.2.js"></script>
@@ -70,7 +70,7 @@
       }
       n = extract(window.location.hash) || extract(window.location.pathname);
 
-      var path = window.location.href.split("sanehtml5history")[1].split("#").join("/").split("//").join("/");
+      var path = window.location.href.split("sanerhtml5history")[1].split("#").join("/").split("//").join("/");
       if (path.charAt(0) !== "/") {
         path = "/" + path;
       }
@@ -91,7 +91,7 @@
         if (p.charAt(0) === "/") {
           p = p.slice(1)
         }
-        $.pathchange.changeTo("/playground/sanehtml5history/#" + p);
+        $.pathchange.changeTo("/playground/sanerhtml5history/#" + p);
         return false;
       }
       $("#inform").submit(submit);

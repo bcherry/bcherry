@@ -67,7 +67,7 @@ def main():
 		('/playground/spying-constructors', SpyConstructorsHandler),
 		('/playground/keyboard-shortcuts', KeyboardShortcutsHandler),
 		('/playground/pushstate.jpg', PushStateImgHandler),
-    ('/playground/sanehtml5history(/(.+)?)?', SaneHTML5HistoryHandler),
+    ('/playground/sanerhtml5history(/(.+)?)?', SaneHTML5HistoryHandler),
 		('/playground/(.*)', AnyHandler),
 	], debug=True)
 	wsgiref.handlers.CGIHandler().run(application)
