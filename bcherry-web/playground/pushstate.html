@@ -22,7 +22,7 @@
 </head>
 <body>
   <div id="n"></div>
-  <p>There's a bug in the HTML5 "popstate" event, as implemented in WebKit (Safari and Chrome).  View this page in one of those browsers.  Your browser has had history entries added from #0 to #19 (you should start at #19).  Hitting back/forward will navigate through these.  On each URL, the large number above should reflect the hash value.  If you hit back/forward quickly, you'll notice that your number gets out of sync with the URL.  This is because WebKit is dropping popstate events (they are not firing).  It seems to happen when outbound network requests are made within a popstate handler, and are not completed yet when the next popstate happens.  In this case, your browser is downloading an image that takes 1s to serve on every popstate, so you'll have to wait 1s between backs/forwards to have the feature work correctly.  View the source for more info.</p>
+  <p>There's a bug in the HTML5 "popstate" event, as implemented in WebKit (Safari and Chrome).  View this page in one of those browsers.  Your browser has had history entries added from #0 to #19 (you should start at #19).  Hitting back/forward will navigate through these.  On each URL, the large number above should reflect the hash value.  If you hit back/forward quickly, you'll notice that your number gets out of sync with the URL.  This is because WebKit is dropping popstate events (they are not firing).  It seems to happen when outbound network requests are made within a popstate handler, and are not completed yet when the next popstate happens.  In this case, your browser is downloading an image that takes 1s to serve on every popstate, so you'll have to wait 1s between backs/forwards to have the feature work correctly.  View the source for more info.  The Firefox 4 beta does not have this bug, which is good news.</p>
   <p>This is put together by <a href="http://www.adequatelygood.com">Ben Cherry</a>.  Ben is a front-end engineer at <a href="http://twitter.com/">Twitter</a>, and you can follow him at <a href="http://twitter.com/bcherry">@bcherry</a>.</p>
   <script src="/static/lib/js/jquery-1.4.2.js"></script>
   <script>
@@ -34,7 +34,9 @@
     // Bind to popstate
     $(window).bind("popstate", function(e) {
       // log that this event was fired, and the current URL
-      console.log("popstate", e, window.location.hash);
+      if (window.console && window.console.log) {
+        console.log("popstate", e, window.location.hash);
+      }
       // update the page
       $("#n").text(e.originalEvent.state.n);
       // Make an outbound image request that will take 1s. This request seems to be the cause of dropped popstates.
