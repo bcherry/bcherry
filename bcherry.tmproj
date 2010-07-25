@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>bcherry-web/playground/anywhere.html</string>
+	<string>bcherry-web/playground/static/js/progressive_load.js</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -21,35 +21,35 @@
 	<integer>260</integer>
 	<key>metaData</key>
 	<dict>
-		<key>bcherry-web/playground/anywhere.html</key>
+		<key>bcherry-web/playground/progressive-load-empty.html</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>7</integer>
+				<integer>34</integer>
 				<key>line</key>
-				<integer>41</integer>
+				<integer>16</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
 		</dict>
-		<key>bcherry-web/playground/js-testcase.html</key>
+		<key>bcherry-web/playground/progressive-load-full.html</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>44</integer>
+				<integer>603</integer>
 				<key>line</key>
-				<integer>4</integer>
+				<integer>69</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
+			<integer>46</integer>
 		</dict>
-		<key>bcherry-web/playground/routing-test.html</key>
+		<key>bcherry-web/playground/static/css/progressive-load.css</key>
 		<dict>
 			<key>caret</key>
 			<dict>
@@ -58,94 +58,32 @@
 				<key>line</key>
 				<integer>15</integer>
 			</dict>
-			<key>columnSelection</key>
-			<false/>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-			<key>selectFrom</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>0</integer>
-			</dict>
-			<key>selectTo</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>15</integer>
-			</dict>
-		</dict>
-		<key>bcherry-web/playground/routing.html</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>4</integer>
-			</dict>
-			<key>columnSelection</key>
-			<false/>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-			<key>selectFrom</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>0</integer>
-			</dict>
-			<key>selectTo</key>
-			<dict>
-				<key>column</key>
-				<integer>7</integer>
-				<key>line</key>
-				<integer>22</integer>
-			</dict>
-		</dict>
-		<key>bcherry-web/playground/static/js/routing-test.js</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>15</integer>
-				<key>line</key>
-				<integer>11</integer>
-			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
 		</dict>
-		<key>bcherry-web/playground/static/js/routing.js</key>
+		<key>bcherry-web/playground/static/js/progressive_load.js</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>2</integer>
+				<integer>20</integer>
 				<key>line</key>
-				<integer>59</integer>
+				<integer>79</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>45</integer>
+			<integer>71</integer>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
-		<string>bcherry-web/playground/static/js/routing.js</string>
-		<string>bcherry-web/playground/js-testcase.html</string>
-		<string>bcherry-web/playground/anywhere.html</string>
-		<string>bcherry-web/playground/static/js/routing-test.js</string>
-		<string>bcherry-web/playground/routing.html</string>
-		<string>bcherry-web/playground/routing-test.html</string>
+		<string>bcherry-web/playground/static/js/progressive_load.js</string>
+		<string>bcherry-web/playground/progressive-load-empty.html</string>
+		<string>bcherry-web/playground/progressive-load-full.html</string>
+		<string>bcherry-web/playground/static/css/progressive-load.css</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<false/>
@@ -177,6 +115,13 @@
 									<true/>
 									<key>subItems</key>
 									<dict>
+										<key>css</key>
+										<dict>
+											<key>isExpanded</key>
+											<true/>
+											<key>subItems</key>
+											<dict/>
+										</dict>
 										<key>js</key>
 										<dict>
 											<key>isExpanded</key>
