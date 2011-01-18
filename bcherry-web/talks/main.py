@@ -10,21 +10,19 @@ class MainHandler(webapp.RequestHandler):
 		self.response.out.write(template.render(path, {}))
 
 class TalkHandler(webapp.RequestHandler):
-	def get(self):
-		talk_name = 'js-better-faster'
+	def get(self, talk_name):
 		path = os.path.join(os.path.dirname(__file__), 'talk.html')
 		self.response.out.write(template.render(path, dict(talk_name=talk_name)))
 
 class SlidesHandler(webapp.RequestHandler):
-	def get(self):
-		talk_name = 'js-better-faster'
+	def get(self, talk_name):
 		path = os.path.join(os.path.dirname(__file__), talk_name + '/slides.html')
 		self.response.out.write(template.render(path, {}))
 
 def main():
 	application = webapp.WSGIApplication([
-		('/talks/.+/slides/?', SlidesHandler),
-		('/talks/.+', TalkHandler),
+		('/talks/(.+)/slides/?', SlidesHandler),
+		('/talks/(.+)', TalkHandler),
 		('/talks/?', MainHandler),
 	], debug=True)
 	wsgiref.handlers.CGIHandler().run(application)

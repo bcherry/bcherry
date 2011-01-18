@@ -1,0 +1,587 @@
+<div class="slide" data-transition="none"><div class="content" ref="title/title/1">
+<h1>#newtwitter Performance</h1>
+
+<h2>Ben Cherry</h2>
+
+<h3>Front-end Engineer at Twitter</h3>
+
+<hr/>
+
+<h3>SF Web Performance Meetup - Jan. 2011</h3></div>
+</div><div class="slide" data-transition="none"><div class="content overview" ref="title/title/2">
+<h1>what we'll cover</h1>
+
+<ol>
+<li>Thinking About Performance</li>
+<li>Problem: Slow App Loads</li>
+<li>Problem: Slow Navigation</li>
+<li>Problem: Non-instant Actions</li>
+<li>Problem: Timestamps Get Old</li>
+<li>More Thoughts On Performance</li>
+</ol>
+
+
+<hr/>
+
+<h3>if you haven't guessed, this talk is about solving problems</h3></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="thinkingaboutperf/thinkingaboutperf/1">
+<h1>Thinking About Performance</h1></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="thinkingaboutperf/thinkingaboutperf/2">
+<h2>performance is about the <strong>user</strong></h2>
+
+<hr/>
+
+<h3>this informs our engineering</h3></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="thinkingaboutperf/thinkingaboutperf/3">
+<h2>"wow, this app is fast!"</h2>
+
+<hr/>
+
+<h3>most users don't think like this</h3></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="thinkingaboutperf/thinkingaboutperf/4">
+<h2>"man, this app is slow :("</h2>
+
+<hr/>
+
+<h3>this means you've failed</h3></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="thinkingaboutperf/thinkingaboutperf/5">
+<h2>remove or minimize negative user experience</h2>
+
+<hr/>
+
+<h3>your users will thank you</h3></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="thinkingaboutperf/thinkingaboutperf/6">
+<h2>performance engineering is about</h2>
+
+<h2><strong>solving problems for the user</strong></h2></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="thinkingaboutperf/thinkingaboutperf/7">
+<h2>performance focus areas</h2>
+
+<hr/>
+
+<h3>there are three main spots</h3></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="thinkingaboutperf/thinkingaboutperf/8">
+<h2>out the door</h2>
+
+<hr/>
+
+<h3>time from HTTP request to full HTTP response</h3>
+
+<hr/>
+
+<h3>this is mostly a server-side problem</h3></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="thinkingaboutperf/thinkingaboutperf/9">
+<h2>application load</h2>
+
+<hr/>
+
+<h3>time for the app to be ready-to-use</h3>
+
+<hr/>
+
+<h3>this is the traditional focus of web performance</h3></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="thinkingaboutperf/thinkingaboutperf/10">
+<h2>responsiveness</h2>
+
+<hr/>
+
+<h3>speed at which the application responds to user input</h3>
+
+<hr/>
+
+<h3>this is the hardest area to get right</h3></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="pageload/pageload/1">
+<h1>Problem: Slow App Load</h1>
+
+<hr/>
+
+<h3>load time was unacceptably slow</h3></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="pageload/pageload/2">
+<h2>the standard rules are not enough</h2>
+
+<hr/>
+
+<h3>we need to dig a bit deeper</h3></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="pageload/pageload/3">
+<h2>two goals: pick one</h2>
+
+<hr/>
+
+<h3>show the user some content as fast as possible</h3>
+
+<hr/>
+
+<h3>get the user the whole app as fast as possible</h3>
+
+<hr/>
+
+<h2>we choose the latter</h2></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="pageload/pageload/4">
+<h2>our application load order</h2>
+
+<ol>
+<li>base js (jQuery, etc.)</li>
+<li>api js</li>
+<li>cross-domain iframe</li>
+<li>application js</li>
+<li>api ajax calls</li>
+<li>application rendering</li>
+</ol>
+
+
+<hr/>
+
+<h3>we can make some optimizations</h3></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="pageload/pageload/5">
+<h2>parallel loading</h2>
+
+<hr/>
+
+<h3>api js -&gt; cross-domain iframe</h3>
+
+<hr/>
+
+<h3>application js</h3>
+
+<hr/>
+
+<h3>LABjs made this simple</h3></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="pageload/pageload/6">
+<h2>eliminate the ajax calls</h2>
+
+<hr/>
+
+<h3>we can send the expected response in the original page</h3></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="pageload/pageload/7">
+<h2>home page (/) ajax requests</h2>
+
+<ol>
+<li>account/verify_credentials.json</li>
+<li>statuses/home_timeline.json</li>
+<li>account/settings.json</li>
+<li>trends/current.json</li>
+<li>promos/random.json</li>
+</ol>
+
+
+<hr/>
+
+<h3>we can save 5 requests</h3></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="pageload/pageload/8">
+<h2>when will this help?</h2>
+
+<hr/>
+
+<h3>most page requests are for the same page</h3>
+
+<hr/>
+
+<h3>low-cost of fetching the data</h3>
+
+<hr/>
+
+<h2>only when both of these are true</h2></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="pageload/pageload/9">
+<h2>how to predict the requests that will be made?</h2>
+
+<hr/>
+
+<h3>server doesn't receive the hash</h3></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="pageload/pageload/10">
+<h2>we always seed the home page</h2>
+
+<hr/>
+
+<h3>but the tradeoff is that other pages are slower</h3></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="pageload/pageload/11">
+<h2>what about rendering?</h2>
+
+<hr/>
+
+<h3>rendering on the server might make it faster</h3></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="pageload/pageload/12">
+<h2>mustache.js is already way fast</h2>
+
+<hr/>
+
+<h3>no gains to be made in raw HTML generation</h3>
+
+<hr/>
+
+<h3>this outcome was a relief, because rendering is hard</h3></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="pageload/pageload/13">
+<h2>parallel rendering</h2>
+
+<hr/>
+
+<h3>when possible, break the UI into discrete components</h3></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="pageload/pageload/14">
+<h2>render the base layout first</h2>
+
+<hr/>
+
+<h3>then let components fetch their own data and render</h3>
+
+<hr/>
+
+<h3>ex: profile timelines don't block profile page</h3></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="pageswitches/pageswitches/1">
+<h1>Problem: Slow Navigation</h1>
+
+<hr/>
+
+<h3>navigating to profile and permalink pages was too slow</h3></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="pageswitches/pageswitches/2">
+<h2>app load problem is multiplied</h2>
+
+<hr/>
+
+<h3>each page navigation incurs a full page load</h3>
+
+<hr/>
+
+<h3>ex: from twitter.com/ to twitter.com/bcherry</h3></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="pageswitches/pageswitches/3">
+<h2>remove the new page load</h2>
+
+<hr/>
+
+<h3>using the URL hash means we avoid a reload</h3></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="pageswitches/pageswitches/4">
+<h2>sensible client-side routing</h2>
+
+<hr/>
+
+<h3>the URL drives the app</h3></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="pageswitches/pageswitches/5">
+<h2>link clicks are link clicks</h2>
+
+<hr/>
+
+<h3>listen to <code>hashchange</code></h3>
+
+<hr/>
+
+<h3>we avoid proliferation of navigational click handlers</h3></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="pageswitches/pageswitches/6">
+<h2>the mythical hashbang</h2>
+
+<hr/>
+
+<h3>google supports indexing of #! URLs</h3>
+
+<hr/>
+
+<h3>this makes the hash a good tradeoff</h3></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="pageswitches/pageswitches/7">
+<h2><code>hashchange</code> in older browsers</h2>
+
+<hr/>
+
+<h3>easy to re-implement</h3>
+
+<hr/>
+
+<h3>very robust libraries exist if needed</h3></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="pageswitches/pageswitches/8">
+<h2>what about html5 history?</h2>
+
+<hr/>
+
+<h3>change the URL path directly, no need for the hash</h3>
+
+<hr/>
+
+<h3>supported in Chrome, Safari, Firefox 4</h3></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="pageswitches/pageswitches/9">
+<h2>we're not using <code>pushState</code> yet</h2>
+
+<hr/>
+
+<h3>a bug exists in WebKit with the back-button</h3>
+
+<hr/>
+
+<h3>poor user experience, we chose not to use it</h3>
+
+<hr/>
+
+<h3>fix is in Chrome 8, coming to Safari</h3>
+
+<hr/>
+
+<h3>we'll use it in the future</h3></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="pageswitches/pageswitches/10">
+<h2>still waiting on ajax</h2>
+
+<hr/>
+
+<h3>need to load user profile before we render page</h3>
+
+<hr/>
+
+<h3>still too slow</h3></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="pageswitches/pageswitches/11">
+<h2>caching to the rescue</h2>
+
+<hr/>
+
+<h3>if a Tweet or user appears on-screen, we cache the object</h3>
+
+<hr/>
+
+<h3>nearly impossible to navigate via clicks to non-cached object page</h3></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="pageswitches/pageswitches/12">
+<h2>if the user remembers something, so should we</h2>
+
+<hr/>
+
+<h3>important rule about caching</h3>
+
+<hr/>
+
+<h3>we also save document fragments</h3></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="pageswitches/pageswitches/13">
+<h2>wow, that was fast!</h2>
+
+<hr/>
+
+<h3>ok, so we have heard this from users about navigation :)</h3></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="tweetactions/tweetactions/1">
+<h1>Problem: Non-instant Actions</h1>
+
+<hr/>
+
+<h3>users expect no delay when taking action</h3></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="tweetactions/tweetactions/2">
+<h2>types of actions</h2>
+
+<ol>
+<li>open/close</li>
+<li>favorite/unfavorite</li>
+<li>retweet/unretweet</li>
+<li>reply/mention</li>
+<li>delete</li>
+<li>follow/unfollow</li>
+<li>block/unblock</li>
+</ol>
+</div>
+</div><div class="slide" data-transition="none"><div class="content" ref="tweetactions/tweetactions/3">
+<h2>optimistic UI</h2>
+
+<hr/>
+
+<h3>take action immediately, revert on failure</h3></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="tweetactions/tweetactions/4">
+<h2>optimistic UI <em>is hard</em></h2>
+
+<hr/>
+
+<h3>Tweets and users appear in many places (and in cached fragments)</h3>
+
+<hr/>
+
+<h3>action via clicks and keyboard shortcuts</h3>
+
+<hr/></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="tweetactions/tweetactions/5">
+<h2>delegate UI ownership</h2>
+
+<hr/>
+
+<h3>setup delegated event handlers</h3>
+
+<hr/>
+
+<h3>listen for global events (e.g. favorite)</h3>
+
+<hr/>
+
+<h3>find and modify owned objects</h3></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="tweetactions/tweetactions/6">
+<h2>consistent UI framework</h2>
+
+<hr/>
+
+<h3>Tweets appear many different ways</h3>
+
+<hr/>
+
+<h3>but they are all made of the same building blocks</h3>
+
+<hr/>
+
+<h3>you must write flexible, modular html and css</h3></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="tweetactions/tweetactions/7">
+<h2>event-driven API layer</h2>
+
+<hr/>
+
+<h3>all calls trigger 'before' and 'error' events</h3>
+
+<hr/>
+
+<h3>anything can easily listen to API events</h3>
+
+<hr/>
+
+<h3>including off-screen document fragments</h3></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="tweetactions/tweetactions/8">
+<h2>opening a Tweet</h2>
+
+<hr/>
+
+<h3>leverage CSS3 animations</h3>
+
+<hr/>
+
+<h3>discrete, fault-tolerant components</h3>
+
+<hr/>
+
+<h3>cache the pane, in case the user goes back</h3></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="timestamps/timestamps/1">
+<h1>Problem: Timestamps Get Old</h1>
+
+<hr/>
+
+<h3>keeping the UI from getting stale</h3></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="timestamps/timestamps/2">
+<h2>dom is too slow to update in real-time</h2>
+
+<hr/>
+
+<h3>our app is complex, and there are lots of Tweets</h3></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="timestamps/timestamps/3">
+<h2>let's be smart about our approach</h2>
+
+<hr/>
+
+<h3>long interval time (2s)</h3>
+
+<hr/>
+
+<h3>process a subset each interval (10%)</h3>
+
+<hr/>
+
+<h3>skip ones too old to change (&gt;1 day)</h3></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="timestamps/timestamps/4">
+<h2>store the data on the timestamp HTML</h2>
+
+<hr/>
+
+<h3>original UNIX timestamp</h3>
+
+<hr/>
+
+<h3>input parameters to pretty-form function</h3></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="timestamps/timestamps/5">
+<h2>select a subset of timestamps</h2>
+
+<hr/>
+
+<h3>loop across 0-9, select timestamps by last digit</h3>
+
+<hr/>
+
+<h3>we use jQuery global selection</h3></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="timestamps/timestamps/6">
+<h2>cut old ones out of the selection</h2>
+
+<hr/>
+
+<h3>remove from set if &gt;1 day old</h3>
+
+<hr/>
+
+<h3>and change the class so they are not selected again</h3></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="timestamps/timestamps/7">
+<h2>compute new display value</h2>
+
+<hr/>
+
+<h3>use parameters from HTML data attributes</h3>
+
+<hr/>
+
+<h3>only update if the value changed</h3></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="timestamps/timestamps/8">
+<h2>imperfect solution</h2>
+
+<hr/>
+
+<h3>all timestamps are updated within 20s</h3>
+
+<hr/>
+
+<h3>solution is adequate, though we could do better</h3></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="morethoughts/morethoughts/1">
+<h1>More Thoughts On Performance</h1>
+
+<hr/>
+
+<h3>to close things out</h3></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="morethoughts/morethoughts/2">
+<h2>performance engineering is about</h2>
+
+<h2><strong>solving problems for the user</strong></h2>
+
+<hr/>
+
+<h3>this slide is important, so i'm showing it again</h3></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="morethoughts/morethoughts/3">
+<h2>how to find the right problems?</h2>
+
+<hr/>
+
+<h3>ask your users, they'd be happy to tell you</h3>
+
+<hr/>
+
+<h3>but don't be afraid to trust your instincts, too</h3></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="morethoughts/morethoughts/4">
+<h2>they say "performance is a feature"</h2>
+
+<hr/>
+
+<h3>i think poor performance is a bug</h3></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="credits/credits/1">
+<h1>the team</h1>
+
+<hr/>
+
+<h3>our team solved these problems together</h3>
+
+<hr/>
+
+<h2>@hoverbird, @mracus, @dsa, @esbie, @bs, @ded, @shinypb, @mattknox, and @k</h2>
+
+<hr/>
+
+<h3>and they're still solving more every day</h3></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="credits/credits/2">
+<h1>the end</h1>
+
+<hr/>
+
+<h3>this was obviously not exhaustive</h3>
+
+<hr/>
+
+<h3>i'm happy to answer questions about other parts</h3></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="credits/credits/3">
+<h2>question time!</h2>
+
+<hr/>
+
+<h3>or for more, find me on Twitter</h3>
+
+<hr/>
+
+<h2>@bcherry</h2>
+
+<hr/>
+
+<h3>thanks for coming!</h3></div>
+</div>

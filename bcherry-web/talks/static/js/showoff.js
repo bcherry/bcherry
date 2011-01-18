@@ -4,6 +4,7 @@ var preso_started = false
 var slidenum = 0
 var slideTotal = 0
 var slides
+var currentSlide
 var totalslides = 0
 var slidesLoaded = false
 var incrSteps = 0
@@ -11,8 +12,10 @@ var incrElem
 var incrCurr = 0
 var incrCode = false
 var debugMode = false
+var gotoSlidenum = 0
 
-function setupPreso() {
+
+function setupPreso(load_slides, prefix) {
   if (preso_started)
   {
      alert("already started")
@@ -20,7 +23,9 @@ function setupPreso() {
   }
   preso_started = true
 
-  loadSlides()
+
+  loadSlides(load_slides, prefix)
+
   doDebugStuff()
 
   // bind event handlers
@@ -30,21 +35,63 @@ function setupPreso() {
   /* window.onunload = unloaded; */
 }
 
-function loadSlides() {
-  $('#slides').hide();
-  $("#slides").load("/talks/{TALK_NAME}/slides".split("{TALK_NAME}").join(TALK_NAME), false, function(){
-    slides = $('#slides > .slide')
-    slideTotal = slides.size()
-    setupMenu()
-    if (slidesLoaded) {
-      showSlide()
-      alert('slides loaded')
-    } else {
-      showFirstSlide()
-      slidesLoaded = true
-    }
-    sh_highlightDocument('/talks/static/js/sh_lang/', '.min.js')
-   })
+function loadSlides(load_slides, prefix) {
+  //load slides offscreen, wait for images and then initialize
+  if (load_slides) {
+  	$("#slides").load("/talks/{TALK_NAME}/slides".split("{TALK_NAME}").join(TALK_NAME), false, function(){
+    	$("#slides img").batchImageLoad({
+			loadingCompleteCallback: initializePresentation(prefix)
+		})
+  	})
+  } else {
+	$("#slides img").batchImageLoad({
+		loadingCompleteCallback: initializePresentation(prefix)
+	})
+  }
+}
+
+function initializePresentation(prefix) {
+  //center slides offscreen
+  centerSlides($('#slides > .slide'))
+
+  //copy into presentation area
+  $("#preso").empty()
+  $('#slides > .slide').appendTo($("#preso"))
+
+  //populate vars
+  slides = $('#preso > .slide')
+  slideTotal = slides.size()
+
+  //setup manual jquery cycle
+  $('#preso').cycle({
+    timeout: 0
+  })
+
+  setupMenu()
+  if (slidesLoaded) {
+    showSlide()
+    alert('slides loaded')
+  } else {
+    showFirstSlide()
+    slidesLoaded = true
+  }
+  sh_highlightDocument(prefix+'/js/sh_lang/', '.min.js')
+}
+
+function centerSlides(slides) {
+  slides.each(function(s, slide) {
+    centerSlide(slide)
+  })
+}
+
+function centerSlide(slide) {
+  var slide_content = $(slide).children(".content").first()
+  var height = slide_content.height()
+  var mar_top = (0.5 * parseFloat($(slide).height())) - (0.5 * parseFloat(height))
+  if (mar_top < 0) {
+    mar_top = 0
+  }
+  slide_content.css('margin-top', mar_top)
 }
 
 function setupMenu() {
@@ -52,16 +99,17 @@ function setupMenu() {
 
   var currSlide = 0
   var menu = new ListMenu()
-  
+
   slides.each(function(s, elem) {
-    shortTxt = $(elem).text().substr(0, 20)
-    path = $(elem).attr('ref').split('/')
+    content = $(elem).children(".content")
+    shortTxt = $(content).text().substr(0, 20)
+    path = $(content).attr('ref').split('/')
     currSlide += 1
     menu.addItem(path, shortTxt, currSlide)
   })
 
   $('#navigation').html(menu.getList())
-  $('#navmenu').menu({ 
+  $('#navmenu').menu({
     content: $('#navigation').html(),
     flyOut: true
   });
@@ -91,13 +139,23 @@ function showSlide(back_step) {
     return
   }
 
-  // TODO: calculate and set the height margins on slide load, not here
+  currentSlide = slides.eq(slidenum)
 
-  $("#preso").html(slides.eq(slidenum).clone())
-  curr_slide = $("#preso > .slide")
-  var slide_height = curr_slide.height()
-  var mar_top = (0.5 * parseFloat($("#preso").height())) - (0.5 * parseFloat(slide_height))
-  $("#preso > .slide").css('margin-top', mar_top)
+  var transition = currentSlide.attr('data-transition')
+  var fullPage = currentSlide.find(".content").is('.full-page');
+
+  if (back_step || fullPage) {
+    transition = 'none'
+  }
+
+  $('#preso').cycle(slidenum, transition)
+
+  if (fullPage) {
+    $('#preso').css({'width' : '100%', 'overflow' : 'visible'});
+    currentSlide.css({'width' : '100%', 'text-align' : 'center', 'overflow' : 'visible'});
+  } else {
+    $('#preso').css({'width' : '1020px', 'overflow' : 'hidden'});
+  }
 
   percent = getSlidePercent()
   $("#slideInfo").text((slidenum + 1) + '/' + slideTotal + '  - ' + percent + '%')
@@ -123,11 +181,11 @@ function determineIncremental()
 {
   incrCurr = 0
   incrCode = false
-  incrElem = $("#preso > .incremental > ul > li")
+  incrElem = currentSlide.find(".incremental > ul > li")
   incrSteps = incrElem.size()
   if(incrSteps == 0) {
     // also look for commandline
-    incrElem = $("#preso > .incremental > pre > code > code")
+    incrElem = currentSlide.find(".incremental > pre > code > code")
     incrSteps = incrElem.size()
     incrCode = true
   }
@@ -158,7 +216,7 @@ function doDebugStuff()
     $('#debugInfo').show()
     debug('debug mode on')
   } else {
-    $('#debugInfo').hide()    
+    $('#debugInfo').hide()
   }
 }
 
@@ -176,6 +234,19 @@ function keyDown(event)
 
     debug('key: ' + key)
 
+    if (key >= 48 && key <= 57) // 0 - 9
+    {
+      gotoSlidenum = gotoSlidenum * 10 + (key - 48);
+      return true;
+    }
+    if (key == 13 && gotoSlidenum > 0)
+    {
+      debug('go to ' + gotoSlidenum);
+      slidenum = gotoSlidenum - 1;
+      showSlide(true);
+    }
+    gotoSlidenum = 0;
+
     if (key == 32) // space bar
     {
       nextStep()
@@ -185,12 +256,12 @@ function keyDown(event)
       debugMode = !debugMode
       doDebugStuff()
     }
-    else if (key == 37 || key == 33) // Left arrow OR page up
+    else if (key == 37 || key == 33) // Left arrow or page up
     {
       slidenum--
       showSlide(true) // We show the slide fully loaded
     }
-    else if (key == 39 || key == 34) // Right arrow OR page down
+    else if (key == 39 || key == 34) // Right arrow or page down
     {
       nextStep()
     }
@@ -255,7 +326,7 @@ function ListMenu(s)
       }
       newMenu.append(domItem)
     }
-    return newMenu      
+    return newMenu
   }
 }
 
@@ -267,7 +338,7 @@ function ListMenuItem(t, s)
 }
 
 var removeResults = function() {
-  $('.results').remove();	
+  $('.results').remove();
 };
 
 var print = function(text) {

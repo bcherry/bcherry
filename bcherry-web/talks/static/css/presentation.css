@@ -1,0 +1,33 @@
+ol {
+  font-size: 24pt;
+  list-style-type: decimal;
+}
+
+ol li {
+  line-height: 32pt;
+  margin-left: 50px;
+}
+
+.biblioteca ul {
+	font-size: 20pt;
+}
+
+.biblioteca ul li {
+	line-height: 32pt;
+}
+
+.process ol {
+	font-size: 20pt;
+}
+
+.process ol li {
+	line-height: 32pt;
+}
+
+.overview ol {
+	font-size: 24pt;
+}
+
+.overview ol li {
+	line-height: 32pt;
+}
