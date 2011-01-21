@@ -75,7 +75,7 @@ function initializePresentation(prefix) {
     showFirstSlide()
     slidesLoaded = true
   }
-  sh_highlightDocument(prefix+'/js/sh_lang/', '.min.js')
+  sh_highlightDocument(prefix+'/talks/static/js/sh_lang/', '.min.js')
 }
 
 function centerSlides(slides) {
