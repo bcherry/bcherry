@@ -1,0 +1,21 @@
+/*ul, ol {
+  font-size: 20pt;
+}
+
+ul li, ol li {
+  line-height: 32pt;
+}
+*/
+
+body {
+  font-family: Helvetica;
+  font-size: 10pt;
+}
+
+.serif {
+  font-family: Times New Roman, serif;
+}
+
+.bullets-left ul li {
+  text-align: left;
+}

@@ -40,6 +40,10 @@ handlers:
   static_files: talks/\1/\2.css
   upload: talks/(.*)/(.*).css
 
+- url: /talks/techtalks-to/(.*)
+  static_files: talks/techtalks-to/\1
+  upload: talks/techtalks-to/.*
+
 # Talks and Presentations
 - url: /talks/?.*
   script: /talks/main.py
