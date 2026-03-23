@@ -1,0 +1,151 @@
+Alex Gould
+	3/11/05
+Found a gigantic bug.  I believe in the readme you said that pressing f3 allows you 
+to space jump, but in the 89 version it causes a gigantic freeze and crash so i had to 
+manually reset the RAM (battery-style).
+Nothing happened, it just froze and the 2nd+left+right+on combo wouldn't
+respond either, and there was no address error bar or anything else at the
+top.  It was quite strange.
+
+--------------------------------------------------------------------------------------------------
+
+Konstantin Beliakov <zkostik@calcgames.org>
+	2/28/05
+Good stuff:
+- key responce it good
+- jumping is really good
+- collision detection is quite nice
+
+Needs improvement:
+- gfx definitely needs to be improved a lot, but that's reall something for
+later. gfx is good enough for testing. maps are also good enough for testing
+despite a comment below regarding their suckiness.
+- the diagonal shots in my opinion need to be improved. how about if user
+presses [shift] or [alpha] shot would be fire diagonally w/t. that way one
+could run and still be able to fire diagonally.
+- diagonal shots fired downwards are almost impossible to see. maybe their speed
+it a bit too fast?
+- when your roll in a ball into a small space not high enough for you to stand
+up, you can still stand but your head will be clipped thru a tile. you don't
+get stuck but this may need to be fixed in future.
+- i think jumping while in a ball should be also using the [<>] button and not
+[2nd] for consistency reasons.
+- firing a bullet while jumping seems awfully laggy. you probably may want to
+adjust your firing/jumping routines to work better together.
+- i'd also consider making bullets blink so that they're easier to see (kinda
+like they did in Contra on old GameBoy to improve bullet visibility).
+
+Bugs seen:
+-none so far
+
+Other than that, everything seems to work very nice. Never had any lockups or
+resets, so everything seems pretty solid as of now.
+
+--------------------------------------------------------------------------------------------------
+
+Vladislav Kontsevoi
+	2/18/05
+If you go allt eh way to the bottom-left corner and
+moroh and use bombs and move left, you will go into
+the wall. You can also unmoroh there, and be inside
+the wall (until you move out). You can not get there
+when you are unmorphed...
+
+--------------------------------------------------------------------------------------------------
+
+Vladislav Kontsevoi
+	2/19/05
+The flyimng enemies have bad crash detection and it is
+quite annoying when you are stuck on top of the
+l;and-based enemies with nothing to do but wait until
+the enemy moves out of your way and you can run away.
+Shooting at an angle is cubersome and [UP] dos the
+same thing when shooting as [F4]+[F5]. The two
+different kinds of jumps should be integrated. I do
+not see what benefit holding [2ND] ("charging") has.
+Also, it is hard to climb using bombs when you are
+morphed. You should move upward faster when morphed
+and you should be able to move slightly left/right
+when flying (jumping?) using bombs. That is all so
+far... I'm looking forwart to a better release! Oh,
+yes; there should be "super-bombs" that are limited
+(powerups...?) and can destroy small sections of wall.
+
+--------------------------------------------------------------------------------------------------
+
+Joe C. <jcchip@snet.net>
+	2/20/05
+FINALLY got around to the game, TI-Connect was giving me problems.
+Anyways, I patched the programs and it ran fine.  Obviously, I noticed
+some of the little bugs like rolling into the wall and how an enemy can
+get you stuck by getting hurt.  I also noticed how you don't actually
+aim the gun in a direction, I just figured that was because of the early
+version.  Overall, I was pleased, it really did feel like a metroid
+game.
+
+However, I found one little problem with the controls.  I would
+personally rather have the sprint button close to the jump button so I
+could make jumps easier.
+
+--------------------------------------------------------------------------------------------------
+
+Vladislav Kontsevoi
+	 2/20/05
+The "jumping enemy" once jumped all the way to the
+ceiling and OFF OF THE SCREEN when I did something...
+exploded some bombs near it I think...
+
+--------------------------------------------------------------------------------------------------
+
+Joe C. <jcchip@snet.net>
+	 2/20/05
+I just realized... if you shoot and then sprint in the same direction,
+you will actually pass your shots...
+
+--------------------------------------------------------------------------------------------------
+
+Alex Gould
+	 2/18/05
+Some things about the beta:
+   1. Awesome graphics and smooth runtime so far.
+   2. Does the series justice.  All the controls are perfect
+   3. I did have trouble doing the bomb jump, though.  I did it once by chance then I couldn't find it again.
+   4. Need some more levels.  That's probably the last thing though, but the levels so far are kinda plain as well.
+   5. Enemy sprites are a bit unclear, that is to say, i can't really tell what they are
+   6. Last but not least, I can't really see that the power-up shot works either.  Maybe it does, but it doesn't
+look any different than the regular one on my version
+
+--------------------------------------------------------------------------------------------------
+
+Neil F
+	 2/18/05
+There are several annoyances with the controls in metroid when playing on the 92+. I would strongly 
+reccommend changing the controls on the 92+ to:
+
+Jump: F1
+Shoot\Charge: F2
+Sprint: F3
+Aim up: F5
+Aim down:F6
+Aim strait up: The hand thingy
+Up Down left right: Control Pad
+Change level: F4
+Quit: ESC
+
+This DOES NOT apply to the v200. I will examine the v200 later and see what controls would be best. 
+Also, I do not notice any difference in speed when you press shift on the 89.
+
+--------------------------------------------------------------------------------------------------
+
+Joe C. <jcchip@snet.net>
+	 2/6/05
+Very cool!  I patched it with ghostbuster and it works fine.  I was
+surprised how much it actually felt like metroid.
+Several notes:
+
+1. Are you going to implement firing upwards or at angles?
+2. Will bombs explode in the future?
+3. Things seem a little unresponsive.
+4. Would you like me to email you a ghostbuster-patched program if you
+want to release a demo?  You should note to users that they would have
+to run the metcode program.
