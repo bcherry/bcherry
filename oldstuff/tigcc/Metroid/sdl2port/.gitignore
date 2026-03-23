@@ -1,0 +1,5 @@
+build/
+metroid
+metroid_debug
+*.dSYM/
+*.o
